@@ -48,8 +48,8 @@ class Piece:
         else:
             drawThis = Black[self.img]
 
-#113 é o inicio do tabuleiro
-#525 é o tamanho da casa no tabuleiro
+    #113 é o inicio do tabuleiro
+    #525 é o tamanho da casa no tabuleiro
 
         x = (4 - self.col) + round(113 + (self.col * 525 / 8))
         y = 3 + round(113 + (self.row * 525 / 8))
