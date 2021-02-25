@@ -1,15 +1,21 @@
 import time
+import pygame
 
 from piece import Piece
-import pygame
+
+from models.board import Board
 
 
 def main():
     pygame.init()
+    screen = pygame.display.set_mode([700, 700])
     screen = pygame.display.set_mode([800, 800])
     pygame.display.set_caption('Olá mundo')
     screen.fill(pygame.Color("white"))
     pygame.display.flip()
+
+    board = Board()
+    board.draw(screen)
 
     piece00 = Piece(0, 0, "black", 1)
     piece01 = Piece(0, 1, "black", 2)
@@ -82,6 +88,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
