@@ -42,22 +42,16 @@ class Piece:
     def is_selected(self):
         return self.selected
 
-    def draw(self, windows, color):
+    def draw(self, windows,x,y):
         if self.color == "white":
             drawThis = White[self.img]
         else:
             drawThis = Black[self.img]
 
-    #113 é o inicio do tabuleiro
-    #525 é o tamanho da casa no tabuleiro
-
-        x = (4 - self.col) + round(113 + (self.col * 525 / 8))
-        y = 3 + round(113 + (self.row * 525 / 8))
-
         if self.selected and self.color == color:
-            pygame.draw.rect(windows, 0, (x, y, 62, 62), 2)
+            pygame.draw.rect(windows, 0, (x+20, y+20, 62, 62), 2)
 
-        windows.blit(drawThis, (x, y))
+        windows.blit(drawThis, (x+20, y+20))
 
 
     def update_position(self, r, c):
