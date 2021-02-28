@@ -28,7 +28,7 @@ for img in black_pieces:
 for img in white_pieces:
     White.append(pygame.transform.scale(img, (55, 55)))
 
-class Piece:
+class Piece(object):
 
 
     def __init__(self, row, col, color, img):
@@ -61,7 +61,7 @@ class Piece:
     def get_color(self):
         return self.color
 
-    def get_possition(self):
+    def get_position(self):
         return self.row, self.col
 
     def get_possible_moves(self, board):

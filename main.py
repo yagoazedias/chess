@@ -5,8 +5,25 @@ from piece import Piece
 
 from models.board import Board
 
+from models.pawn import Pawn
+
+
+
 
 def main():
+
+
+    board = [['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
+         ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
+         ['-', '-', '-', '-', '-', '-', '-', '-'],
+         ['-', '-', '-', '-', '-', '-', '-', '-'],
+         ['-', '-', '-', '-', '-', '-', '-', '-'],
+         ['-', '-', '-', '-', '-', '-', '-', '-'],
+         ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
+         ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR']]
+    teste = Pawn(1, 1, "black", 0)
+    print(teste.valid_moves(board))
+
     pygame.init()
     screen = pygame.display.set_mode([700, 700])
     screen = pygame.display.set_mode([800, 800])
