@@ -1,19 +1,3 @@
-def get_position():
-    return (0, 0)
-
-
-def get_row():
-    return 0
-
-
-def get_col():
-    return 0
-
-
-def get_color():
-    return 'black'
-
-
 ##-- FUNÇÕES AUXILIARES --##
 
 # verifica se a posicao pos é valida. ou seja, esta dentro dos limites do tabuleiro
@@ -22,6 +6,7 @@ def is_valid_pos(pos):
     col = pos[1]
     return (row >= 0 and row <= 7 and col >= 0 and col <= 7)
 
+    
 # verifica se a posicao pos tem peça branca (nao to usando)
 def has_white(pos, board):
     row = pos[0]
@@ -202,6 +187,24 @@ def all_down_right_moves(pos, board):
 
     return moves
 
+def rook_valid_moves(pos, board):
+    moves = all_down_moves(pos, board) + \
+        all_up_moves(pos, board) + \
+        all_right_moves(pos, board) + \
+        all_left_moves(pos, board)
+    return moves
+
+def bishop_valid_moves(pos, board):
+    moves = all_down_left_moves(pos, board) + \
+        all_down_right_moves(pos, board) + \
+        all_up_right_moves(pos, board) + \
+        all_up_left_moves(pos, board)
+    return moves
+
+def queen_valid_moves(pos, board):
+    moves = bishop_valid_moves(pos, board) + rook_valid_moves(pos, board)
+    return moves
+
 
 # retorna os 2 L's: |--
 def knight_left_L(pos, board):
@@ -234,3 +237,60 @@ def knight_up_L(pos, board):
     u_left = (row-2, col-1)
     u_right = (row-2, col+1)
     return [u_left, u_right]
+
+#retorna todos os movimentos validos de um cavalo, dada uma posicao
+def knight_valid_moves(pos, board):
+    moves = knight_down_L(pos, board) + knight_up_L(pos, board) \
+        + knight_left_L(pos, board) + knight_right_L(pos, board)
+
+    invalid_moves = []
+    for move in moves:
+        if not(is_valid_pos(move)) or has_teammate(move, board):
+            invalid_moves.append(move)
+    
+    moves = [x for x in moves if x not in invalid_moves]
+
+    return moves
+
+
+def pawn_valid_moves(pos, board, color, first_move):
+    moves = []
+    first_move = first_move
+    if color == 'white':
+        pawn_move = up
+        diag_right_house = up_right(pos)
+        diag_left_house = up_left(pos)
+    elif color == 'black':
+        pawn_move = down
+        diag_right_house = down_right(pos)
+        diag_left_house = down_left(pos)
+
+    move_front = pawn_move(pos)
+    if is_valid_pos(move_front) and is_empty(move_front, board):
+        moves.append(move_front)
+        if first_move:
+            first_move = False
+            move_front = pawn_move(move_front)
+            if is_valid_pos(move_front) and is_empty(move_front, board):
+                moves.append(move_front)
+    
+    if is_valid_pos(diag_left_house) and has_oponent(diag_left_house, board):
+        moves.append(diag_left_house)
+
+    if is_valid_pos(diag_right_house) and has_oponent(diag_right_house, board):
+        moves.append(diag_right_house)
+
+    return moves
+
+#retorna todos os movimentos validos de um rei, dada uma posicao (sem roque)
+def king_valid_moves(pos, board):
+    moves = [up(pos), down(pos), left(pos), right(pos), up_left(pos), 
+            up_right(pos), down_left(pos), down_right(pos)]
+    
+    invalid_moves = []
+    for move in moves:
+        if not(is_valid_pos(move)) or has_teammate(move, board):
+            invalid_moves.append(move)
+    
+    moves = [x for x in moves if x not in invalid_moves]
+    return moves
