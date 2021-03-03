@@ -64,7 +64,9 @@ class Piece(object):
     def get_position(self):
         return self.row, self.col
 
-    def get_possible_moves(self, board):
-        self.move_list = self.valid_moves(board)
+    def get_possible_moves(self):
+        return self.move_list
 
+    def update_possible_moves(self, board):
+        pass
 

@@ -24,4 +24,10 @@ class House:
         pygame.draw.rect(display, self.color, (self.position_row, self.position_column, 100, 100))
         if self.piece != None:
             self.piece.draw(display,self.position_row, self.position_column)
-        
+    
+
+    def get_piece(self):
+        return self.piece
+    
+    def is_empty(self):
+        return self.piece == None
