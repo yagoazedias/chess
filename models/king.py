@@ -5,12 +5,25 @@ from move_utils import *
 class King(Piece):
     def __init__(self, row, col, color, img):
         super(King, self).__init__(row, col, color, img)
-        self.first_move = True
+        self.is_first_move = True
         self.is_checked = False
         
 
     def __str__(self):
      return "King"
+
+
+    def set_is_first_move(self, value):
+        self.is_first_move = value
+    
+    def get_is_first_move(self):
+        return self.is_first_move
+    
+    def set_is_checked(self, value):
+        self.is_checked = value
+    
+    def get_is_checked(self):
+        return self.is_checked
 
 
     def update_possible_moves(self, board):
