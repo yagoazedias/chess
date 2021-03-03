@@ -53,7 +53,7 @@ class Knight(Piece):
 
         invalid_moves = []
         for move in self.move_list:
-            if not(board.is_valid_pos(move)) or board.has_teammate(move):
+            if not(board.is_valid_pos(move)) or board.has_teammate(move, self.get_color()):
                 invalid_moves.append(move)
     
         self.move_list = [x for x in self.move_list if x not in invalid_moves]
