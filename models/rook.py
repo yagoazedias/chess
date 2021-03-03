@@ -9,7 +9,7 @@ class Rook(Piece):
         
 
     def __str__(self):
-     return "Rook"
+        return "Rook"
 
 
     def get_is_first_move(self):
@@ -21,7 +21,7 @@ class Rook(Piece):
 
     def update_possible_moves(self, board):
         pos = self.get_position()
-        self.move_list = all_down_moves(pos, board, self.get_color()) + \
-        all_up_moves(pos, board, self.get_color()) + \
-        all_right_moves(pos, board, self.get_color()) + \
-        all_left_moves(pos, board, self.get_color())
+        self.move_list = all_down_moves(pos, board, self.color) + \
+        all_up_moves(pos, board, self.color) + \
+        all_right_moves(pos, board, self.color) + \
+        all_left_moves(pos, board, self.color)
