@@ -33,3 +33,34 @@ class Board:
 
     def move_piece(self):
         print("move_piece")
+
+
+
+
+    def get_house(self, pos):
+        row = pos[0]
+        col = pos[1]
+        return houses[row][col]
+
+    # verifica se a posicao pos tem um oponente
+    def has_oponent(self, pos, my_color):
+        row = pos[0]
+        col = pos[1]
+        return my_color != self.houses[row][col].get_piece().get_color() and not(self.houses[row][col].is_empty())
+
+    
+    # verifica se a posicao pos é valida. ou seja, esta dentro dos limites do tabuleiro
+    def is_valid_pos(self, pos):
+        row = pos[0]
+        col = pos[1]
+        return (row >= 0 and row <= 7 and col >= 0 and col <= 7)
+    
+    def get_piece(self, pos):
+        return self.get_house(pos).get_piece()
+    
+    def is_empty(self, pos):
+        return self.get_house(pos).is_empty()
+
+    # verifica se a posicao pos tem um companheiro de equipe
+    def has_teammate(self, pos, my_color):
+        return my_color == self.get_house(pos).get_piece().get_color() 
