@@ -21,8 +21,8 @@ def main():
          ['-', '-', '-', '-', '-', '-', '-', '-'],
          ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
          ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR']]
+
     teste = Pawn(1, 1, "black", 0)
-    print(teste.valid_moves(board))
 
     pygame.init()
     screen = pygame.display.set_mode([700, 700])
