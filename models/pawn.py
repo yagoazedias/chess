@@ -30,7 +30,6 @@ class Pawn(Piece):
         if board.is_valid_pos(move_front) and board.is_empty(move_front):
             self.move_list.append(move_front)
             if self.first_move:
-                self.first_move = False
                 move_front = pawn_move(move_front)
                 if board.is_valid_pos(move_front) and board.is_empty(move_front):
                     self.move_list.append(move_front)
