@@ -12,7 +12,7 @@ class Knight(Piece):
     #-- Metodos auxiliares --#
 
     # retorna os 2 L's: |--
-    def knight_left_L(self, pos):
+    def knight_left(self, pos):
         row = pos[0]
         col = pos[1]
         l_up = (row-1, col-2)
@@ -20,7 +20,7 @@ class Knight(Piece):
         return [l_up, l_down]
 
     # retorna os 2 L's: --|
-    def knight_right_L(self, pos):
+    def knight_right(self, pos):
         row = pos[0]
         col = pos[1]
         r_up = (row-1, col+2)
@@ -28,7 +28,7 @@ class Knight(Piece):
         return [r_up, r_down]
 
     # retorna os 2 L's: _|_
-    def knight_down_L(self, pos):
+    def knight_down(self, pos):
         row = pos[0]
         col = pos[1]
         d_left = (row+2, col-1)
@@ -36,7 +36,7 @@ class Knight(Piece):
         return [d_left, d_right]
 
     # retorna os 2 L's: T
-    def knight_up_L(self, pos):
+    def knight_up(self, pos):
         row = pos[0]
         col = pos[1]
         u_left = (row-2, col-1)
@@ -48,8 +48,8 @@ class Knight(Piece):
     def update_possible_moves(self, board):
         self.move_list = []
         pos = self.get_position()
-        self.move_list = knight_down_L(pos) + knight_up_L(pos) \
-        + knight_left_L(pos) + knight_right_L(pos)
+        self.move_list = knight_down(pos) + knight_up(pos) \
+        + knight_left(pos) + knight_right(pos)
 
         invalid_moves = []
         for move in self.move_list:
