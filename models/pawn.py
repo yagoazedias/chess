@@ -1,4 +1,3 @@
-# from models.move import Move
 from models.piece import Piece
 from util.move import *
 
@@ -44,14 +43,14 @@ class Pawn(Piece):
         # Movimentos de captura en passant
 
         # se à direita do meu peão tiver um peão adversario
-        if board.is_valid_pos(right(pos)) and board.get_piece(right(pos)) == 'Pawn':
+        if board.is_valid_pos(right(pos)) and board.get_piece(right(pos)) == 'Pawn' and board.has_opponent(right(pos), self.color):
             # e se este peão estiver vulnerável à captura en passant
             if board.get_piece(right(pos)).get_en_passant_vulnerable():
                 # e se a posicao atras desse peão estiver vazia
                 if board.is_valid_pos(diag_right_house) and board.is_empty(diag_right_house):
                     self.move_list.append(diag_right_house)
 
-        if board.is_valid_pos(left(pos)) and board.get_piece(left(pos)) == 'Pawn':
+        if board.is_valid_pos(left(pos)) and board.get_piece(left(pos)) == 'Pawn' and board.has_opponent(left(pos), self.color):
             if board.get_piece(left(pos)).get_en_passant_vulnerable():
                 if board.is_valid_pos(diag_left_house) and board.is_empty(diag_left_house):
                     self.move_list.append(diag_left_house)

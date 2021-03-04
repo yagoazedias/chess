@@ -1,6 +1,5 @@
-# from models.move import Move
-from piece import Piece
-from move_utils import *
+from models.piece import Piece
+from util.move import *
 
 class Knight(Piece):
     def __init__(self, row, col, color, img):
