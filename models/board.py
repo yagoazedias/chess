@@ -40,7 +40,7 @@ class Board:
         return self.houses[row][col]
 
     # verifica se a posicao pos tem um oponente
-    def has_oponent(self, pos, my_color):
+    def has_opponent(self, pos, my_color):
         row = pos[0]
         col = pos[1]
         return my_color != self.houses[row][col].get_piece().get_color() and not (self.houses[row][col].is_empty())
