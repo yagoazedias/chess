@@ -2,58 +2,58 @@
 
 # retorna a posicao à direita de pos
 def right(pos):
-    pos_y = pos[0]
-    pos_x = pos[1] + 1
-    return pos_y, pos_x
+    col = pos[0] + 1
+    row = pos[1]
+    return col, row
 
 
 # retorna a posicao à esquerda de pos
 def left(pos):
-    pos_y = pos[0]
-    pos_x = pos[1] - 1
-    return pos_y, pos_x
+    col = pos[0] - 1
+    row = pos[1]
+    return col, row
 
 
 # retorna a posicao 'acima' de pos
 def up(pos):
-    pos_y = pos[0] - 1
-    pos_x = pos[1]
-    return pos_y, pos_x
+    col = pos[0]
+    row = pos[1] - 1
+    return col, row
 
 
 # retorna a posicao abaixo de pos
 def down(pos):
-    pos_y = pos[0] + 1
-    pos_x = pos[1]
-    return pos_y, pos_x
+    col = pos[0]
+    row = pos[1] + 1
+    return col, row
 
 
 # retorna a posicao da 'diagonal direita superior' de pos
 def up_right(pos):
-    pos_y = pos[0] - 1
-    pos_x = pos[1] + 1
-    return pos_y, pos_x
+    col = pos[0] + 1
+    row = pos[1] - 1
+    return col, row
 
 
 # retorna a posicao da 'diagonal esquerda superior' de pos
 def up_left(pos):
-    pos_y = pos[0] - 1
-    pos_x = pos[1] - 1
-    return pos_y, pos_x
+    col = pos[0] - 1
+    row = pos[1] - 1
+    return col, row
 
 
 # retorna a posicao da 'diagonal direita inferior' de pos
 def down_right(pos):
-    pos_y = pos[0] + 1
-    pos_x = pos[1] + 1
-    return pos_y, pos_x
+    col = pos[0] + 1
+    row = pos[1] + 1
+    return col, row
 
 
 # retorna a posicao da 'diagonal esquerda inferior' de pos
 def down_left(pos):
-    pos_y = pos[0] + 1
-    pos_x = pos[1] - 1
-    return pos_y, pos_x
+    col = pos[0] - 1
+    row = pos[1] + 1
+    return col, row
 
 
 # dada uma posicao, retorna todas as casas validas 'para cima'
