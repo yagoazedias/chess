@@ -23,7 +23,7 @@ class Board:
             for row in range(0, 8):
                 self.houses[col][row].draw(display)
                 
-    def clear_high_ligths(self):
+    def clean_high_ligths(self):
         for col in range(0, 8):
             for row in range(0, 8):
                 self.houses[col][row].set_is_high_ligth(False)
