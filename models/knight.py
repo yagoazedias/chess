@@ -12,34 +12,34 @@ class Knight(Piece):
 
     # retorna os 2 L's: |--
     def knight_left(self, pos):
-        row = pos[0]
-        col = pos[1]
-        l_up = (row-1, col-2)
-        l_down = (row+1, col-2)
+        col = pos[0]
+        row = pos[1]
+        l_up = (col-2, row-1)
+        l_down = (col-2, row+1)
         return [l_up, l_down]
 
     # retorna os 2 L's: --|
     def knight_right(self, pos):
-        row = pos[0]
-        col = pos[1]
-        r_up = (row-1, col+2)
-        r_down = (row+1, col+2)
+        col = pos[0]
+        row = pos[1]
+        r_up = (col+2, row-1)
+        r_down = (col+2, row+1)
         return [r_up, r_down]
 
     # retorna os 2 L's: _|_
     def knight_down(self, pos):
-        row = pos[0]
-        col = pos[1]
-        d_left = (row+2, col-1)
-        d_right = (row+2, col+1)
+        col = pos[0]
+        row = pos[1]
+        d_left = (col-1, row+2)
+        d_right = (col+1, row+2)
         return [d_left, d_right]
 
     # retorna os 2 L's: T
     def knight_up(self, pos):
-        row = pos[0]
-        col = pos[1]
-        u_left = (row-2, col-1)
-        u_right = (row-2, col+1)
+        col = pos[0]
+        row = pos[1]
+        u_left = (col-1, row-2)
+        u_right = (col+1, row-2)
         return [u_left, u_right]
 
     #-- --#
@@ -47,13 +47,12 @@ class Knight(Piece):
     def update_possible_moves(self, board):
         self.move_list = []
         pos = self.get_position()
-        self.move_list = knight_down(pos) + knight_up(pos) \
-        + knight_left(pos) + knight_right(pos)
+        self.move_list = self.knight_down(pos) + self.knight_up(pos) + self.knight_left(pos) + self.knight_right(pos)
 
         invalid_moves = []
         for move in self.move_list:
             if not(board.is_valid_pos(move)) or board.has_teammate(move, self.get_color()):
                 invalid_moves.append(move)
-    
+        
         self.move_list = [x for x in self.move_list if x not in invalid_moves]
         
