@@ -28,16 +28,17 @@ class Pawn(Piece):
         move_front = pawn_move(pos)
         if board.is_valid_pos(move_front) and board.is_empty(move_front):
             self.move_list.append(move_front)
+            
             if self.first_move:
                 move_front = pawn_move(move_front)
                 if board.is_valid_pos(move_front) and board.is_empty(move_front):
                     self.move_list.append(move_front)
 
         # Movimentos de captura normais
-        if board.is_valid_pos(diag_left_house) and board.has_opponent(diag_left_house, self.color):
+        if board.is_valid_pos(diag_left_house) and board.has_opponent(diag_left_house, self.get_color()):
             self.move_list.append(diag_left_house)
 
-        if board.is_valid_pos(diag_right_house) and board.has_opponent(diag_right_house, self.color):
+        if board.is_valid_pos(diag_right_house) and board.has_opponent(diag_right_house, self.get_color()):
             self.move_list.append(diag_right_house)
 
         # Movimentos de captura en passant
