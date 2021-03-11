@@ -31,9 +31,11 @@ class Piece(object):
         return self.color
 
     def get_position(self):
-        return self.row, self.col
-
-    def get_possible_moves(self):
+        return self.col, self.row
+    
+    def get_possible_moves(self, board):
+        self.move_list = []
+        self.update_possible_moves(board)
         return self.move_list
 
     def update_possible_moves(self, board):
