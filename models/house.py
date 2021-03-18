@@ -1,6 +1,7 @@
 import pygame
 from constants.colors import *
 
+
 class House:
 
     def __init__(self, column, row, color):
@@ -18,32 +19,30 @@ class House:
 
     def get_position_row(self):
         return self.position_row
-    
-    def set_piece(self,piece):
+
+    def set_piece(self, piece):
         self.piece = piece
 
     def draw(self, display):
         pygame.draw.rect(display, self.color, (self.position_column, self.position_row, 100, 100))
-        if self.piece != None:
+        if self.piece is not None:
             self.piece.draw(display, self.position_column, self.position_row)
-    
 
     def get_piece(self):
         return self.piece
-    
+
     def is_empty(self):
-        return self.piece == None
-    
+        return self.piece is None
+
     def set_color(self):
-        if self.house_color == WHITE:         
-            self.color = self.house_color if not self.is_high_ligth else WHITE_HIGH_LIGTH
+        if self.house_color == WHITE:
+            self.color = self.house_color if not self.is_high_ligth else WHITE_HIGH_LIGHT
         else:
-            self.color = self.house_color if not self.is_high_ligth else BLACK_HIGH_LIGTH
-    
-    def set_is_high_ligth(self,condition):
+            self.color = self.house_color if not self.is_high_ligth else BLACK_HIGH_LIGHT
+
+    def set_is_high_ligth(self, condition):
         self.is_high_ligth = condition
         self.set_color()
 
     def get_is_high_ligth(self):
         return self.is_high_ligth
-    

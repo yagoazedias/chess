@@ -10,6 +10,7 @@ from models.pawn import Pawn
 
 from constants import images
 
+
 class Board:
 
     def __init__(self):
@@ -22,7 +23,7 @@ class Board:
         for col in range(0, 8):
             for row in range(0, 8):
                 self.houses[col][row].draw(display)
-                
+
     def clean_high_ligths(self):
         for col in range(0, 8):
             for row in range(0, 8):
@@ -58,7 +59,7 @@ class Board:
         if self.get_house(pos).get_piece() == None:
             return False
         return piece_color != self.get_house(pos).get_piece().get_color()
-    
+
     # verifica se a posicao pos é valida. ou seja, esta dentro dos limites do tabuleiro
     def is_valid_pos(self, pos):
         col = pos[0]
@@ -76,7 +77,7 @@ class Board:
         if not self.is_valid_pos(pos):
             return False
         if self.get_house(pos).get_piece() == None:
-            return False 
+            return False
         return my_color == self.get_house(pos).get_piece().get_color()
 
     def init_config(self):
