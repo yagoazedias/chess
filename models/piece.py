@@ -3,9 +3,9 @@ import pygame
 
 class Piece(object):
 
-    def __init__(self, row, col, color, img):
-        self.row = row
+    def __init__(self, col, row, color, img):
         self.col = col
+        self.row = row
         self.color = color
         self.img = img
         self.selected = False
@@ -23,17 +23,19 @@ class Piece(object):
 
         windows.blit(draw_this, (x + 20, y + 20))
 
-    def update_position(self, r, c):
-        self.row = r
-        self.col = c
+    def update_position(self, col, row):
+        self.col = col
+        self.row = row
 
     def get_color(self):
         return self.color
 
     def get_position(self):
-        return self.row, self.col
-
-    def get_possible_moves(self):
+        return self.col, self.row
+    
+    def get_possible_moves(self, board):
+        self.move_list = []
+        self.update_possible_moves(board)
         return self.move_list
 
     def update_possible_moves(self, board):
