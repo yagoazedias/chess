@@ -15,13 +15,13 @@ class Piece(object):
         return self.selected
 
     def draw(self, windows, x, y):
-        draw_this = pygame.transform.scale(self.img, (55, 55)) if self.color == "white" \
-            else pygame.transform.scale(self.img, (55, 55))
+        draw_this = pygame.transform.scale(self.img, (27, 27)) if self.color == "white" \
+            else pygame.transform.scale(self.img, (27, 27))
 
         if self.selected:
-            pygame.draw.rect(windows, 0, (x + 20, y + 20, 62, 62), 2)
+            pygame.draw.rect(windows, 0, (x + 10, y + 10, 31, 31), 2)
 
-        windows.blit(draw_this, (x + 20, y + 20))
+        windows.blit(draw_this, (x + 10, y + 10))
 
     def update_position(self, col, row):
         self.col = col

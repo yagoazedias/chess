@@ -14,10 +14,8 @@ from constants import images
 class Board:
 
     def __init__(self):
-        self.turn = 0
-        self.winner = None
-        self.houses = self.build_houses()
-        self.init_config()
+        self.reset_board()
+
 
     def draw(self, display):
         for col in range(0, 8):
@@ -116,3 +114,15 @@ class Board:
         self.houses[5][6].set_piece(Pawn(5, 6, "white", images.white_pawn))
         self.houses[6][6].set_piece(Pawn(6, 6, "white", images.white_pawn))
         self.houses[7][6].set_piece(Pawn(7, 6, "white", images.white_pawn))
+
+    # def init_config2(self):
+    #     self.houses[0][2].set_piece(Rook(0, 0, "black", images.black_rook))
+
+    def reset_board(self):
+        self.turn = 0
+        self.winner = None
+        self.houses = self.build_houses()
+        self.init_config()
+        # self.init_config2()
+
+
