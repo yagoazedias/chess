@@ -66,6 +66,7 @@ def main():
                       pygame.mouse.get_pos()[1] >= 440 and pygame.mouse.get_pos()[
                           1] <= 440 + 25):
                     print("cliquei no botão")
+                    board.reset_board()
 
         prepare_player_turn_indicator(
             board, screen, text_font, 100, 410
