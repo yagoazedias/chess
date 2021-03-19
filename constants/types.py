@@ -1,0 +1,2 @@
+PAWN = "Pawn"
+ROOK = "Rook"

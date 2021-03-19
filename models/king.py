@@ -4,10 +4,13 @@ from util.move import *
 
 
 class King(Piece):
-    def __init__(self, row, col, color, img):
-        super(King, self).__init__(row, col, color, img)
+    def __init__(self, row, col, color, img, house):
+        super(King, self).__init__(row, col, color, img, house)
         self.is_first_move = True
         self.is_checked = False
+
+    def get_type(self):
+        return self.__str__()
 
     def __str__(self):
         return "King"
@@ -26,7 +29,7 @@ class King(Piece):
 
     def update_possible_moves(self, board):
         self.move_list = []
-        pos = self.get_position()
+        pos = self.house.get_position()
         self.move_list = [up(pos), down(pos), left(pos), right(pos), up_left(pos),
                           up_right(pos), down_left(pos), down_right(pos)]
 
