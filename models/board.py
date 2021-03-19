@@ -33,6 +33,7 @@ class Board:
         selected_house = self.get_selected_house()
         selected_house.get_piece().set_selected(False)
 
+
     def draw(self, display):
         for col in range(0, 8):
             for row in range(0, 8):
@@ -94,6 +95,7 @@ class Board:
             return False
         return my_color == self.get_house(pos).get_piece().get_color()
 
+      
     def set_up_pieces(self):
         self.houses[0][0].set_piece(
             Rook(0, 0, "black", images.black_rook, self.houses[0][0])

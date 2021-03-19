@@ -9,6 +9,7 @@ class House:
         self.position_column = column * 50
         self.position_row = row * 50
         self.is_high_light = False
+
         self.house_color = color
         self.color = color
         self.piece = None
@@ -28,9 +29,8 @@ class House:
         self.piece = piece
 
     def draw(self, display):
-        pygame.draw.rect(
-            display, self.color, (self.position_column, self.position_row, 50, 50)
-        )
+
+        pygame.draw.rect(display, self.color, (self.position_column, self.position_row, 50, 50))
         if self.piece is not None:
             self.piece.draw(display, self.position_column, self.position_row)
 

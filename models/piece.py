@@ -18,11 +18,9 @@ class Piece(object):
         self.selected = value
 
     def draw(self, windows, x, y):
-        draw_this = (
-            pygame.transform.scale(self.img, (27, 27))
-            if self.color == "white"
+
+        draw_this = pygame.transform.scale(self.img, (27, 27)) if self.color == "white" \
             else pygame.transform.scale(self.img, (27, 27))
-        )
 
         if self.selected:
             pygame.draw.rect(windows, 0, (x + 10, y + 10, 31, 31), 2)
