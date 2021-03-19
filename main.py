@@ -6,13 +6,12 @@ pygame.init()
 
 def prepare_player_turn_indicator(board, screen, font, x, y):
     text = "Vez das peças "
-    text += "bracas" if board.turn == 0 else "pretas"
+    text += "brancas" if board.turn == 0 else "pretas"
     indicator = font.render(text, True, (255, 255, 255))
 
     screen_width = screen.get_width() / 2
     text_width = indicator.get_width() / 2
     x = screen_width - text_width
-    print(x)
 
     screen.blit(indicator, (x, y))
 
