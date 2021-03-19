@@ -19,6 +19,18 @@ class Board:
         self.houses = self.build_houses()
         self.init_config()
 
+    def get_selected_house(self):
+        for col in range(0, 8):
+            for row in range(0, 8):
+                if self.houses[col][row].get_piece():
+                    if self.houses[col][row].get_piece().is_selected():
+                        return self.houses[col][row]
+        return None
+
+    def unselect_selected_house(self):
+        selected_house = self.get_selected_house()
+        selected_house.get_piece().set_selected(False)
+
     def draw(self, display):
         for col in range(0, 8):
             for row in range(0, 8):
@@ -27,7 +39,7 @@ class Board:
     def clean_high_ligths(self):
         for col in range(0, 8):
             for row in range(0, 8):
-                self.houses[col][row].set_is_high_ligth(False)
+                self.houses[col][row].set_is_high_light(False)
 
     def build_houses(self):
         houses = [[0 for _ in range(8)] for __ in range(8)]
@@ -81,38 +93,39 @@ class Board:
         return my_color == self.get_house(pos).get_piece().get_color()
 
     def init_config(self):
-        self.houses[0][0].set_piece(Rook(0, 0, "black", images.black_rook))
-        self.houses[1][0].set_piece(Horse(1, 0, "black", images.black_horse))
-        self.houses[2][0].set_piece(Bishop(2, 0, "black", images.black_bishop))
-        self.houses[3][0].set_piece(Queen(3, 0, "black", images.black_queen))
-        self.houses[4][0].set_piece(King(4, 0, "black", images.black_king))
-        self.houses[5][0].set_piece(Bishop(5, 0, "black", images.black_bishop))
-        self.houses[6][0].set_piece(Horse(6, 0, "black", images.black_horse))
-        self.houses[7][0].set_piece(Rook(7, 0, "black", images.black_rook))
 
-        self.houses[0][1].set_piece(Pawn(0, 1, "black", images.black_pawn))
-        self.houses[1][1].set_piece(Pawn(1, 1, "black", images.black_pawn))
-        self.houses[2][1].set_piece(Pawn(2, 1, "black", images.black_pawn))
-        self.houses[3][1].set_piece(Pawn(3, 1, "black", images.black_pawn))
-        self.houses[4][1].set_piece(Pawn(4, 1, "black", images.black_pawn))
-        self.houses[5][1].set_piece(Pawn(5, 1, "black", images.black_pawn))
-        self.houses[6][1].set_piece(Pawn(6, 1, "black", images.black_pawn))
-        self.houses[7][1].set_piece(Pawn(7, 1, "black", images.black_pawn))
+        self.houses[0][0].set_piece(Rook(0, 0, "black", images.black_rook, self.houses[0][0]))
+        self.houses[1][0].set_piece(Horse(1, 0, "black", images.black_horse, self.houses[1][0]))
+        self.houses[2][0].set_piece(Bishop(2, 0, "black", images.black_bishop, self.houses[2][0]))
+        self.houses[3][0].set_piece(Queen(3, 0, "black", images.black_queen, self.houses[3][0]))
+        self.houses[4][0].set_piece(King(4, 0, "black", images.black_king, self.houses[4][0]))
+        self.houses[5][0].set_piece(Bishop(5, 0, "black", images.black_bishop, self.houses[5][0]))
+        self.houses[6][0].set_piece(Horse(6, 0, "black", images.black_horse, self.houses[6][0]))
+        self.houses[7][0].set_piece(Rook(7, 0, "black", images.black_rook, self.houses[7][0]))
 
-        self.houses[0][7].set_piece(Rook(0, 7, "white", images.white_rook))
-        self.houses[1][7].set_piece(Horse(1, 7, "white", images.white_horse))
-        self.houses[2][7].set_piece(Bishop(2, 7, "white", images.white_bishop))
-        self.houses[3][7].set_piece(Queen(3, 7, "white", images.white_queen))
-        self.houses[4][7].set_piece(King(4, 7, "white", images.white_king))
-        self.houses[5][7].set_piece(Bishop(5, 7, "white", images.white_bishop))
-        self.houses[6][7].set_piece(Horse(6, 7, "white", images.white_horse))
-        self.houses[7][7].set_piece(Rook(7, 7, "white", images.white_rook))
+        self.houses[0][1].set_piece(Pawn(0, 1, "black", images.black_pawn, self.houses[0][1]))
+        self.houses[1][1].set_piece(Pawn(1, 1, "black", images.black_pawn, self.houses[1][1]))
+        self.houses[2][1].set_piece(Pawn(2, 1, "black", images.black_pawn, self.houses[2][1]))
+        self.houses[3][1].set_piece(Pawn(3, 1, "black", images.black_pawn, self.houses[3][1]))
+        self.houses[4][1].set_piece(Pawn(4, 1, "black", images.black_pawn, self.houses[4][1]))
+        self.houses[5][1].set_piece(Pawn(5, 1, "black", images.black_pawn, self.houses[5][1]))
+        self.houses[6][1].set_piece(Pawn(6, 1, "black", images.black_pawn, self.houses[6][1]))
+        self.houses[7][1].set_piece(Pawn(7, 1, "black", images.black_pawn, self.houses[7][1]))
 
-        self.houses[0][6].set_piece(Pawn(0, 6, "white", images.white_pawn))
-        self.houses[1][6].set_piece(Pawn(1, 6, "white", images.white_pawn))
-        self.houses[2][6].set_piece(Pawn(2, 6, "white", images.white_pawn))
-        self.houses[3][6].set_piece(Pawn(3, 6, "white", images.white_pawn))
-        self.houses[4][6].set_piece(Pawn(4, 6, "white", images.white_pawn))
-        self.houses[5][6].set_piece(Pawn(5, 6, "white", images.white_pawn))
-        self.houses[6][6].set_piece(Pawn(6, 6, "white", images.white_pawn))
-        self.houses[7][6].set_piece(Pawn(7, 6, "white", images.white_pawn))
+        self.houses[0][7].set_piece(Rook(0, 7, "white", images.white_rook, self.houses[0][7]))
+        self.houses[1][7].set_piece(Horse(1, 7, "white", images.white_horse, self.houses[1][7]))
+        self.houses[2][7].set_piece(Bishop(2, 7, "white", images.white_bishop, self.houses[2][7]))
+        self.houses[3][7].set_piece(Queen(3, 7, "white", images.white_queen, self.houses[3][7]))
+        self.houses[4][7].set_piece(King(4, 7, "white", images.white_king, self.houses[4][7]))
+        self.houses[5][7].set_piece(Bishop(5, 7, "white", images.white_bishop, self.houses[5][7]))
+        self.houses[6][7].set_piece(Horse(6, 7, "white", images.white_horse, self.houses[6][7]))
+        self.houses[7][7].set_piece(Rook(7, 7, "white", images.white_rook, self.houses[7][7]))
+
+        self.houses[0][6].set_piece(Pawn(0, 6, "white", images.white_pawn, self.houses[0][6]))
+        self.houses[1][6].set_piece(Pawn(1, 6, "white", images.white_pawn, self.houses[1][6]))
+        self.houses[2][6].set_piece(Pawn(2, 6, "white", images.white_pawn, self.houses[2][6]))
+        self.houses[3][6].set_piece(Pawn(3, 6, "white", images.white_pawn, self.houses[3][6]))
+        self.houses[4][6].set_piece(Pawn(4, 6, "white", images.white_pawn, self.houses[4][6]))
+        self.houses[5][6].set_piece(Pawn(5, 6, "white", images.white_pawn, self.houses[5][6]))
+        self.houses[6][6].set_piece(Pawn(6, 6, "white", images.white_pawn, self.houses[6][6]))
+        self.houses[7][6].set_piece(Pawn(7, 6, "white", images.white_pawn, self.houses[7][6]))

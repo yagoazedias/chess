@@ -3,8 +3,11 @@ from util.move import *
 
 
 class Knight(Piece):
-    def __init__(self, row, col, color, img):
-        super(Knight, self).__init__(row, col, color, img)
+    def __init__(self, row, col, color, img, house):
+        super(Knight, self).__init__(row, col, color, img, house)
+
+    def get_type(self):
+        return self.__str__()
 
     def __str__(self):
         return "Knight"
@@ -47,7 +50,7 @@ class Knight(Piece):
 
     def update_possible_moves(self, board):
         self.move_list = []
-        pos = self.get_position()
+        pos = self.house.get_position()
         self.move_list = self.knight_down(pos) + self.knight_up(pos) + self.knight_left(pos) + self.knight_right(pos)
 
         invalid_moves = []

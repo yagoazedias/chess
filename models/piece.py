@@ -3,16 +3,20 @@ import pygame
 
 class Piece(object):
 
-    def __init__(self, col, row, color, img):
+    def __init__(self, col, row, color, img, house):
         self.col = col
         self.row = row
         self.color = color
         self.img = img
         self.selected = False
         self.move_list = []
+        self.house = house
 
     def is_selected(self):
         return self.selected
+
+    def set_selected(self, value):
+        self.selected = value
 
     def draw(self, windows, x, y):
         draw_this = pygame.transform.scale(self.img, (55, 55)) if self.color == "white" \

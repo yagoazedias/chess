@@ -1,20 +1,28 @@
 from models.piece import Piece
 from util.move import *
+from constants.types import PAWN
 
 
 class Pawn(Piece):
-    def __init__(self, row, col, color, img):
-        super(Pawn, self).__init__(row, col, color, img)
+    def __init__(self, row, col, color, img, house):
+        super(Pawn, self).__init__(row, col, color, img, house)
         self.first_move = True
         # self.is_queen = False
         self.is_en_passant_vulnerable = False
+        self.house = house
 
     def __str__(self):
-        return "Pawn"
+        return PAWN
+
+    def toggle_first_move(self, value=False):
+        self.first_move = value
+
+    def get_type(self):
+        return self.__str__()
 
     def update_possible_moves(self, board):
         self.move_list = []
-        pos = self.get_position()
+        pos = self.house.get_position()
         if self.get_color() == 'white':
             pawn_move = up
             diag_right_house = up_right(pos)

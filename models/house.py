@@ -20,7 +20,12 @@ class House:
     def get_position_row(self):
         return self.position_row
 
+    def get_position(self):
+        return int(self.get_position_column() / 100), int(self.get_position_row() / 100)
+
     def set_piece(self, piece):
+        if piece:
+            piece.house = self
         self.piece = piece
 
     def draw(self, display):
@@ -40,9 +45,9 @@ class House:
         else:
             self.color = self.house_color if not self.is_high_ligth else BLACK_HIGH_LIGHT
 
-    def set_is_high_ligth(self, condition):
+    def set_is_high_light(self, condition):
         self.is_high_ligth = condition
         self.set_color()
 
-    def get_is_high_ligth(self):
+    def get_is_high_light(self):
         return self.is_high_ligth
