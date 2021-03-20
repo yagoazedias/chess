@@ -107,9 +107,15 @@ class Board:
             
     def prepare_player_turn_indicator(self, screen, font, x, y):
         self.clean_turn_indicator(screen)
+        self.draw_button(screen,font)
         text = "Vez das peças "
-        text += "brancas" if self.turn == WHITE else "pretas"
-        indicator = font.render(text, True, (255, 255, 255))
+        if self.turn == WHITE:
+            text += "brancas"
+            color = WHITE
+        else:
+            text += "pretas"
+            color = (0, 0, 0)
+        indicator = font.render(text, True, color)
 
         screen_width = screen.get_width() / 2
         text_width = indicator.get_width() / 2
@@ -118,15 +124,20 @@ class Board:
         screen.blit(indicator, (x, y))
         
     def clean_turn_indicator(self, screen):
-        pygame.draw.rect(screen, (0, 0, 0), (0, 400, 400, 100))
+        pygame.draw.rect(screen, (26,120,122), (0, 400, 400, 100))
         
-    def draw_button(screen, text, height, width, x, y):
-    text_font = pygame.font.Font(pygame.font.get_default_font(), int(height * 0.8))
-    pygame.draw.rect(screen, (210, 210, 210), (x, y, width, height), 0, 3, 3, 3, 3)
-    textButton = text_font.render(text, True, (0, 0, 0))
-    screen.blit(
-        textButton, (x + ((width - textButton.get_width()) / 2), y + height * 0.2)
-    )
+    def draw_button(self, screen, font):
+        height = 25
+        width = 200
+        x = screen.get_width() / 4
+        y = 440
+        text = "Reiniciar Partida"
+        
+        pygame.draw.rect(screen, (210, 210, 210), (x, y, width, height ), 0, 3, 3, 3, 3)
+        textButton = font.render(text, True, (0, 0, 0))
+        screen.blit(
+            textButton, (x + ((width - textButton.get_width()) / 2), y + height * 0.2)
+        )
       
     def set_up_pieces(self):
         self.houses[0][0].set_piece(

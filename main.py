@@ -12,13 +12,9 @@ def main():
     pygame.display.set_caption("Xadrez")
     pygame.display.flip()
     clock = pygame.time.Clock()
-    buttonTextStart = "Iniciar/Abandonar"
 
     # defining Text font
     text_font = pygame.font.Font(pygame.font.get_default_font(), 20)
-
-    # defining button text
-    buttonTextStart = "Iniciar/Abandonar"
 
     board = Board()
 
@@ -33,10 +29,6 @@ def main():
                     movement_manager(board)
                 elif restart_button_click_manager(pygame.mouse, screen):
                     board.prepare_board()
-
-        
-
-        draw_button(screen, buttonTextStart, 25, 200, screen.get_width() / 4, 440)
 
         pygame.display.update()
         clock.tick(60)
