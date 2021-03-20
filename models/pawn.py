@@ -1,6 +1,7 @@
 from models.piece import Piece
 from util.move import *
 from constants.types import PAWN
+from constants.colors import *
 
 
 class Pawn(Piece):
@@ -23,11 +24,10 @@ class Pawn(Piece):
     def update_possible_moves(self, board):
         self.move_list = []
         pos = self.house.get_position()
-        if self.get_color() == 'white':
+        if self.get_color() == WHITE:
             pawn_move = up
             diag_right_house = up_right(pos)
             diag_left_house = up_left(pos)
-        # elif self.get_color() == 'black'
         else:
             pawn_move = down
             diag_right_house = down_right(pos)

@@ -1,46 +1,20 @@
 import pygame
 from models.board import Board
 from constants.types import PAWN, ROOK
+from constants.colors import *
 
 pygame.init()
 
 pygame.init()
-
-
-def prepare_player_turn_indicator(board, screen, font, x, y):
-    text = "Vez das peças "
-    text += "brancas" if board.turn == 0 else "pretas"
-    indicator = font.render(text, True, (255, 255, 255))
-
-    screen_width = screen.get_width() / 2
-    text_width = indicator.get_width() / 2
-    x = screen_width - text_width
-
-    screen.blit(indicator, (x, y))
-
-
-def draw_button(screen, text, height, width, x, y):
-    text_font = pygame.font.Font(pygame.font.get_default_font(), int(height * 0.8))
-    pygame.draw.rect(screen, (210, 210, 210), (x, y, width, height), 0, 3, 3, 3, 3)
-    textButton = text_font.render(text, True, (0, 0, 0))
-    screen.blit(textButton, (x + ((width - textButton.get_width()) / 2), y + height * 0.2))
-
 
 def main():
     screen = pygame.display.set_mode([400, 500])
     pygame.display.set_caption("Xadrez")
     pygame.display.flip()
     clock = pygame.time.Clock()
-    buttonTextStart = "Iniciar/Abandonar"
 
     # defining Text font
     text_font = pygame.font.Font(pygame.font.get_default_font(), 20)
-
-    # defining Text font
-    text_font = pygame.font.Font(pygame.font.get_default_font(), 20)
-
-    # defining button text
-    buttonTextStart = "Iniciar/Abandonar"
 
     board = Board()
 
@@ -56,13 +30,9 @@ def main():
                 elif restart_button_click_manager(pygame.mouse, screen):
                     board.prepare_board()
 
-        prepare_player_turn_indicator(board, screen, text_font, 100, 410)
-
-        draw_button(screen, buttonTextStart, 25, 200, screen.get_width() / 4, 440)
-
         pygame.display.update()
         clock.tick(60)
-        board.draw(screen)
+        board.draw(screen,text_font)
 
 
 def movement_manager(board):
@@ -89,6 +59,7 @@ def movement_manager(board):
 
                 candidate_house.set_piece(selected_house.get_piece())
                 selected_house.set_piece(None)
+                board.switch_turn()
 
         # lógica de alteração da peça selecionada
         board.unselect_selected_house()
@@ -100,14 +71,17 @@ def movement_manager(board):
     ]
 
     # verifica se há uma peça na casa
+    
     if not selected_house.get_piece() is None:
         selected_piece = selected_house.get_piece()
-        possible_moves = selected_piece.get_possible_moves(board)
+        if selected_piece.get_color() == board.get_turn():
+            possible_moves = selected_piece.get_possible_moves(board)
 
-        for possible_move in possible_moves:
-            board.houses[possible_move[0]][possible_move[1]].set_is_high_light(True)
+            for possible_move in possible_moves:
+                board.houses[possible_move[0]][possible_move[1]].set_is_high_light(True)
 
-        selected_piece.set_selected(True)
+            selected_piece.set_selected(True)
+            
 
 
 def restart_button_click_manager(mouse, screen):
@@ -115,27 +89,6 @@ def restart_button_click_manager(mouse, screen):
         0] <= screen.get_width() / 4 + 200 and
             mouse.get_pos()[1] >= 440 and mouse.get_pos()[
                 1] <= 440 + 25)
-
-
-def prepare_player_turn_indicator(board, screen, font, x, y):
-    text = "Vez das peças "
-    text += "brancas" if board.turn == 0 else "pretas"
-    indicator = font.render(text, True, (255, 255, 255))
-
-    screen_width = screen.get_width() / 2
-    text_width = indicator.get_width() / 2
-    x = screen_width - text_width
-
-    screen.blit(indicator, (x, y))
-
-
-def draw_button(screen, text, height, width, x, y):
-    text_font = pygame.font.Font(pygame.font.get_default_font(), int(height * 0.8))
-    pygame.draw.rect(screen, (210, 210, 210), (x, y, width, height), 0, 3, 3, 3, 3)
-    textButton = text_font.render(text, True, (0, 0, 0))
-    screen.blit(
-        textButton, (x + ((width - textButton.get_width()) / 2), y + height * 0.2)
-    )
 
 
 if __name__ == "__main__":

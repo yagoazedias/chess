@@ -1,3 +1,4 @@
+import pygame
 from models.house import House
 from constants.colors import *
 
@@ -10,13 +11,12 @@ from models.pawn import Pawn
 
 from constants import images
 
-
 class Board:
     def __init__(self):
         self.prepare_board()
 
     def prepare_board(self):
-        self.turn = 0
+        self.turn = WHITE
         self.winner = None
         self.houses = self.build_houses()
         self.set_up_pieces()
@@ -34,7 +34,8 @@ class Board:
         selected_house.get_piece().set_selected(False)
 
 
-    def draw(self, display):
+    def draw(self, display, text_font):
+        self.prepare_player_turn_indicator(display, text_font, 100, 410)
         for col in range(0, 8):
             for row in range(0, 8):
                 self.houses[col][row].draw(display)
@@ -94,105 +95,147 @@ class Board:
         if self.get_house(pos).get_piece() == None:
             return False
         return my_color == self.get_house(pos).get_piece().get_color()
+    
+    def get_turn(self):
+        return self.turn
+    
+    def switch_turn(self):
+        if self.turn == WHITE:
+            self.turn = BLACK
+        else:
+            self.turn = WHITE
+            
+    def prepare_player_turn_indicator(self, screen, font, x, y):
+        self.clean_turn_indicator(screen)
+        self.draw_button(screen,font)
+        text = "Vez das peças "
+        if self.turn == WHITE:
+            text += "brancas"
+            color = WHITE
+        else:
+            text += "pretas"
+            color = (0, 0, 0)
+        indicator = font.render(text, True, color)
 
+        screen_width = screen.get_width() / 2
+        text_width = indicator.get_width() / 2
+        x = screen_width - text_width
+
+        screen.blit(indicator, (x, y))
+        
+    def clean_turn_indicator(self, screen):
+        pygame.draw.rect(screen, (26,120,122), (0, 400, 400, 100))
+        
+    def draw_button(self, screen, font):
+        height = 25
+        width = 200
+        x = screen.get_width() / 4
+        y = 440
+        text = "Reiniciar Partida"
+        
+        pygame.draw.rect(screen, (210, 210, 210), (x, y, width, height ), 0, 3, 3, 3, 3)
+        textButton = font.render(text, True, (0, 0, 0))
+        screen.blit(
+            textButton, (x + ((width - textButton.get_width()) / 2), y + height * 0.2)
+        )
       
     def set_up_pieces(self):
         self.houses[0][0].set_piece(
-            Rook(0, 0, "black", images.black_rook, self.houses[0][0])
+            Rook(0, 0, BLACK, images.black_rook, self.houses[0][0])
         )
         self.houses[1][0].set_piece(
-            Horse(1, 0, "black", images.black_horse, self.houses[1][0])
+            Horse(1, 0, BLACK, images.black_horse, self.houses[1][0])
         )
         self.houses[2][0].set_piece(
-            Bishop(2, 0, "black", images.black_bishop, self.houses[2][0])
+            Bishop(2, 0, BLACK, images.black_bishop, self.houses[2][0])
         )
         self.houses[3][0].set_piece(
-            Queen(3, 0, "black", images.black_queen, self.houses[3][0])
+            Queen(3, 0, BLACK, images.black_queen, self.houses[3][0])
         )
         self.houses[4][0].set_piece(
-            King(4, 0, "black", images.black_king, self.houses[4][0])
+            King(4, 0, BLACK, images.black_king, self.houses[4][0])
         )
         self.houses[5][0].set_piece(
-            Bishop(5, 0, "black", images.black_bishop, self.houses[5][0])
+            Bishop(5, 0, BLACK, images.black_bishop, self.houses[5][0])
         )
         self.houses[6][0].set_piece(
-            Horse(6, 0, "black", images.black_horse, self.houses[6][0])
+            Horse(6, 0, BLACK, images.black_horse, self.houses[6][0])
         )
         self.houses[7][0].set_piece(
-            Rook(7, 0, "black", images.black_rook, self.houses[7][0])
+            Rook(7, 0, BLACK, images.black_rook, self.houses[7][0])
         )
 
         self.houses[0][1].set_piece(
-            Pawn(0, 1, "black", images.black_pawn, self.houses[0][1])
+            Pawn(0, 1, BLACK, images.black_pawn, self.houses[0][1])
         )
         self.houses[1][1].set_piece(
-            Pawn(1, 1, "black", images.black_pawn, self.houses[1][1])
+            Pawn(1, 1, BLACK, images.black_pawn, self.houses[1][1])
         )
         self.houses[2][1].set_piece(
-            Pawn(2, 1, "black", images.black_pawn, self.houses[2][1])
+            Pawn(2, 1, BLACK, images.black_pawn, self.houses[2][1])
         )
         self.houses[3][1].set_piece(
-            Pawn(3, 1, "black", images.black_pawn, self.houses[3][1])
+            Pawn(3, 1, BLACK, images.black_pawn, self.houses[3][1])
         )
         self.houses[4][1].set_piece(
-            Pawn(4, 1, "black", images.black_pawn, self.houses[4][1])
+            Pawn(4, 1, BLACK, images.black_pawn, self.houses[4][1])
         )
         self.houses[5][1].set_piece(
-            Pawn(5, 1, "black", images.black_pawn, self.houses[5][1])
+            Pawn(5, 1, BLACK, images.black_pawn, self.houses[5][1])
         )
         self.houses[6][1].set_piece(
-            Pawn(6, 1, "black", images.black_pawn, self.houses[6][1])
+            Pawn(6, 1, BLACK, images.black_pawn, self.houses[6][1])
         )
         self.houses[7][1].set_piece(
-            Pawn(7, 1, "black", images.black_pawn, self.houses[7][1])
+            Pawn(7, 1, BLACK, images.black_pawn, self.houses[7][1])
         )
 
         self.houses[0][7].set_piece(
-            Rook(0, 7, "white", images.white_rook, self.houses[0][7])
+            Rook(0, 7, WHITE, images.white_rook, self.houses[0][7])
         )
         self.houses[1][7].set_piece(
-            Horse(1, 7, "white", images.white_horse, self.houses[1][7])
+            Horse(1, 7, WHITE, images.white_horse, self.houses[1][7])
         )
         self.houses[2][7].set_piece(
-            Bishop(2, 7, "white", images.white_bishop, self.houses[2][7])
+            Bishop(2, 7, WHITE, images.white_bishop, self.houses[2][7])
         )
         self.houses[3][7].set_piece(
-            Queen(3, 7, "white", images.white_queen, self.houses[3][7])
+            Queen(3, 7, WHITE, images.white_queen, self.houses[3][7])
         )
         self.houses[4][7].set_piece(
-            King(4, 7, "white", images.white_king, self.houses[4][7])
+            King(4, 7, WHITE, images.white_king, self.houses[4][7])
         )
         self.houses[5][7].set_piece(
-            Bishop(5, 7, "white", images.white_bishop, self.houses[5][7])
+            Bishop(5, 7, WHITE, images.white_bishop, self.houses[5][7])
         )
         self.houses[6][7].set_piece(
-            Horse(6, 7, "white", images.white_horse, self.houses[6][7])
+            Horse(6, 7, WHITE, images.white_horse, self.houses[6][7])
         )
         self.houses[7][7].set_piece(
-            Rook(7, 7, "white", images.white_rook, self.houses[7][7])
+            Rook(7, 7, WHITE, images.white_rook, self.houses[7][7])
         )
 
         self.houses[0][6].set_piece(
-            Pawn(0, 6, "white", images.white_pawn, self.houses[0][6])
+            Pawn(0, 6, WHITE, images.white_pawn, self.houses[0][6])
         )
         self.houses[1][6].set_piece(
-            Pawn(1, 6, "white", images.white_pawn, self.houses[1][6])
+            Pawn(1, 6, WHITE, images.white_pawn, self.houses[1][6])
         )
         self.houses[2][6].set_piece(
-            Pawn(2, 6, "white", images.white_pawn, self.houses[2][6])
+            Pawn(2, 6, WHITE, images.white_pawn, self.houses[2][6])
         )
         self.houses[3][6].set_piece(
-            Pawn(3, 6, "white", images.white_pawn, self.houses[3][6])
+            Pawn(3, 6, WHITE, images.white_pawn, self.houses[3][6])
         )
         self.houses[4][6].set_piece(
-            Pawn(4, 6, "white", images.white_pawn, self.houses[4][6])
+            Pawn(4, 6, WHITE, images.white_pawn, self.houses[4][6])
         )
         self.houses[5][6].set_piece(
-            Pawn(5, 6, "white", images.white_pawn, self.houses[5][6])
+            Pawn(5, 6, WHITE, images.white_pawn, self.houses[5][6])
         )
         self.houses[6][6].set_piece(
-            Pawn(6, 6, "white", images.white_pawn, self.houses[6][6])
+            Pawn(6, 6, WHITE, images.white_pawn, self.houses[6][6])
         )
         self.houses[7][6].set_piece(
-            Pawn(7, 6, "white", images.white_pawn, self.houses[7][6])
+            Pawn(7, 6, WHITE, images.white_pawn, self.houses[7][6])
         )

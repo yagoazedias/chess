@@ -1,5 +1,5 @@
 import pygame
-
+from constants.colors import *
 
 class Piece(object):
     def __init__(self, col, row, color, img, house):
@@ -19,7 +19,7 @@ class Piece(object):
 
     def draw(self, windows, x, y):
 
-        draw_this = pygame.transform.scale(self.img, (27, 27)) if self.color == "white" \
+        draw_this = pygame.transform.scale(self.img, (27, 27)) if self.color == WHITE \
             else pygame.transform.scale(self.img, (27, 27))
 
         if self.selected:
