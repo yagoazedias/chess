@@ -54,23 +54,19 @@ def movement_manager(board):
     else:
         
         if selected_house.get_is_highlight():
-            
+                       
             candidate_house = selected_house
 
-            # lógica de movimentação e troca de casa da peça
-            if (candidate_house.get_position() 
-                in board.get_selected_piece_house().get_piece().get_possible_moves(board)):
+            # lógica de movimentação sem captura (troca 'candidate_house' por 'selected_piece_house' e o ultimo é anulado)
+            if candidate_house.get_piece() is None:
 
-                # lógica de movimentação sem captura (troca 'candidate_house' por 'selected_piece_house' e o ultimo é anulado)
-                if candidate_house.get_piece() is None:
+                test = board.get_selected_piece_house().get_piece().get_type()
+                if test == PAWN:
+                    board.get_selected_piece_house().get_piece().toggle_first_move()
 
-                    test = board.get_selected_piece_house().get_piece().get_type()
-                    if test == PAWN:
-                        board.get_selected_piece_house().get_piece().toggle_first_move()
-
-                    candidate_house.set_piece(board.get_selected_piece_house().get_piece())
-                    board.get_selected_piece_house().set_piece(None)
-                    board.switch_turn()
+                candidate_house.set_piece(board.get_selected_piece_house().get_piece())
+                board.get_selected_piece_house().set_piece(None)
+                board.switch_turn()
 
             # limpar as casas realçadas
             board.clean_highlight()
