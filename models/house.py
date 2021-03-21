@@ -1,7 +1,6 @@
 import pygame
 from constants.colors import *
 
-
 class House:
     def __init__(self, column, row, color):
         self.column = column
@@ -9,8 +8,8 @@ class House:
         self.position_column = column * 50
         self.position_row = row * 50
         self.is_high_light = False
-
         self.house_color = color
+        self.selected = False
         self.color = color
         self.piece = None
 
@@ -26,11 +25,16 @@ class House:
     def set_piece(self, piece):
         if piece:
             piece.house = self
+        else:
+            self.selected = False
+            self.house = None
         self.piece = piece
 
     def draw(self, display):
 
         pygame.draw.rect(display, self.color, (self.position_column, self.position_row, 50, 50))
+        if(self.selected):
+            pygame.draw.rect(display, (248, 250, 165), (self.position_column, self.position_row, 50, 50))
         if self.piece is not None:
             self.piece.draw(display, self.position_column, self.position_row)
 
@@ -56,3 +60,6 @@ class House:
 
     def get_is_high_light(self):
         return self.is_high_light
+
+    def set_selected(self, condition):
+        self.selected = condition
