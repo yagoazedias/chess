@@ -7,24 +7,11 @@ class Piece(object):
         self.row = row
         self.color = color
         self.img = img
-        self.selected = False
         self.move_list = []
         self.house = house
 
-    def is_selected(self):
-        return self.selected
-
-    def set_selected(self, value):
-        self.selected = value
-
     def draw(self, windows, x, y):
-
-        draw_this = pygame.transform.scale(self.img, (27, 27)) if self.color == WHITE \
-            else pygame.transform.scale(self.img, (27, 27))
-
-        if self.selected:
-            pygame.draw.rect(windows, 0, (x + 10, y + 10, 31, 31), 2)
-
+        draw_this = pygame.transform.scale(self.img, (27, 27))
         windows.blit(draw_this, (x + 10, y + 10))
 
     def update_position(self, col, row):

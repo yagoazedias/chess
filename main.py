@@ -5,8 +5,6 @@ from constants.colors import *
 
 pygame.init()
 
-pygame.init()
-
 def main():
     screen = pygame.display.set_mode([400, 500])
     pygame.display.set_caption("Xadrez")
@@ -36,60 +34,52 @@ def main():
 
 
 def movement_manager(board):
-    board.clean_high_light()
-    selected_house = board.get_selected_house()
-
-    if selected_house:
-        candidate_house = board.houses[int(pygame.mouse.get_pos()[0] / (6.25 * 8))][
-            int(pygame.mouse.get_pos()[1] / (6.25 * 8))
-        ]
-
-        # lógica de movimentação e troca de casa da peça
-        if (
-                candidate_house.get_position()
-                in selected_house.get_piece().get_possible_moves(board)
-        ):
-
-            # lógica de movimentação sem capitura (troca 'candidate_house' por 'selected_house' e o ultimo é anulado)
-            if candidate_house.get_piece() is None:
-
-                test = selected_house.get_piece().get_type()
-                if test == PAWN:
-                    selected_house.get_piece().toggle_first_move()
-
-                candidate_house.set_piece(selected_house.get_piece())
-                selected_house.set_piece(None)
-                board.switch_turn()
-
-        # lógica de alteração da peça selecionada
-        board.unselect_selected_house()
-        return
-
-    # seleciona a casa clicada
-    selected_house = board.houses[int(pygame.mouse.get_pos()[0] / (6.25 * 8))][
-        int(pygame.mouse.get_pos()[1] / (6.25 * 8))
-    ]
-
-    # verifica se há uma peça na casa
     
-    if not selected_house.get_piece() is None:
+    # seleciona a casa clicada
+    selected_house = get_clicked_house(board)
+    
+    # verifica se há uma peça na casa
+    if selected_house.get_piece() is not None:
         selected_piece = selected_house.get_piece()
         if selected_piece.get_color() == board.get_turn():
             possible_moves = selected_piece.get_possible_moves(board)
-
+            board.clean_highlight()
             for possible_move in possible_moves:
-                board.houses[possible_move[0]][possible_move[1]].set_is_high_light(True)
+                board.houses[possible_move[0]][possible_move[1]].set_is_highlight(True)
 
-            selected_piece.set_selected(True)
-            
+            # guarda a casa da peça selecionada
+            board.set_selected_piece_house(selected_house)
 
+    # verifica se a casa clicada está realçada
+    else:
+        
+        if selected_house.get_is_highlight():
+                       
+            candidate_house = selected_house
+
+            # lógica de movimentação sem captura (troca 'candidate_house' por 'selected_piece_house' e o ultimo é anulado)
+            if candidate_house.get_piece() is None:
+
+                test = board.get_selected_piece_house().get_piece().get_type()
+                if test == PAWN:
+                    board.get_selected_piece_house().get_piece().toggle_first_move()
+
+                candidate_house.set_piece(board.get_selected_piece_house().get_piece())
+                board.get_selected_piece_house().set_piece(None)
+                board.switch_turn()
+
+            # limpar as casas realçadas
+            board.clean_highlight()
+
+def get_clicked_house(board):
+    return board.houses[int(pygame.mouse.get_pos()[0] / (6.25 * 8))][
+        int(pygame.mouse.get_pos()[1] / (6.25 * 8))]
 
 def restart_button_click_manager(mouse, screen):
     return (mouse.get_pos()[0] >= screen.get_width() / 4 and mouse.get_pos()[
         0] <= screen.get_width() / 4 + 200 and
             mouse.get_pos()[1] >= 440 and mouse.get_pos()[
                 1] <= 440 + 25)
-
 
 if __name__ == "__main__":
     main()
