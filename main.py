@@ -37,9 +37,11 @@ def movement_manager(board):
     
     # seleciona a casa clicada
     selected_house = get_clicked_house(board)
+    position = selected_house.get_position()
+    color_turn = board.get_turn()
     
     # verifica se há uma peça na casa
-    if selected_house.get_piece() is not None:
+    if selected_house.get_piece() is not None and board.has_teammate(position,color_turn):
         selected_piece = selected_house.get_piece()
         if selected_piece.get_color() == board.get_turn():
             possible_moves = selected_piece.get_possible_moves(board)
@@ -50,23 +52,23 @@ def movement_manager(board):
             # guarda a casa da peça selecionada
             board.set_selected_piece_house(selected_house)
 
-    # verifica se a casa clicada está realçada
+    
     else:
-        
+        # verifica se a casa clicada está realçada
         if selected_house.get_is_highlight():
-                       
+            
             candidate_house = selected_house
 
-            # lógica de movimentação sem captura (troca 'candidate_house' por 'selected_piece_house' e o ultimo é anulado)
-            if candidate_house.get_piece() is None:
+            #lógica que registra que já foi dado o primeiro movimento
+            test = board.get_selected_piece_house().get_piece().get_type()
+            if test == PAWN:
+                board.get_selected_piece_house().get_piece().toggle_first_move()
 
-                test = board.get_selected_piece_house().get_piece().get_type()
-                if test == PAWN:
-                    board.get_selected_piece_house().get_piece().toggle_first_move()
-
-                candidate_house.set_piece(board.get_selected_piece_house().get_piece())
-                board.get_selected_piece_house().set_piece(None)
-                board.switch_turn()
+            # lógica de movimentação e captura
+            candidate_house.set_piece(board.get_selected_piece_house().get_piece())
+            board.get_selected_piece_house().set_piece(None)
+            board.set_selected_piece_house(None)
+            board.switch_turn()
 
             # limpar as casas realçadas
             board.clean_highlight()
