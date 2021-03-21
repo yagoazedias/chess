@@ -34,7 +34,7 @@ class House:
 
         pygame.draw.rect(display, self.color, (self.position_column, self.position_row, 50, 50))
         if(self.selected):
-            pygame.draw.rect(display, (248, 250, 165), (self.position_column, self.position_row, 50, 50))
+            pygame.draw.rect(display, SELECTED_HOUSE_HIGH_LIGHT, (self.position_column, self.position_row, 50, 50))
         if self.piece is not None:
             self.piece.draw(display, self.position_column, self.position_row)
 
