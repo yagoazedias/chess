@@ -7,7 +7,7 @@ class House:
         self.row = row
         self.position_column = column * 50
         self.position_row = row * 50
-        self.is_high_light = False
+        self.is_highlight = False
         self.house_color = color
         self.selected = False
         self.color = color
@@ -34,7 +34,7 @@ class House:
 
         pygame.draw.rect(display, self.color, (self.position_column, self.position_row, 50, 50))
         if(self.selected):
-            pygame.draw.rect(display, SELECTED_HOUSE_HIGH_LIGHT, (self.position_column, self.position_row, 50, 50))
+            pygame.draw.rect(display, SELECTED_HOUSE_HIGHLIGHT, (self.position_column, self.position_row, 50, 50))
         if self.piece is not None:
             self.piece.draw(display, self.position_column, self.position_row)
 
@@ -47,19 +47,19 @@ class House:
     def set_color(self):
         if self.house_color == WHITE:
             self.color = (
-                self.house_color if not self.is_high_light else WHITE_HIGH_LIGHT
+                self.house_color if not self.is_highlight else WHITE_HIGHLIGHT
             )
         else:
             self.color = (
-                self.house_color if not self.is_high_light else BLACK_HIGH_LIGHT
+                self.house_color if not self.is_highlight else BLACK_HIGHLIGHT
             )
 
-    def set_is_high_light(self, condition):
-        self.is_high_light = condition
+    def set_is_highlight(self, condition):
+        self.is_highlight = condition
         self.set_color()
 
-    def get_is_high_light(self):
-        return self.is_high_light
+    def get_is_highlight(self):
+        return self.is_highlight
 
     def set_selected(self, condition):
         self.selected = condition

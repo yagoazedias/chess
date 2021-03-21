@@ -43,9 +43,9 @@ def movement_manager(board):
         selected_piece = selected_house.get_piece()
         if selected_piece.get_color() == board.get_turn():
             possible_moves = selected_piece.get_possible_moves(board)
-            board.clean_high_light()
+            board.clean_highlight()
             for possible_move in possible_moves:
-                board.houses[possible_move[0]][possible_move[1]].set_is_high_light(True)
+                board.houses[possible_move[0]][possible_move[1]].set_is_highlight(True)
 
             # guarda a casa da peça selecionada
             board.set_selected_piece_house(selected_house)
@@ -53,7 +53,7 @@ def movement_manager(board):
     # verifica se a casa clicada está realçada
     else:
         
-        if selected_house.get_is_high_light():
+        if selected_house.get_is_highlight():
             
             candidate_house = selected_house
 
@@ -73,7 +73,7 @@ def movement_manager(board):
                     board.switch_turn()
 
             # limpar as casas realçadas
-            board.clean_high_light()
+            board.clean_highlight()
 
 def get_clicked_house(board):
     return board.houses[int(pygame.mouse.get_pos()[0] / (6.25 * 8))][
