@@ -13,6 +13,7 @@ from constants import images
 
 class Board:
     def __init__(self):
+        self.selected_piece_house = None
         self.prepare_board()
 
     def prepare_board(self):
@@ -21,24 +22,18 @@ class Board:
         self.houses = self.build_houses()
         self.set_up_pieces()
 
-    def get_selected_house(self):
-        for col in range(0, 8):
-            for row in range(0, 8):
-                if self.houses[col][row].get_piece():
-                    if self.houses[col][row].get_piece().is_selected():
-                        return self.houses[col][row]
-        return None
-
-    def unselect_selected_house(self):
-        selected_house = self.get_selected_house()
-        selected_house.get_piece().set_selected(False)
-
-
     def draw(self, display, text_font):
         self.prepare_player_turn_indicator(display, text_font, 100, 410)
         for col in range(0, 8):
             for row in range(0, 8):
                 self.houses[col][row].draw(display)
+                
+    def set_selected_piece_house(self, house):
+        house.set_selected(True)
+        self.selected_piece_house = house
+        
+    def get_selected_piece_house(self):
+        return self.selected_piece_house
 
     def clean_high_light(self):
         for col in range(0, 8):
