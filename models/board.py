@@ -39,6 +39,7 @@ class Board:
         for col in range(0, 8):
             for row in range(0, 8):
                 self.houses[col][row].set_is_highlight(False)
+                self.houses[col][row].set_selected(False)
 
     def build_houses(self):
         houses = [[0 for _ in range(8)] for __ in range(8)]

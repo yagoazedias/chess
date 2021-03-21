@@ -25,16 +25,11 @@ class House:
     def set_piece(self, piece):
         if piece:
             piece.house = self
-        else:
-            self.selected = False
-            self.house = None
         self.piece = piece
 
     def draw(self, display):
 
         pygame.draw.rect(display, self.color, (self.position_column, self.position_row, 50, 50))
-        if(self.selected):
-            pygame.draw.rect(display, SELECTED_HOUSE_HIGHLIGHT, (self.position_column, self.position_row, 50, 50))
         if self.piece is not None:
             self.piece.draw(display, self.position_column, self.position_row)
 
@@ -45,7 +40,9 @@ class House:
         return self.piece is None
 
     def set_color(self):
-        if self.house_color == WHITE:
+        if self.selected:
+            self.color = SELECTED_HOUSE_HIGHLIGHT
+        elif self.house_color == WHITE:
             self.color = (
                 self.house_color if not self.is_highlight else WHITE_HIGHLIGHT
             )
@@ -63,3 +60,4 @@ class House:
 
     def set_selected(self, condition):
         self.selected = condition
+        self.set_color()
