@@ -29,7 +29,8 @@ class Board:
                 self.houses[col][row].draw(display)
                 
     def set_selected_piece_house(self, house):
-        house.set_selected(True)
+        if house is not None:
+            house.set_selected(True)
         self.selected_piece_house = house
         
     def get_selected_piece_house(self):
