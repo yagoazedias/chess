@@ -1,5 +1,6 @@
 import pygame
 from models.board import Board
+from models.ia import Ia
 from constants.types import PAWN, ROOK
 from constants.colors import *
 
@@ -15,14 +16,15 @@ def main():
     text_font = pygame.font.Font(pygame.font.get_default_font(), 20)
 
     board = Board()
-
+    ia = Ia(board)
     running = True
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            ia.move()
+            if event.type == pygame.MOUSEBUTTONDOWN:                    
                 if pygame.mouse.get_pos()[1] <= 400:
                     movement_manager(board)
                 elif restart_button_click_manager(pygame.mouse, screen):
