@@ -15,6 +15,25 @@ class Pawn(Piece):
     def __str__(self):
         return PAWN
 
+    # verifica se eh um movimento especial do peao (andar duas casas)
+    # se o movimento tiver mais de uma casa de distancia, eh um movimento especial
+    def is_special_move(self, current_pos, desired_pos):
+        return (abs(current_pos[1] - desired_pos[1]) != 1)
+
+    #verifica se eh um movimento de captura
+    def is_capture_move(self, current_pos, desired_pos):
+        return (current_pos[0] != desired_pos[0])
+
+    #verifica se o movimento eh uma captura en passant.
+    # eh uma captura en passant se for um movimento de captura,
+    # mas a casa desejada nao tiver adversario
+    def is_en_passant_capture_move(self, board, current_pos, desired_pos):
+        return self.is_capture_move(current_pos, desired_pos) and \
+            not board.has_opponent(desired_pos, self.get_color())
+
+    def get_is_first_move(self):
+        return self.first_move
+
     def toggle_first_move(self, value=False):
         self.first_move = value
 
@@ -52,14 +71,14 @@ class Pawn(Piece):
         # Movimentos de captura en passant
 
         # se à direita do meu peão tiver um peão adversario
-        if board.is_valid_pos(right(pos)) and board.get_piece(right(pos)) == 'Pawn' and board.has_opponent(right(pos), self.color):
+        if board.is_valid_pos(right(pos)) and board.get_piece(right(pos)).__str__() == PAWN and board.has_opponent(right(pos), self.color):
             # e se este peão estiver vulnerável à captura en passant
             if board.get_piece(right(pos)).get_en_passant_vulnerable():
                 # e se a posicao atras desse peão estiver vazia
                 if board.is_valid_pos(diag_right_house) and board.is_empty(diag_right_house):
                     self.move_list.append(diag_right_house)
 
-        if board.is_valid_pos(left(pos)) and board.get_piece(left(pos)) == 'Pawn' and board.has_opponent(left(pos), self.color):
+        if board.is_valid_pos(left(pos)) and board.get_piece(left(pos)).__str__() == PAWN and board.has_opponent(left(pos), self.color):
             if board.get_piece(left(pos)).get_en_passant_vulnerable():
                 if board.is_valid_pos(diag_left_house) and board.is_empty(diag_left_house):
                     self.move_list.append(diag_left_house)
@@ -67,5 +86,5 @@ class Pawn(Piece):
     def set_is_en_passant_vulnerable(self, value):
         self.is_en_passant_vulnerable = value
 
-    def get_en_passant_vulnerable(self, value):
+    def get_en_passant_vulnerable(self):
         return self.is_en_passant_vulnerable
