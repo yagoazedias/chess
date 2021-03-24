@@ -11,30 +11,29 @@ class Ia:
   def move(self):
     
     if self.board.get_turn() == BLACK:
-      possible_moves = []
-      selected_house = None
-      candidate_house = None
       
-      while True:
-        position = choices(self.search_blacks())[0]
-        selected_house = self.board.get_house(position)
+      positions = self.select_piece_and_desired_house()
+      
+      selected_house = positions[0]
+      desired_house = positions[1]    
+      
+      self.board.movement_manager(selected_house, desired_house)
+      
+  def select_piece_and_desired_house(self):
+    position = (-1,-1)
+    possible_moves = []
+    selected_piece = None
+    while True:
+      position = choices(self.search_blacks())[0]
+      selected_piece = self.board.get_house(position)
+      
+      possible_moves = selected_piece.get_piece().get_possible_moves(self.board)
+      if len(possible_moves) > 0:
+        break
         
-        possible_moves = selected_house.get_piece().get_possible_moves(self.board)
-        if len(possible_moves) > 0:
-          break
-        
-      move = choices(possible_moves)[0]
-      
-      candidate_house = self.board.get_house(move)
-      
-      test = selected_house.get_piece().get_type()
-      if test == PAWN:
-          selected_house.get_piece().toggle_first_move()
-
-      candidate_house.set_piece(selected_house.get_piece())
-      selected_house.set_piece(None)
-      
-      self.board.switch_turn()
+    move = choices(possible_moves)[0]
+    desired_house = self.board.get_house(move)
+    return selected_piece, desired_house
       
   def search_blacks(self):
     positions = []

@@ -5,8 +5,8 @@ from constants.colors import *
 
 
 class Pawn(Piece):
-    def __init__(self, row, col, color, img, house):
-        super(Pawn, self).__init__(row, col, color, img, house)
+    def __init__(self, col, row, color, img, house):
+        super(Pawn, self).__init__(col, row, color, img, house)
         self.first_move = True
         # self.is_queen = False
         self.is_en_passant_vulnerable = False
@@ -31,11 +31,11 @@ class Pawn(Piece):
         return self.is_capture_move(current_pos, desired_pos) and \
             not board.has_opponent(desired_pos, self.get_color())
 
-    def get_is_first_move(self):
-        return self.first_move
+    def set_is_first_move(self, condition):
+        self.is_first_move = condition
 
-    def toggle_first_move(self, value=False):
-        self.first_move = value
+    def get_is_first_move(self):
+        return self.is_first_move
 
     def get_type(self):
         return self.__str__()
