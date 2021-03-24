@@ -167,6 +167,10 @@ class Board:
                         #remove o peao vulneravel
                         opponent_pawn_house.set_piece(None)
 
+                # marcar como falso o primeiro movimento da torre
+                if selected_piece.get_type() == ROOK:
+                    selected_piece.set_first_move(False)
+
                 #roque
                 if selected_piece.get_type() == KING:
                     selected_piece.set_first_move(False)
