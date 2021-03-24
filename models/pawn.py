@@ -95,7 +95,6 @@ class Pawn(Piece):
         #se for branco
         if self.color == WHITE:
             #e tiver na linha zero
-            print (self.house.get_position())
             return self.house.get_position()[1] == 0
         
         #se for preto e tiver na linha 7
