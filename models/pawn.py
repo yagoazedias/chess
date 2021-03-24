@@ -7,8 +7,7 @@ from constants.colors import *
 class Pawn(Piece):
     def __init__(self, col, row, color, img, house):
         super(Pawn, self).__init__(col, row, color, img, house)
-        self.first_move = True
-        # self.is_queen = False
+        self.is_first_move = True
         self.is_en_passant_vulnerable = False
         self.house = house
 
@@ -56,7 +55,7 @@ class Pawn(Piece):
         if board.is_valid_pos(move_front) and board.is_empty(move_front):
             self.move_list.append(move_front)
             
-            if self.first_move:
+            if self.is_first_move:
                 move_front = pawn_move(move_front)
                 if board.is_valid_pos(move_front) and board.is_empty(move_front):
                     self.move_list.append(move_front)
@@ -88,3 +87,16 @@ class Pawn(Piece):
 
     def get_en_passant_vulnerable(self):
         return self.is_en_passant_vulnerable
+    
+
+    #verifica se o peão pode ser promovido
+    def can_be_promoted(self):
+        #pode ser promovido se:
+        #se for branco
+        if self.color == WHITE:
+            #e tiver na linha zero
+            print (self.house.get_position())
+            return self.house.get_position()[1] == 0
+        
+        #se for preto e tiver na linha 7
+        return self.house.get_position()[1] == 7
