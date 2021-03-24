@@ -145,7 +145,7 @@ class Board:
                         #ele nao fica mais vulneravel a captura en passant
                          selected_piece.set_is_en_passant_vulnerable(False)
                         
-                    selected_piece.toggle_first_move()
+                    selected_piece.set_first_move(False)
 
                     # se o peao fizer o movimento inicial de andar duas casas...
                     if selected_piece.is_special_move(selected_piece_current_pos, selected_piece_desired_pos):
@@ -169,7 +169,7 @@ class Board:
 
                 #roque
                 if selected_piece.get_type() == KING:
-                    selected_piece.toggle_first_move()
+                    selected_piece.set_first_move(False)
 
                     #se o movimento escolhido for o roque
                     if selected_piece.is_special_move(selected_piece_current_pos, selected_piece_desired_pos):
@@ -236,102 +236,102 @@ class Board:
         )
       
     def set_up_pieces(self):
-        self.houses[0][0].set_piece(
-            Rook(0, 0, BLACK, images.black_rook, self.houses[0][0])
-        )
-        self.houses[1][0].set_piece(
-            Horse(1, 0, BLACK, images.black_horse, self.houses[1][0])
-        )
-        self.houses[2][0].set_piece(
-            Bishop(2, 0, BLACK, images.black_bishop, self.houses[2][0])
-        )
-        self.houses[3][0].set_piece(
-            Queen(3, 0, BLACK, images.black_queen, self.houses[3][0])
-        )
-        self.houses[4][0].set_piece(
+        # self.houses[0][0].set_piece(
+        #     Rook(0, 0, BLACK, images.black_rook, self.houses[0][0])
+        # )
+        # self.houses[1][0].set_piece(
+        #     Horse(1, 0, BLACK, images.black_horse, self.houses[1][0])
+        # )
+        # self.houses[2][0].set_piece(
+        #     Bishop(2, 0, BLACK, images.black_bishop, self.houses[2][0])
+        # )
+        # self.houses[3][0].set_piece(
+        #     Queen(3, 0, BLACK, images.black_queen, self.houses[3][0])
+        # )
+        self.houses[2][3].set_piece(
             King(4, 0, BLACK, images.black_king, self.houses[4][0])
         )
-        self.houses[5][0].set_piece(
-            Bishop(5, 0, BLACK, images.black_bishop, self.houses[5][0])
-        )
-        self.houses[6][0].set_piece(
-            Horse(6, 0, BLACK, images.black_horse, self.houses[6][0])
-        )
-        self.houses[7][0].set_piece(
-            Rook(7, 0, BLACK, images.black_rook, self.houses[7][0])
-        )
+        # self.houses[5][0].set_piece(
+        #     Bishop(5, 0, BLACK, images.black_bishop, self.houses[5][0])
+        # )
+        # self.houses[6][0].set_piece(
+        #     Horse(6, 0, BLACK, images.black_horse, self.houses[6][0])
+        # )
+        # self.houses[7][0].set_piece(
+        #     Rook(7, 0, BLACK, images.black_rook, self.houses[7][0])
+        # )
 
-        self.houses[0][1].set_piece(
-            Pawn(0, 1, BLACK, images.black_pawn, self.houses[0][1])
-        )
-        self.houses[1][1].set_piece(
-            Pawn(1, 1, BLACK, images.black_pawn, self.houses[1][1])
-        )
-        self.houses[2][1].set_piece(
-            Pawn(2, 1, BLACK, images.black_pawn, self.houses[2][1])
-        )
-        self.houses[3][1].set_piece(
-            Pawn(3, 1, BLACK, images.black_pawn, self.houses[3][1])
-        )
-        self.houses[4][1].set_piece(
-            Pawn(4, 1, BLACK, images.black_pawn, self.houses[4][1])
-        )
-        self.houses[5][1].set_piece(
-            Pawn(5, 1, BLACK, images.black_pawn, self.houses[5][1])
-        )
-        self.houses[6][1].set_piece(
-            Pawn(6, 1, BLACK, images.black_pawn, self.houses[6][1])
-        )
-        self.houses[7][1].set_piece(
-            Pawn(7, 1, BLACK, images.black_pawn, self.houses[7][1])
-        )
+        # self.houses[0][1].set_piece(
+        #     Pawn(0, 1, BLACK, images.black_pawn, self.houses[0][1])
+        # )
+        # self.houses[1][1].set_piece(
+        #     Pawn(1, 1, BLACK, images.black_pawn, self.houses[1][1])
+        # )
+        # self.houses[2][1].set_piece(
+        #     Pawn(2, 1, BLACK, images.black_pawn, self.houses[2][1])
+        # )
+        # self.houses[3][1].set_piece(
+        #     Pawn(3, 1, BLACK, images.black_pawn, self.houses[3][1])
+        # )
+        # self.houses[4][1].set_piece(
+        #     Pawn(4, 1, BLACK, images.black_pawn, self.houses[4][1])
+        # )
+        # self.houses[5][1].set_piece(
+        #     Pawn(5, 1, BLACK, images.black_pawn, self.houses[5][1])
+        # )
+        # self.houses[6][1].set_piece(
+        #     Pawn(6, 1, BLACK, images.black_pawn, self.houses[6][1])
+        # )
+        # self.houses[7][1].set_piece(
+        #     Pawn(7, 1, BLACK, images.black_pawn, self.houses[7][1])
+        # )
 
-        self.houses[0][7].set_piece(
-            Rook(0, 7, WHITE, images.white_rook, self.houses[0][7])
-        )
-        self.houses[1][7].set_piece(
-            Horse(1, 7, WHITE, images.white_horse, self.houses[1][7])
-        )
-        self.houses[2][7].set_piece(
-            Bishop(2, 7, WHITE, images.white_bishop, self.houses[2][7])
-        )
+        # self.houses[1][6].set_piece(
+        #     Rook(0, 7, WHITE, images.white_rook, self.houses[0][7])
+        # )
+        # self.houses[1][7].set_piece(
+        #     Horse(1, 7, WHITE, images.white_horse, self.houses[1][7])
+        # )
+        # self.houses[2][7].set_piece(
+        #     Bishop(2, 7, WHITE, images.white_bishop, self.houses[2][7])
+        # )
         self.houses[3][7].set_piece(
             Queen(3, 7, WHITE, images.white_queen, self.houses[3][7])
         )
-        self.houses[4][7].set_piece(
-            King(4, 7, WHITE, images.white_king, self.houses[4][7])
-        )
-        self.houses[5][7].set_piece(
-            Bishop(5, 7, WHITE, images.white_bishop, self.houses[5][7])
-        )
-        self.houses[6][7].set_piece(
-            Horse(6, 7, WHITE, images.white_horse, self.houses[6][7])
-        )
-        self.houses[7][7].set_piece(
-            Rook(7, 7, WHITE, images.white_rook, self.houses[7][7])
-        )
+        # self.houses[4][7].set_piece(
+        #     King(4, 7, WHITE, images.white_king, self.houses[4][7])
+        # )
+        # self.houses[5][7].set_piece(
+        #     Bishop(5, 7, WHITE, images.white_bishop, self.houses[5][7])
+        # )
+        # self.houses[6][7].set_piece(
+        #     Horse(6, 7, WHITE, images.white_horse, self.houses[6][7])
+        # )
+        # self.houses[7][7].set_piece(
+        #     Rook(7, 7, WHITE, images.white_rook, self.houses[7][7])
+        # )
 
-        self.houses[0][6].set_piece(
-            Pawn(0, 6, WHITE, images.white_pawn, self.houses[0][6])
-        )
-        self.houses[1][6].set_piece(
-            Pawn(1, 6, WHITE, images.white_pawn, self.houses[1][6])
-        )
-        self.houses[2][6].set_piece(
-            Pawn(2, 6, WHITE, images.white_pawn, self.houses[2][6])
-        )
-        self.houses[3][6].set_piece(
-            Pawn(3, 6, WHITE, images.white_pawn, self.houses[3][6])
-        )
-        self.houses[4][6].set_piece(
-            Pawn(4, 6, WHITE, images.white_pawn, self.houses[4][6])
-        )
-        self.houses[5][6].set_piece(
-            Pawn(5, 6, WHITE, images.white_pawn, self.houses[5][6])
-        )
-        self.houses[6][6].set_piece(
-            Pawn(6, 6, WHITE, images.white_pawn, self.houses[6][6])
-        )
-        self.houses[7][6].set_piece(
-            Pawn(7, 6, WHITE, images.white_pawn, self.houses[7][6])
-        )
+        # self.houses[0][6].set_piece(
+        #     Pawn(0, 6, WHITE, images.white_pawn, self.houses[0][6])
+        # )
+        # self.houses[1][6].set_piece(
+        #     Pawn(1, 6, WHITE, images.white_pawn, self.houses[1][6])
+        # )
+        # self.houses[2][6].set_piece(
+        #     Pawn(2, 6, WHITE, images.white_pawn, self.houses[2][6])
+        # )
+        # self.houses[3][6].set_piece(
+        #     Pawn(3, 6, WHITE, images.white_pawn, self.houses[3][6])
+        # )
+        # self.houses[4][6].set_piece(
+        #     Pawn(4, 6, WHITE, images.white_pawn, self.houses[4][6])
+        # )
+        # self.houses[5][6].set_piece(
+        #     Pawn(5, 6, WHITE, images.white_pawn, self.houses[5][6])
+        # )
+        # self.houses[6][6].set_piece(
+        #     Pawn(6, 6, WHITE, images.white_pawn, self.houses[6][6])
+        # )
+        # self.houses[7][6].set_piece(
+        #     Pawn(7, 6, WHITE, images.white_pawn, self.houses[7][6])
+        # )

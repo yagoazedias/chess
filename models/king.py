@@ -22,12 +22,8 @@ class King(Piece):
     def __str__(self):
         return "King"
 
-    def toggle_first_move(self):
-        self.is_first_move = False
-
-    def get_is_first_move(self):
-        return self.is_first_move
-    
+    def set_is_first_move(self, condition):
+        self.is_first_move = condition
 
     def get_is_first_move(self):
         return self.is_first_move
