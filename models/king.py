@@ -14,7 +14,7 @@ class King(Piece):
     #verifica se o movimento eh o roque.
     #eh roque quando o rei anda mais de uma casa
     def is_special_move(self, current_pos, desired_pos):
-        return (abs(current_pos[0] - desired_pos[0]) != 1)
+        return (abs(current_pos[0] - desired_pos[0]) > 1)
     
     def get_type(self):
         return self.__str__()
