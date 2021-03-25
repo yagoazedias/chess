@@ -18,13 +18,13 @@ from util.move import *
 class Match:
 
     def __init__(self):
+        self.prepare_match()
+
+    def prepare_match(self):
         self.winner = None
         self.turn = WHITE
         self.selected_piece_house = None
         self.board = Board(houses=self.build_houses())
-        self.prepare_match()
-
-    def prepare_match(self):
         self.set_up_pieces()
 
     def draw(self, display, text_font):
