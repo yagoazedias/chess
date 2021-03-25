@@ -48,14 +48,14 @@ class Knight(Piece):
 
     # -- --#
 
-    def update_possible_moves(self, board):
+    def update_possible_moves(self, match):
         self.move_list = []
         pos = self.house.get_position()
         self.move_list = self.knight_down(pos) + self.knight_up(pos) + self.knight_left(pos) + self.knight_right(pos)
 
         invalid_moves = []
         for move in self.move_list:
-            if not (board.is_valid_pos(move)) or board.has_teammate(move, self.get_color()):
+            if not (is_valid_pos(move)) or has_teammate(move, self.get_color(), match.board):
                 invalid_moves.append(move)
 
         self.move_list = [x for x in self.move_list if x not in invalid_moves]

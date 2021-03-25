@@ -1,5 +1,5 @@
 import pygame
-from constants.colors import *
+
 
 class Piece(object):
     def __init__(self, col, row, color, img, house):
@@ -21,13 +21,10 @@ class Piece(object):
     def get_color(self):
         return self.color
 
-    def get_position(self):
-        return self.col, self.row
-
-    def get_possible_moves(self, board):
+    def get_possible_moves(self, match):
         self.move_list = []
-        self.update_possible_moves(board)
+        self.update_possible_moves(match)
         return self.move_list
 
-    def update_possible_moves(self, board):
+    def update_possible_moves(self, match):
         pass

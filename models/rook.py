@@ -19,9 +19,9 @@ class Rook(Piece):
     def get_is_first_move(self):
         return self.is_first_move
 
-    def update_possible_moves(self, board):
+    def update_possible_moves(self, match):
         pos = self.house.get_position()
-        self.move_list = all_down_moves(pos, board, self.color) + \
-                         all_up_moves(pos, board, self.color) + \
-                         all_right_moves(pos, board, self.color) + \
-                         all_left_moves(pos, board, self.color)
+        self.move_list = all_down_moves(pos, match, self.color) + \
+                         all_up_moves(pos, match, self.color) + \
+                         all_right_moves(pos, match, self.color) + \
+                         all_left_moves(pos, match, self.color)

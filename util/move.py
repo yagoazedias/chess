@@ -57,112 +57,128 @@ def down_left(pos):
 
 
 # dada uma posicao, retorna todas as casas validas 'para cima'
-def all_up_moves(pos, board, my_color):
+def all_up_moves(pos, match, my_color):
     moves = []
     pos = up(pos)
-    while board.is_valid_pos(pos) and board.is_empty(pos):
+    while is_valid_pos(pos) and match.board.is_empty(pos):
         moves.append(pos)
         pos = up(pos)
 
-    if board.is_valid_pos(pos) and board.has_opponent(pos, my_color):
+    if is_valid_pos(pos) and match.board.has_opponent(pos, my_color):
         moves.append(pos)
 
     return moves
 
 
 # dada uma posicao, retorna todas as casas validas 'para direita'
-def all_right_moves(pos, board, my_color):
+def all_right_moves(pos, match, my_color):
     moves = []
     pos = right(pos)
-    while board.is_valid_pos(pos) and board.is_empty(pos):
+    while is_valid_pos(pos) and match.board.is_empty(pos):
         moves.append(pos)
         pos = right(pos)
 
-    if board.is_valid_pos(pos) and board.has_opponent(pos, my_color):
+    if is_valid_pos(pos) and match.board.has_opponent(pos, my_color):
         moves.append(pos)
 
     return moves
 
 
 # dada uma posicao, retorna todas as casas validas 'para baixo'
-def all_down_moves(pos, board, my_color):
+def all_down_moves(pos, match, my_color):
     moves = []
     pos = down(pos)
-    while board.is_valid_pos(pos) and board.is_empty(pos):
+    while is_valid_pos(pos) and match.board.is_empty(pos):
         moves.append(pos)
         pos = down(pos)
 
-    if board.is_valid_pos(pos) and board.has_opponent(pos, my_color):
+    if is_valid_pos(pos) and match.board.has_opponent(pos, my_color):
         moves.append(pos)
 
     return moves
 
 
 # dada uma posicao, retorna todas as casas validas 'para esquerda'
-def all_left_moves(pos, board, my_color):
+def all_left_moves(pos, match, my_color):
     moves = []
     pos = left(pos)
-    while board.is_valid_pos(pos) and board.is_empty(pos):
+    while is_valid_pos(pos) and match.board.is_empty(pos):
         moves.append(pos)
         pos = left(pos)
 
-    if board.is_valid_pos(pos) and board.has_opponent(pos, my_color):
+    if is_valid_pos(pos) and match.board.has_opponent(pos, my_color):
         moves.append(pos)
 
     return moves
 
 
 # dada uma posicao, retorna todas as casas validas para 'diagonal superior direita'
-def all_up_right_moves(pos, board, my_color):
+def all_up_right_moves(pos, match, my_color):
     moves = []
     pos = up_right(pos)
-    while board.is_valid_pos(pos) and board.is_empty(pos):
+    while is_valid_pos(pos) and match.board.is_empty(pos):
         moves.append(pos)
         pos = up_right(pos)
 
-    if board.is_valid_pos(pos) and board.has_opponent(pos, my_color):
+    if is_valid_pos(pos) and match.board.has_opponent(pos, my_color):
         moves.append(pos)
 
     return moves
 
 
 # dada uma posicao, retorna todas as casas validas para 'diagonal superior esquerda'
-def all_up_left_moves(pos, board, my_color):
+def all_up_left_moves(pos, match, my_color):
     moves = []
     pos = up_left(pos)
-    while board.is_valid_pos(pos) and board.is_empty(pos):
+    while is_valid_pos(pos) and match.board.is_empty(pos):
         moves.append(pos)
         pos = up_left(pos)
 
-    if board.is_valid_pos(pos) and board.has_opponent(pos, my_color):
+    if is_valid_pos(pos) and match.board.has_opponent(pos, my_color):
         moves.append(pos)
 
     return moves
 
 
 # dada uma posicao, retorna todas as casas validas para 'diagonal inferior esquerda'
-def all_down_left_moves(pos, board, my_color):
+def all_down_left_moves(pos, match, my_color):
     moves = []
     pos = down_left(pos)
-    while board.is_valid_pos(pos) and board.is_empty(pos):
+    while is_valid_pos(pos) and match.board.is_empty(pos):
         moves.append(pos)
         pos = down_left(pos)
 
-    if board.is_valid_pos(pos) and board.has_opponent(pos, my_color):
+    if is_valid_pos(pos) and match.board.has_opponent(pos, my_color):
         moves.append(pos)
 
     return moves
 
 
 # dada uma posicao, retorna todas as casas validas para 'diagonal inferior direita'
-def all_down_right_moves(pos, board, my_color):
+def all_down_right_moves(pos, match, my_color):
     moves = []
     pos = down_right(pos)
-    while board.is_valid_pos(pos) and board.is_empty(pos):
+    while is_valid_pos(pos) and match.board.is_empty(pos):
         moves.append(pos)
         pos = down_right(pos)
 
-    if board.is_valid_pos(pos) and board.has_opponent(pos, my_color):
+    if is_valid_pos(pos) and match.board.has_opponent(pos, my_color):
         moves.append(pos)
 
     return moves
+
+
+# verifica se a posicao pos é valida. ou seja, esta dentro dos limites do tabuleiro
+def is_valid_pos(pos):
+    col = pos[0]
+    row = pos[1]
+    return 0 <= row <= 7 and 0 <= col <= 7
+
+
+# verifica se a posicao pos tem um companheiro de equipe
+def has_teammate(pos, my_color, board):
+    if not is_valid_pos(pos):
+        return False
+    if board.get_house(pos).get_piece() is None:
+        return False
+    return my_color == board.get_house(pos).get_piece().get_color()
