@@ -61,9 +61,6 @@ class Board:
         print("is_checked")
         return False
 
-    def move_piece(self):
-        print("move_piece")
-
     def get_house(self, pos):
         col = pos[0]
         row = pos[1]
@@ -129,13 +126,18 @@ class Board:
                 
                 #casa desejada
                 desired_house = selected_house if desired_house is None else desired_house
+                #peça capturada
+                captured_piece = desired_house.get_piece()
+                #casa da peca capturada
+                captured_piece_house = desired_house
                 #peca selecionada
                 selected_piece = self.get_selected_piece_house().get_piece()
                 #posicao atual
                 selected_piece_current_pos = self.get_selected_piece_house().get_position()
                 #posicao desejada
                 selected_piece_desired_pos = selected_house.get_position()
-
+                #nova posicao da torre no momento do roque
+                new_rook_house = None
 
                 # en passant
                 if selected_piece.get_type() == PAWN:
@@ -166,7 +168,11 @@ class Board:
                             opponent_pawn_house = self.get_house(up(selected_piece_desired_pos))
 
                         #remove o peao vulneravel
-                        opponent_pawn_house.set_piece(None)
+                        captured_piece = opponent_pawn_house.get_piece()
+                        #casa da peca capturada
+                        captured_piece_house = opponent_pawn_house
+                        #opponent_pawn_house.set_piece(None)
+                        
                 # marcar como falso o primeiro movimento da torre
                 if selected_piece.get_type() == ROOK:
                     selected_piece.set_is_first_move(False)
@@ -189,34 +195,76 @@ class Board:
                             rook_current_pos = right(right(right(selected_piece_current_pos)))
                             rook_desired_pos = right(selected_piece_current_pos)
 
-
+                        # criando a condição para ser desfeita a jogada
+                        captured_piece_house = self.get_house(rook_current_pos)
+                        captured_piece = self.get_house(rook_current_pos).get_piece()
+                        new_rook_house = self.get_house(rook_desired_pos)
+                        
                         #movimenta a torre
                         self.get_house(rook_desired_pos).set_piece(self.get_house(rook_current_pos).get_piece())
                         self.get_house(rook_current_pos).set_piece(None)
 
-
                 # lógica de movimentação e captura
-                desired_house.set_piece(self.get_selected_piece_house().get_piece())
-                self.get_selected_piece_house().set_piece(None)
+                captured_piece = self.move(selected_piece, self.get_selected_piece_house(), captured_piece, desired_house)
+                
+                if self.is_xeque():
+                    self.undo_move(selected_piece, desired_house, captured_piece, captured_piece_house, new_rook_house)
+                    
+                else:          
+                    #promocao do peao
+                    if selected_piece.get_type() == PAWN and selected_piece.can_be_promoted():
+                        if selected_piece.get_color() == BLACK:
+                            queen_image = images.black_queen
+                        else:
+                            queen_image = images.white_queen
+                        queen = Queen(selected_piece_desired_pos[0],  selected_piece_desired_pos[1], selected_piece.get_color(), queen_image, selected_piece_desired_pos)
+                        desired_house.set_piece(queen)
+
+                # limpa a casa da peça selecionada
                 self.set_selected_piece_house(None)
-
-                                    
-                #promocao do peao
-                if selected_piece.get_type() == PAWN and selected_piece.can_be_promoted():
-                    if selected_piece.get_color() == BLACK:
-                        queen_image = images.black_queen
-                    else:
-                        queen_image = images.white_queen
-                    queen = Queen(selected_piece_desired_pos[0],  selected_piece_desired_pos[1], selected_piece.get_color(), queen_image, selected_piece_desired_pos)
-                    desired_house.set_piece(queen)
-
-
+                
+                # Troca o turno
                 self.switch_turn()
 
                 # limpar as casas realçadas
                 self.clean_highlight()
+                
+    def move(self, selected_piece, selected_piece_house, captured_piece, desired_house):
+        #captured_piece = desired_house.get_piece()
+        desired_house.set_piece(selected_piece)
+        self.get_selected_piece_house().set_piece(None)
+        return captured_piece
             
+    def undo_move(self, selected_piece, desired_house, captured_piece, captured_piece_house, new_rook_house):
+        if new_rook_house is not None:
+            new_rook_house.set_piece(None)
+        if desired_house.get_position != captured_piece_house:
+            desired_house.set_piece(None)
+        if captured_piece is not None:
+            captured_piece_house.set_piece(captured_piece)
+        self.get_selected_piece_house().set_piece(selected_piece)
+        
+    def is_xeque(self):
+        king_position = self.get_king_position()
+        possible_moves = []
+        for col in range(0, 8):
+            for row in range(0, 8):
+                if self.houses[col][row].get_piece() is not None:
+                    if self.houses[col][row].get_piece().get_color() != self.get_turn():
+                        possible_moves = self.houses[col][row].get_piece().get_possible_moves(self)
+                        for possible_move in possible_moves:
+                            if possible_move == king_position:
+                                return True
+        return False
     
+    def get_king_position(self):
+        for col in range(0, 8):
+            for row in range(0, 8):
+                if self.houses[col][row].get_piece() is not None:
+                    if self.houses[col][row].get_piece().get_color() == self.get_turn():                      
+                        if self.houses[col][row].get_piece().get_type() == KING:
+                            return col, row
+        raise ValueError('Não foi encontrado o rei do jogar atual no tabuleiro!')
             
     def prepare_player_turn_indicator(self, screen, font, x, y):
         self.clean_turn_indicator(screen)
@@ -238,6 +286,9 @@ class Board:
         
     def clean_turn_indicator(self, screen):
         pygame.draw.rect(screen, (26,120,122), (0, 400, 400, 100))
+        
+    def draw_alert(self, screen, font):
+        pygame.draw.rect(screen, (26,120,122), (200, 100, 200, 50))
         
     def draw_button(self, screen, font):
         height = 25
