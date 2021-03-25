@@ -15,7 +15,7 @@ class Knight(Piece):
     # -- Metodos auxiliares --#
 
     # retorna os 2 L's: |--
-    def knight_left(self, pos):
+    def knight_left(self):
         col = self.house.get_position()[0]
         row = self.house.get_position()[1]
         l_up = (col - 2, row - 1)
@@ -23,7 +23,7 @@ class Knight(Piece):
         return [l_up, l_down]
 
     # retorna os 2 L's: --|
-    def knight_right(self, pos):
+    def knight_right(self):
         col = self.house.get_position()[0]
         row = self.house.get_position()[1]
         r_up = (col + 2, row - 1)
@@ -31,7 +31,7 @@ class Knight(Piece):
         return [r_up, r_down]
 
     # retorna os 2 L's: _|_
-    def knight_down(self, pos):
+    def knight_down(self):
         col = self.house.get_position()[0]
         row = self.house.get_position()[1]
         d_left = (col - 1, row + 2)
@@ -39,7 +39,7 @@ class Knight(Piece):
         return [d_left, d_right]
 
     # retorna os 2 L's: T
-    def knight_up(self, pos):
+    def knight_up(self):
         col = self.house.get_position()[0]
         row = self.house.get_position()[1]
         u_left = (col - 1, row - 2)
@@ -51,7 +51,7 @@ class Knight(Piece):
     def update_possible_moves(self, match):
         self.move_list = []
         pos = self.house.get_position()
-        self.move_list = self.knight_down(pos) + self.knight_up(pos) + self.knight_left(pos) + self.knight_right(pos)
+        self.move_list = self.knight_down() + self.knight_up() + self.knight_left() + self.knight_right()
 
         invalid_moves = []
         for move in self.move_list:
