@@ -4,8 +4,8 @@ from util.move import *
 
 
 class King(Piece):
-    def __init__(self, col, row, color, img, house):
-        super(King, self).__init__(col, row, color, img, house)
+    def __init__(self, color, img, house):
+        super(King, self).__init__(color, img, house)
         self.is_first_move = True
         self.is_checked = False
 
@@ -47,16 +47,19 @@ class King(Piece):
 
         # Roque 
         if self.is_first_move and not self.is_checked:
+            
+            col = self.house.get_position()[0]
+            row = self.house.get_position()[1]
             # Torre da direita
-            if match.board.houses[self.col + 3][self.row].get_piece() is not None:
-                if match.board.get_piece((self.col + 3, self.row)).get_type() == ROOK and match.board.get_piece(
-                        (self.col + 3, self.row)).get_is_first_move():
+            if match.board.houses[col + 3][row].get_piece() is not None:
+                if match.board.get_piece((col + 3, row)).get_type() == ROOK and match.board.get_piece(
+                        (col + 3, row)).get_is_first_move():
                     if match.board.is_empty(right(pos)) and match.board.is_empty(right(right(pos))):
                         self.move_list.append(right(right(pos)))
             # Torre da esquerda
-            if match.board.houses[self.col - 4][self.row].get_piece() is not None:
-                if match.board.get_piece((self.col - 4, self.row)).get_type() == ROOK and match.board.get_piece(
-                        (self.col - 4, self.row)).get_is_first_move():
+            if match.board.houses[col - 4][row].get_piece() is not None:
+                if match.board.get_piece((col - 4, row)).get_type() == ROOK and match.board.get_piece(
+                        (col - 4, row)).get_is_first_move():
                     if match.board.is_empty(left(pos)) and match.board.is_empty(
                             left(left(pos))) and match.board.is_empty(
                             left(left(left(pos)))):

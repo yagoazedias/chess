@@ -2,9 +2,7 @@ import pygame
 
 
 class Piece(object):
-    def __init__(self, col, row, color, img, house):
-        self.col = col
-        self.row = row
+    def __init__(self, color, img, house):
         self.color = color
         self.img = img
         self.move_list = []
@@ -13,10 +11,6 @@ class Piece(object):
     def draw(self, windows, x, y):
         draw_this = pygame.transform.scale(self.img, (27, 27))
         windows.blit(draw_this, (x + 10, y + 10))
-
-    def update_position(self, col, row):
-        self.col = col
-        self.row = row
 
     def get_color(self):
         return self.color

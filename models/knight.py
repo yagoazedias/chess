@@ -3,8 +3,8 @@ from util.move import *
 
 
 class Knight(Piece):
-    def __init__(self, col, row, color, img, house):
-        super(Knight, self).__init__(col, row, color, img, house)
+    def __init__(self, color, img, house):
+        super(Knight, self).__init__(color, img, house)
 
     def get_type(self):
         return self.__str__()
@@ -16,32 +16,32 @@ class Knight(Piece):
 
     # retorna os 2 L's: |--
     def knight_left(self, pos):
-        col = pos[0]
-        row = pos[1]
+        col = self.house.get_position()[0]
+        row = self.house.get_position()[1]
         l_up = (col - 2, row - 1)
         l_down = (col - 2, row + 1)
         return [l_up, l_down]
 
     # retorna os 2 L's: --|
     def knight_right(self, pos):
-        col = pos[0]
-        row = pos[1]
+        col = self.house.get_position()[0]
+        row = self.house.get_position()[1]
         r_up = (col + 2, row - 1)
         r_down = (col + 2, row + 1)
         return [r_up, r_down]
 
     # retorna os 2 L's: _|_
     def knight_down(self, pos):
-        col = pos[0]
-        row = pos[1]
+        col = self.house.get_position()[0]
+        row = self.house.get_position()[1]
         d_left = (col - 1, row + 2)
         d_right = (col + 1, row + 2)
         return [d_left, d_right]
 
     # retorna os 2 L's: T
     def knight_up(self, pos):
-        col = pos[0]
-        row = pos[1]
+        col = self.house.get_position()[0]
+        row = self.house.get_position()[1]
         u_left = (col - 1, row - 2)
         u_right = (col + 1, row - 2)
         return [u_left, u_right]

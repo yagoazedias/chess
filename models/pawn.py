@@ -5,8 +5,8 @@ from constants.colors import *
 
 
 class Pawn(Piece):
-    def __init__(self, col, row, color, img, house):
-        super(Pawn, self).__init__(col, row, color, img, house)
+    def __init__(self, color, img, house):
+        super(Pawn, self).__init__(color, img, house)
         self.is_first_move = True
         self.is_en_passant_vulnerable = False
         self.house = house

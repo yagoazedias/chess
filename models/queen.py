@@ -3,8 +3,8 @@ from util.move import *
 
 
 class Queen(Piece):
-    def __init__(self, col, row, color, img, house):
-        super(Queen, self).__init__(col, row, color, img, house)
+    def __init__(self, color, img, house):
+        super(Queen, self).__init__(color, img, house)
 
     def get_type(self):
         return self.__str__()

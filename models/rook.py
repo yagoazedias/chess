@@ -3,8 +3,8 @@ from util.move import *
 
 
 class Rook(Piece):
-    def __init__(self, col, row, color, img, house):
-        super(Rook, self).__init__(col, row, color, img, house)
+    def __init__(self, color, img, house):
+        super(Rook, self).__init__(color, img, house)
         self.is_first_move = True
 
     def get_type(self):
