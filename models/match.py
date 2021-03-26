@@ -27,6 +27,9 @@ class Match:
         self.board = Board(houses=self.build_houses())
         self.set_up_pieces()
 
+    def get_board(self):
+        return self.board
+
     def draw(self, display, text_font):
         self.prepare_player_turn_indicator(display, text_font, 100, 410)
         for col in range(0, 8):
@@ -106,7 +109,7 @@ class Match:
                         selected_piece.set_is_en_passant_vulnerable(True)
 
                     # se a jogada escolhida for uma captura en passant...
-                    if (selected_piece.is_en_passant_capture_move(self, selected_piece_current_pos,
+                    if (selected_piece.is_en_passant_capture_move(self.board, selected_piece_current_pos,
                                                                   selected_piece_desired_pos)):
                         # se o meu peao for branco,
                         if selected_piece.get_color() == WHITE:
@@ -122,7 +125,7 @@ class Match:
                         captured_piece = opponent_pawn_house.get_piece()
                         # casa da peca capturada
                         captured_piece_house = opponent_pawn_house
-                        # opponent_pawn_house.set_piece(None)
+                        opponent_pawn_house.set_piece(None)
 
                 # marcar como falso o primeiro movimento da torre
                 if selected_piece.get_type() == ROOK:
@@ -156,11 +159,11 @@ class Match:
                         self.board.get_house(rook_current_pos).set_piece(None)
 
                 # lógica de movimentação e captura
-                captured_piece = self.board.move(selected_piece, self.board.get_selected_piece_house(), captured_piece,
-                                                 desired_house)
+                captured_piece = self.move(selected_piece, captured_piece, desired_house)
 
-                if self.is_xeque():
-                    self.board.undo_move(selected_piece, desired_house, captured_piece, captured_piece_house,
+                is_checked = self.is_checked()
+                if is_checked:
+                    self.undo_move(selected_piece, desired_house, captured_piece, captured_piece_house,
                                          new_rook_house)
 
                 else:
@@ -170,18 +173,34 @@ class Match:
                             queen_image = images.black_queen
                         else:
                             queen_image = images.white_queen
-                        queen = Queen(selected_piece_desired_pos[0], selected_piece_desired_pos[1],
-                                      selected_piece.get_color(), queen_image, selected_piece_desired_pos)
+                        queen = Queen(selected_piece.get_color(), queen_image, selected_piece_desired_pos)
                         desired_house.set_piece(queen)
 
                 # limpa a casa da peça selecionada
                 self.board.set_selected_piece_house(None)
 
+                
                 # Troca o turno
-                self.switch_turn()
-
+                if not is_checked: self.switch_turn()
+                
                 # limpar as casas realçadas
                 self.board.clean_highlight()
+
+
+    def move(self, selected_piece, captured_piece, desired_house):
+        desired_house.set_piece(selected_piece)
+        self.board.get_selected_piece_house().set_piece(None)
+        return captured_piece
+
+    def undo_move(self, selected_piece, desired_house, captured_piece, captured_piece_house, new_rook_house):
+        if new_rook_house is not None:
+            new_rook_house.set_piece(None)
+        if desired_house.get_position != captured_piece_house:
+            desired_house.set_piece(None)
+        if captured_piece is not None:
+            captured_piece_house.set_piece(captured_piece)
+        self.board.get_selected_piece_house().set_piece(selected_piece)
+
 
     def prepare_player_turn_indicator(self, screen, font, x, y):
         self.clean_turn_indicator(screen)
@@ -256,7 +275,7 @@ class Match:
         self.board.houses[6][6].set_piece(Pawn(WHITE, images.white_pawn, self.board.houses[6][6]))
         self.board.houses[7][6].set_piece(Pawn(WHITE, images.white_pawn, self.board.houses[7][6]))
 
-    def is_xeque(self):
+    def is_checked(self):
         king_position = self.get_king_position()
         for col in range(0, 8):
             for row in range(0, 8):

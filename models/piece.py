@@ -22,3 +22,6 @@ class Piece(object):
 
     def update_possible_moves(self, match):
         pass
+
+    def get_house(self):
+        return self.house

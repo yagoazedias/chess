@@ -46,18 +46,3 @@ class Board:
 
     def is_empty(self, pos):
         return self.get_house(pos).is_empty()
-
-    def move(self, selected_piece, selected_piece_house, captured_piece, desired_house):
-        # captured_piece = desired_house.get_piece()
-        desired_house.set_piece(selected_piece)
-        self.get_selected_piece_house().set_piece(None)
-        return captured_piece
-
-    def undo_move(self, selected_piece, desired_house, captured_piece, captured_piece_house, new_rook_house):
-        if new_rook_house is not None:
-            new_rook_house.set_piece(None)
-        if desired_house.get_position != captured_piece_house:
-            desired_house.set_piece(None)
-        if captured_piece is not None:
-            captured_piece_house.set_piece(captured_piece)
-        self.get_selected_piece_house().set_piece(selected_piece)

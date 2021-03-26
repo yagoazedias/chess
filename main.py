@@ -16,7 +16,7 @@ def main():
 
     match = Match()
     ia = Ia(match)
-    ia_on = True
+    ia_on = False
     running = True
 
     while running:

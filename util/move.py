@@ -182,3 +182,10 @@ def has_teammate(pos, my_color, board):
     if board.get_house(pos).get_piece() is None:
         return False
     return my_color == board.get_house(pos).get_piece().get_color()
+
+
+    # verifica se a posicao pos tem um oponente
+def has_opponent(board, house, piece_color):
+    if house.get_piece() is None:
+        return False
+    return piece_color != house.get_piece().get_color()
