@@ -222,13 +222,15 @@ class Match:
         self.clear_text_indicator(screen)
         text = ""
         color = WHITE
+        text = " "
+        if self.turn != WHITE:
+            color = (0, 0, 0)
         if not self.checked:
             text = "Vez das peças "
-            if self.turn == WHITE:
+            if self.turn != WHITE:
                 text += "brancas"
             else:
                 text += "pretas"
-                color = (0, 0, 0)
         else:
             text = "Ficou em Xeque! Faça outra jogada."
             
