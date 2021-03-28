@@ -23,6 +23,7 @@ class Match:
     def prepare_match(self):
         self.winner = None
         self.turn = WHITE
+        self.turn_counter = 1
         self.selected_piece_house = None
         self.board = Board(houses=self.build_houses())
         self.set_up_pieces()
@@ -50,6 +51,7 @@ class Match:
         return self.turn
 
     def switch_turn(self):
+        self.turn_counter += 1
         if self.turn == WHITE:
             self.turn = BLACK
         else:
@@ -101,8 +103,6 @@ class Match:
                         # ele nao fica mais vulneravel a captura en passant
                         selected_piece.set_is_en_passant_vulnerable(False)
 
-                    selected_piece.set_is_first_move(False)
-
                     # se o peao fizer o movimento inicial de andar duas casas...
                     if selected_piece.is_special_move(selected_piece_current_pos, selected_piece_desired_pos):
                         # fica vulneravel ao en passant
@@ -127,13 +127,8 @@ class Match:
                         captured_piece_house = opponent_pawn_house
                         opponent_pawn_house.set_piece(None)
 
-                # marcar como falso o primeiro movimento da torre
-                if selected_piece.get_type() == ROOK:
-                    selected_piece.set_is_first_move(False)
-
                 # roque
                 if selected_piece.get_type() == KING:
-                    selected_piece.set_is_first_move(False)
 
                     # se o movimento escolhido for o roque
                     if selected_piece.is_special_move(selected_piece_current_pos, selected_piece_desired_pos):
@@ -181,18 +176,25 @@ class Match:
 
                 
                 # Troca o turno
-                if not is_checked: self.switch_turn()
+                if not is_checked: 
+                    self.switch_turn()
                 
                 # limpar as casas realçadas
                 self.board.clean_highlight()
 
 
     def move(self, selected_piece, captured_piece, desired_house):
+        if selected_piece.get_type() == PAWN or selected_piece.get_type() == ROOK or selected_piece.get_type() == KING:
+            if selected_piece.get_is_first_move():
+                selected_piece.set_is_first_move(False, self.turn_counter)
         desired_house.set_piece(selected_piece)
         self.board.get_selected_piece_house().set_piece(None)
         return captured_piece
 
     def undo_move(self, selected_piece, desired_house, captured_piece, captured_piece_house, new_rook_house):
+        if selected_piece.get_type() == PAWN or selected_piece.get_type() == ROOK or selected_piece.get_type() == KING:
+            if self.turn_counter == selected_piece.get_turn_first_move_false():
+                selected_piece.set_is_first_move(True, 0)
         if new_rook_house is not None:
             new_rook_house.set_piece(None)
         if desired_house.get_position != captured_piece_house:
