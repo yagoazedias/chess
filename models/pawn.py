@@ -8,6 +8,7 @@ class Pawn(Piece):
     def __init__(self, color, img, house):
         super(Pawn, self).__init__(color, img, house)
         self.is_first_move = True
+        self.turn_first_move_false = 0
         self.is_en_passant_vulnerable = False
         self.house = house
 
@@ -30,11 +31,15 @@ class Pawn(Piece):
         return self.is_capture_move(current_pos, desired_pos) and \
                not board.has_opponent(desired_pos, self.get_color())
 
-    def set_is_first_move(self, condition):
+    def set_is_first_move(self, condition, turn):
         self.is_first_move = condition
+        self.turn_first_move_false = turn
 
     def get_is_first_move(self):
         return self.is_first_move
+    
+    def get_turn_first_move_false(self):
+        return self.turn_first_move_false
 
     def get_type(self):
         return self.__str__()

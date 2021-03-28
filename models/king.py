@@ -7,6 +7,7 @@ class King(Piece):
     def __init__(self, color, img, house):
         super(King, self).__init__(color, img, house)
         self.is_first_move = True
+        self.turn_first_move_false = 0
         self.is_checked = False
 
     # verifica se o movimento eh o roque.
@@ -20,11 +21,15 @@ class King(Piece):
     def __str__(self):
         return "King"
 
-    def set_is_first_move(self, condition):
+    def set_is_first_move(self, condition, turn):
         self.is_first_move = condition
+        self.turn_first_move_false = turn
 
     def get_is_first_move(self):
         return self.is_first_move
+    
+    def get_turn_first_move_false(self):
+        return self.turn_first_move_false
 
     def set_is_checked(self, value):
         self.is_checked = value
