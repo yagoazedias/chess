@@ -1,6 +1,7 @@
 import pygame
 from constants.colors import *
 
+
 class House:
     def __init__(self, column, row, color):
         self.column = column

@@ -3,8 +3,8 @@ from util.move import *
 
 
 class Bishop(Piece):
-    def __init__(self, col, row, color, img, house):
-        super(Bishop, self).__init__(col, row, color, img, house)
+    def __init__(self, color, img, house):
+        super(Bishop, self).__init__(color, img, house)
 
     def get_type(self):
         return self.__str__()
@@ -12,9 +12,9 @@ class Bishop(Piece):
     def __str__(self):
         return "Bishop"
 
-    def update_possible_moves(self, board):
+    def update_possible_moves(self, match):
         pos = self.house.get_position()
-        self.move_list = all_down_left_moves(pos, board, self.color) + \
-                         all_down_right_moves(pos, board, self.color) + \
-                         all_up_left_moves(pos, board, self.color) + \
-                         all_up_right_moves(pos, board, self.color)
+        self.move_list = all_down_left_moves(pos, match, self.color) + \
+                         all_down_right_moves(pos, match, self.color) + \
+                         all_up_left_moves(pos, match, self.color) + \
+                         all_up_right_moves(pos, match, self.color)
