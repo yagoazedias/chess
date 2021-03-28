@@ -25,6 +25,7 @@ class Match:
         self.turn = WHITE
         self.turn_counter = 1
         self.selected_piece_house = None
+        self.checked = False
         self.board = Board(houses=self.build_houses())
         self.set_up_pieces()
 
@@ -32,10 +33,11 @@ class Match:
         return self.board
 
     def draw(self, display, text_font):
-        self.prepare_player_turn_indicator(display, text_font, 100, 410)
         for col in range(0, 8):
             for row in range(0, 8):
                 self.board.houses[col][row].draw(display)
+        self.text_indicator(display, text_font, 100, 410)
+        self.draw_button(display, text_font)
 
     def build_houses(self):
         houses = [[0 for _ in range(8)] for __ in range(8)]
@@ -46,6 +48,12 @@ class Match:
                 houses[col][row] = House(col, row, color)
                 color_index = (color_index + 1) % 2
         return houses
+    
+    def button_manager(self):
+        if self.checked:
+            self.checked = False
+        else:
+            self.prepare_match()
 
     def get_turn(self):
         return self.turn
@@ -58,12 +66,18 @@ class Match:
             self.turn = WHITE
 
     def movement_manager(self, selected_house, desired_house):
+        
+        ia_turn = False
+        
+        if desired_house is not None:
+            self.board.set_selected_piece_house(selected_house)
+            ia_turn = True
+        
+        if self.checked and not ia_turn:
+            return
 
         position = selected_house.get_position()
         color_turn = self.get_turn()
-
-        if desired_house is not None:
-            self.board.set_selected_piece_house(selected_house)
 
         # verifica se há uma peça na casa
         if selected_house.get_piece() is not None and has_teammate(position, color_turn, self.board) and desired_house is None:
@@ -156,8 +170,8 @@ class Match:
                 # lógica de movimentação e captura
                 captured_piece = self.move(selected_piece, captured_piece, desired_house)
 
-                is_checked = self.is_checked()
-                if is_checked:
+                self.checked = self.is_checked()
+                if self.checked:
                     self.undo_move(selected_piece, desired_house, captured_piece, captured_piece_house,
                                          new_rook_house)
 
@@ -176,7 +190,7 @@ class Match:
 
                 
                 # Troca o turno
-                if not is_checked: 
+                if not self.checked: 
                     self.switch_turn()
                 
                 # limpar as casas realçadas
@@ -204,16 +218,22 @@ class Match:
         self.board.get_selected_piece_house().set_piece(selected_piece)
 
 
-    def prepare_player_turn_indicator(self, screen, font, x, y):
-        self.clean_turn_indicator(screen)
-        self.draw_button(screen, font)
-        text = "Vez das peças "
-        if self.turn == WHITE:
-            text += "brancas"
-            color = WHITE
-        else:
-            text += "pretas"
+    def text_indicator(self, screen, font, x, y):
+        self.clear_text_indicator(screen)
+        text = ""
+        color = WHITE
+        text = " "
+        if self.turn != WHITE:
             color = (0, 0, 0)
+        if not self.checked:
+            text = "Vez das peças "
+            if self.turn != WHITE:
+                text += "brancas"
+            else:
+                text += "pretas"
+        else:
+            text = "Ficou em Xeque! Faça outra jogada."
+            
         indicator = font.render(text, True, color)
 
         screen_width = screen.get_width() / 2
@@ -222,18 +242,18 @@ class Match:
 
         screen.blit(indicator, (x, y))
 
-    def clean_turn_indicator(self, screen):
+    def clear_text_indicator(self, screen):
         pygame.draw.rect(screen, (26, 120, 122), (0, 400, 400, 100))
-
-    def draw_alert(self, screen):
-        pygame.draw.rect(screen, (26, 120, 122), (200, 100, 200, 50))
 
     def draw_button(self, screen, font):
         height = 25
         width = 200
         x = screen.get_width() / 4
         y = 440
-        text = "Reiniciar Partida"
+        if self.checked:
+            text = "Ok"
+        else:
+            text = "Reiniciar Partida"
 
         pygame.draw.rect(screen, (210, 210, 210), (x, y, width, height), 0, 3, 3, 3, 3)
         text_button = font.render(text, True, (0, 0, 0))
