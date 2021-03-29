@@ -22,13 +22,6 @@ class Board:
                 self.houses[col][row].set_is_highlight(False)
                 self.houses[col][row].set_selected(False)
 
-    def get_danger_moves(self):
-        print("get_danger_moves")
-
-    def is_checked(self):
-        print("is_checked")
-        return False
-
     # TODO: descobrir porque recebe uma tuple pos
     def get_house(self, pos):
         col = pos[0]
