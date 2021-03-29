@@ -14,3 +14,6 @@ white_horse = pygame.image.load(os.path.join("./images", "wN.png"))
 white_bishop = pygame.image.load(os.path.join("./images", "wB.png"))
 white_queen = pygame.image.load(os.path.join("./images", "wQ.png"))
 white_king = pygame.image.load(os.path.join("./images", "wK.png"))
+
+fallen_white_king = pygame.image.load(os.path.join("./images", "fallen_white_king.jpg"))
+fallen_black_king = pygame.image.load(os.path.join("./images", "fallen_black_king.jpg"))
