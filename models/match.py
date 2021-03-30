@@ -135,7 +135,7 @@ class Match:
                             queen_image = images.black_queen
                         else:
                             queen_image = images.white_queen
-                        queen = Queen(selected_piece.get_color(), queen_image, selected_piece_desired_pos)
+                        queen = Queen(selected_piece.get_color(), queen_image, desired_house.get_position())
                         desired_house.set_piece(queen)
 
                 # limpa a casa da peça selecionada
