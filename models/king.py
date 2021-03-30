@@ -10,6 +10,13 @@ class King(Piece):
         self.turn_first_move_false = 0
         self.is_checked = False
 
+        
+    def get_value():
+        if self.get_color() == WHITE:
+            return 100
+        else:
+            return -100
+
     # verifica se o movimento eh o roque.
     # eh roque quando o rei anda mais de uma casa
     def is_special_move(self, current_pos, desired_pos):

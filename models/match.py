@@ -37,8 +37,8 @@ class Match:
         self.blackCapturePieceIncator = 0
 
 
-    def get_is_stalemate(self):
         return self.is_stalemate
+    def get_is_stalemate(self):
     
     def get_board(self):
         return self.board

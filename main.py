@@ -4,6 +4,8 @@ from models.ia import Ia
 from constants.colors import *
 from constants.screens import Screens
 
+from models.scenario import Scenario
+
 pygame.init()
 
 
@@ -22,6 +24,7 @@ def main():
     running = True
     ia_on = True
 
+    ia_teste = Scenario()
     while running:
         match.is_checkmate = match.checkmate()
 

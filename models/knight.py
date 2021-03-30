@@ -6,6 +6,13 @@ class Knight(Piece):
     def __init__(self, color, img, house):
         super(Knight, self).__init__(color, img, house)
 
+    
+    def get_value():
+        if self.get_color() == WHITE:
+            return 3
+        else:
+            return -3
+
     def get_type(self):
         return self.__str__()
 

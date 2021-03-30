@@ -6,6 +6,13 @@ class Queen(Piece):
     def __init__(self, color, img, house):
         super(Queen, self).__init__(color, img, house)
 
+
+    def get_value():
+        if self.get_color() == WHITE:
+            return 9
+        else:
+            return -9
+
     def get_type(self):
         return self.__str__()
 

@@ -8,6 +8,14 @@ class Rook(Piece):
         self.is_first_move = True
         self.turn_first_move_false = 0
 
+
+    def get_value():
+        if self.get_color() == WHITE:
+            return 5
+        else:
+            return -5
+
+
     def get_type(self):
         return self.__str__()
 
