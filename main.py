@@ -6,9 +6,9 @@ from constants.colors import *
 pygame.init()
 
 def main():
-    screen = pygame.display.set_mode([400, 500])
+    screen = pygame.display.set_mode([400, 400])
     pygame.display.set_caption("Xadrez")
-    pygame.display.flip()
+    
     clock = pygame.time.Clock()
 
     # defining Text font
@@ -16,22 +16,34 @@ def main():
 
     match = Match()
     ia = Ia(match)
-    ia_on = False
+    
     running = True
-
-    while running:
+    ia_on = True
+    
+    while running:                
         match.is_checkmate = match.checkmate()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if match.get_turn() == BLACK and ia_on:
                 ia.move()
-            if event.type == pygame.MOUSEBUTTONDOWN:                    
-                if pygame.mouse.get_pos()[1] <= 400:
-                    clicked_house = get_clicked_house(match)
-                    match.movement_manager(clicked_house,None)
-                elif button_click_manager(pygame.mouse, screen):
-                    match.button_manager()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if match.choice:                   
+                    if pygame.mouse.get_pos()[1] <= 400:
+                        clicked_house = get_clicked_house(match)
+                        match.movement_manager(clicked_house,None)
+                    elif button_click_manager(screen):
+                        if not match.checked:
+                            screen = pygame.display.set_mode([400, 400])
+                        match.button_manager()
+                        
+                else:
+                    if pygame.mouse.get_pos()[0] >= 45 and pygame.mouse.get_pos()[0] <= 125 and pygame.mouse.get_pos()[1] >= 182 and pygame.mouse.get_pos()[1] <= 210:
+                        ia_on = False
+                    elif pygame.mouse.get_pos()[0] >= 158 and pygame.mouse.get_pos()[0] <= 242 and pygame.mouse.get_pos()[1] >= 182 and pygame.mouse.get_pos()[1] <= 210:
+                        ia_on = True
+                    match.choice = True
+                    screen = pygame.display.set_mode([400, 500])
 
         pygame.display.update()
         clock.tick(60)
@@ -41,10 +53,10 @@ def get_clicked_house(match):
     return match.board.houses[int(pygame.mouse.get_pos()[0] / (6.25 * 8))][
         int(pygame.mouse.get_pos()[1] / (6.25 * 8))]
 
-def button_click_manager(mouse, screen):
-    return (mouse.get_pos()[0] >= screen.get_width() / 4 and mouse.get_pos()[
+def button_click_manager(screen):
+    return (pygame.mouse.get_pos()[0] >= screen.get_width() / 4 and pygame.mouse.get_pos()[
         0] <= screen.get_width() / 4 + 200 and
-            mouse.get_pos()[1] >= 440 and mouse.get_pos()[
+            pygame.mouse.get_pos()[1] >= 440 and pygame.mouse.get_pos()[
                 1] <= 440 + 25)
 
 if __name__ == "__main__":
