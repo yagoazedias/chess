@@ -1,5 +1,6 @@
 from models.piece import Piece
 from util.move import *
+from constants.colors import *
 
 
 class Bishop(Piece):
@@ -8,11 +9,11 @@ class Bishop(Piece):
 
 
         
-    def get_value():
+    def get_value(self):
         if self.get_color() == WHITE:
-            return 3
+            return 30
         else:
-            return -3
+            return -30
             
     def get_type(self):
         return self.__str__()

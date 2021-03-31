@@ -24,7 +24,6 @@ def main():
     running = True
     ia_on = True
 
-    ia_teste = Scenario()
     while running:
         match.is_checkmate = match.checkmate()
 

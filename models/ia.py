@@ -1,6 +1,7 @@
 from constants.colors import *
 from random import choices
 
+from models.scenario import Scenario
 
 class Ia:
     def __init__(self, match):
@@ -9,8 +10,9 @@ class Ia:
     def move(self):
 
         if self.match.get_turn() == BLACK:
-            positions = self.select_piece_and_desired_house()
-
+            scenario = Scenario()
+            positions = scenario.play(self.match)
+            #positions = self.select_piece_and_desired_house()
             selected_house = positions[0]
             desired_house = positions[1]
 

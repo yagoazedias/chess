@@ -12,6 +12,13 @@ class Pawn(Piece):
         self.is_en_passant_vulnerable = False
         self.house = house
 
+
+    def get_value(self):
+        if self.get_color() == WHITE:
+            return 10
+        else:
+            return -10
+
     def __str__(self):
         return PAWN
 

@@ -1,4 +1,5 @@
 import pygame
+from constants.colors import *
 
 
 class Piece(object):
