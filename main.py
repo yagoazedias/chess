@@ -20,6 +20,7 @@ def main():
     running = True
 
     while running:
+        match.is_checkmate = match.checkmate()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
