@@ -123,10 +123,46 @@ class Scenario:
         #best_scenario = 8*[8*[0]]
         
         #best_scenario = self.minimax(board, 1, -3)
-        all_moves = self.getAllTurnScenarios(board, -3)
+        
+        #FUNCIONANDO! SEM MINIMAX. so com o min_scenario
+        #all_moves = self.getAllTurnScenarios(board, -3)
+        #best_scenario = self.min_scenario(all_moves)
+        #-----------------------#####
 
-        best_scenario = self.min_scenario(all_moves)
+        #esse if else eh inutil. smp vai entrar aqui
+        #como pretas. e pretas sao o -1 (nao eh maximizing player)
+        #e sim minimizing
+        if match.get_turn() == WHITE:
+            maximizing_player = 1
+        else:
+            maximizing_player = -1
 
+
+        #ESTA AVALIANDO OS MOVIMENTOS DO BRANCO ERRADO (nao sei pq)
+        #so funciona profundidade 1 (q é a mesma coisa de so usar a
+        # funcao 'min_scenario' que eu comentei ali embaixo,
+        # ffalando q funciona sem o minimax).
+        #obs.: ele ta achando, com as pretas, que ele está embaixo no tabuleiro!!!
+        #nao sei pq. ouuu ele ta achando q pode jogar qqr peca em qqr lugar. nao sei
+        #tem q verificar. eu testei as funcoes de calcular os movimentos das brancas e 
+        #tava tudo ok
+        best_scenario = self.minimax(board, 2, False)
+
+        #teste do allturncenario branco
+        # board1 = [-50, -29, -30, -90, -1000, -30, -29, -50], \
+        #   [-10,-10,-10,-10,-10,-10,-10,-10], \
+        #   [0,0,0,0,0,0,0,0], \
+        #   [0,0,0,0,0,0,0,0],  \
+        #   [0,0,0,0,0,0,0,0], \
+        #   [0,0,0,0,0,0,0,0], \
+        #   [10,10,10,10,10,10,10,10], \
+        #   [50, 29, 30, 90, 1000, 30, 29, 50], \
+        
+        # t = self.getAllTurnScenarios(board1, 1)
+        # print(np.array(t))
+        
+        
+        
         best_scenario = self.unflip_board(best_scenario)
         board = self.unflip_board(board)
         
@@ -175,21 +211,32 @@ class Scenario:
 
         return result
 
-    def min_scenario(self, scenarios):
-        best = np.full((8,8), 999)
-        for i in range(len(scenarios)):
-            if np.array(scenarios[i]).sum() < best.sum():
-                best = np.array(scenarios[i])
+    #FUNCIONANDO: (SEM MINIMAX)
+    # def min_scenario(self, scenarios):
+    #     best = np.full((8,8), 999)
+    #     for i in range(len(scenarios)):
+    #         if np.array(scenarios[i]).sum() < best.sum():
+    #             best = np.array(scenarios[i])
 
-        return best
+    #     return best
 
-    def max_scenario(self, maxEval, scenarios):
-        best = np.full((8,8) -999)
-        for i in range(len(scenarios)):
-            if np.array(scenarios[i]).sum() > best.sum():
-                best = np.array(scenarios[i])
+    # def max_scenario(self, scenarios):
+    #     best = np.full((8,8) -999)
+    #     for i in range(len(scenarios)):
+    #         if np.array(scenarios[i]).sum() > best.sum():
+    #             best = np.array(scenarios[i])
 
-        return best
+    #     return best
+
+    def min_scenario(self, minEval, board):
+        if minEval.sum() < board.sum():
+            return minEval
+        return board
+
+    def max_scenario(self, maxEval, board):
+        if maxEval.sum() > board.sum():
+            return maxEval
+        return board
     
     # def min_scenario(self, scenario1, scenario2):
     #     if self.scenario_evaluation(scenario2) < self.scenario_evaluation(scenario2):
@@ -203,24 +250,27 @@ class Scenario:
 
 
     def maximizing_player(self, my_color):
-        return my_color > 0
+        if my_color == -1:
+            return False
+        return True
 
-    def minimax(self, board, depth, maximizingPlayer=-1):
+    def minimax(self, board, depth, maximizing_player):
         if depth == 0:  #or scenario.game_over() <- implementar essa funcao de fim de jogo
-            return board
-        #if self.maximizing_player(maximizingPlayer): #maximizingPlayer
-            #maxEval = self.negative_infinity()
-            #for sub_board in self.getAllTurnScenarios(board, maximizingPlayer):
-                #evaluation = self.minimax(sub_board, depth-1, -1)
-                #maxEval = self.max_scenario(maxEval, evaluation)
-            #return maxEval
+            return np.array(board)
+        if maximizing_player: #maximizingPlayer
+            print('max')
+            maxEval = np.full((8,8), -99)
+            for sub_board in self.getAllTurnScenarios(board, 1):
+                board_eval = self.minimax(sub_board, depth-1, False)
+                maxEval = self.max_scenario(maxEval, board_eval)
+            return maxEval
         
         else:
-            minEval = self.positive_infinity()
-            minEval = self.min_scenario(minEval, self.getAllTurnScenarios(board, maximizingPlayer))
-            #for sub_board in self.getAllTurnScenarios(board, maximizingPlayer):
-                #evaluation = self.minimax(sub_board, depth-1, 1)
-                #minEval = self.min_scenario(minEval, evaluation)
+            print('min')
+            minEval = np.full((8,8), 99)
+            for sub_board in self.getAllTurnScenarios(board, -1):
+                board_eval = self.minimax(sub_board, depth-1, True)
+                minEval = self.min_scenario(minEval, board_eval)
             return minEval
 
 
