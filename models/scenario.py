@@ -6,6 +6,16 @@ from constants.colors import *
 import copy
 from util.move_ia import *
 
+#observacoes: 
+#-as vezes ele faz umas jogadas suicidas que não entendo(nao sei se eh bug);
+#-a IA nao considera os movimentos especiais;
+#-eu fui mexendo nessa classe com o tempo, entao as outras estao desatualizadas;
+#-talvez se atualizar as outras classes, tenha que fazer ajustes aqui na IA;
+#-as vezes ele fica fazendo a mesma jogada toda hora (qnd da no mesmo qqr jogada)
+#por ex, a torre fica indo para um lado e para o outro. talvez dê para aprimorar isso
+#sorteando um movimento em determinada situacao. mas nao consegui pensar nume 
+# logica para  resolver isso;
+#-deve ter outros bugs
 class Scenario:
     def __init__(self):
         pass
@@ -77,7 +87,7 @@ class Scenario:
 
         best_scenario = np.full((8,8), 999)
         for scenario in all_scenarios:
-            scenario_evaluation = self.minimax(scenario, 0, -999, 999, 1)
+            scenario_evaluation = self.minimax(scenario, 2, -999, 999, 1)
             if best_scenario.sum() > scenario_evaluation: 
                 best_scenario = np.array(scenario)        
         
