@@ -414,28 +414,3 @@ def get_all_piece_positions(board, my_color):
     if my_color > 0:
         return get_all_white_pos(board)
 
-
-
-board = [-50, -29, -30, -90, -1000, -30, -29, -50], \
-          [-10,-10,-10,-10,-10,-10,-10,-10], \
-          [0,0,0,0,0,0,0,0], \
-          [0,0,0,0,0,0,0,0],  \
-          [0,0,0,0,0,0,0,0], \
-          [0,0,0,0,0,0,0,0], \
-          [10,10,10,10,10,10,10,10], \
-          [50, 29, 30, 90, 1000, 30, 29, 50], \
-                #a 
-
-def print_board(board):
-    tabuleiro = ""
-    for line in board:
-        print("\n")
-        linha = ""
-        for piece in line:
-            linha = linha + str(piece) + " | "
-    linha = linha + "\n"
-    tabuleiro = tabuleiro + linha
-    print(tabuleiro)
-
-
-posi = (0,0)
