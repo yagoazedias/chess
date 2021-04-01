@@ -25,6 +25,7 @@ class Match:
         self.turn = WHITE
         self.turn_counter = 1
         self.selected_piece_house = None
+        self.choice = False
         self.checked = False
         self.is_checkmate = False
         self.board = Board(houses=self.build_houses())
@@ -34,16 +35,20 @@ class Match:
         return self.board
 
     def draw(self, display, text_font):
-        if not self.is_checkmate:
-            for col in range(0, 8):
-                for row in range(0, 8):
-                    self.board.houses[col][row].draw(display)
+        if self.choice:
+            if not self.is_checkmate:
+                for col in range(0, 8):
+                    for row in range(0, 8):
+                        self.board.houses[col][row].draw(display)
+            else:
+                fallen_king = images.fallen_white_king if self.get_turn() == WHITE else images.fallen_black_king
+                draw_this = pygame.transform.scale(fallen_king, (400,400))
+                display.blit(draw_this, (0, 0))
+            self.text_indicator(display, text_font, 100, 410)
+            self.draw_button(display, text_font)
         else:
-            fallen_king = images.fallen_white_king if self.get_turn() == WHITE else images.fallen_black_king
-            draw_this = pygame.transform.scale(fallen_king, (400,400))
+            draw_this = pygame.transform.scale(images.chess, (400,400))
             display.blit(draw_this, (0, 0))
-        self.text_indicator(display, text_font, 100, 410)
-        self.draw_button(display, text_font)
 
     def build_houses(self):
         houses = [[0 for _ in range(8)] for __ in range(8)]
@@ -130,7 +135,7 @@ class Match:
                             queen_image = images.black_queen
                         else:
                             queen_image = images.white_queen
-                        queen = Queen(selected_piece.get_color(), queen_image, selected_piece_desired_pos)
+                        queen = Queen(selected_piece.get_color(), queen_image, desired_house.get_position())
                         desired_house.set_piece(queen)
 
                 # limpa a casa da peça selecionada
