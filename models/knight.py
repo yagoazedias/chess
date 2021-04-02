@@ -10,9 +10,9 @@ class Knight(Piece):
     
     def get_value(self):
         if self.get_color() == WHITE:
-            return 29
+            return 30 
         else:
-            return -29
+            return -30
 
     def get_type(self):
         return self.__str__()
