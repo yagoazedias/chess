@@ -7,7 +7,6 @@ class Bishop(Piece):
     def __init__(self, color, img, house):
         super(Bishop, self).__init__(color, img, house)
 
-
         
     def get_value(self):
         if self.get_color() == WHITE:

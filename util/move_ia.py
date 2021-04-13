@@ -386,7 +386,7 @@ def get_piece_all_moves(board, pos):
     if abs(piece) == 90:
         return queen_possible_moves(board, pos)
     
-    if abs(piece) == 1000:
+    if abs(piece) == 150:
         return king_possible_moves(board, pos)
 
 
@@ -413,4 +413,3 @@ def get_all_piece_positions(board, my_color):
         return get_all_black_pos(board)
     if my_color > 0:
         return get_all_white_pos(board)
-

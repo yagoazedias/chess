@@ -101,7 +101,6 @@ def get_clicked_house(match):
     return match.board.houses[int(pygame.mouse.get_pos()[0] / (6.25 * 8))][
         int(pygame.mouse.get_pos()[1] / (6.25 * 8))]
 
-
 def button_click_manager(screen):
     return (pygame.mouse.get_pos()[0] >= screen.get_width() / 4 and pygame.mouse.get_pos()[
         0] <= screen.get_width() / 4 + 200 and

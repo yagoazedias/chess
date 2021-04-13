@@ -2,7 +2,6 @@ from models.piece import Piece
 from util.move import *
 from constants.colors import *
 
-
 class Queen(Piece):
     def __init__(self, color, img, house):
         super(Queen, self).__init__(color, img, house)

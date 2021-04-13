@@ -2,6 +2,8 @@ from models.piece import Piece
 from util.move import *
 from constants.colors import *
 
+
+
 class Rook(Piece):
     def __init__(self, color, img, house):
         super(Rook, self).__init__(color, img, house)

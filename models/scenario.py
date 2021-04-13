@@ -55,9 +55,54 @@ class Scenario:
             board.append(line)
         return board
 
+    # def copy_match(self, match):
+    #     new_board = copy.copy(match.get_board())
+    #     new_match = Match()
+    #     new_match.set_board(new_board)
+    #     #tuple_ = match.get_all()
+    #     #new_match.set_all(tuple_[0], tuple_[1], tuple_[2], tuple_[3], tuple_[4])
+    #     return new_match
+
+    def print_matrix(self, matrix):
+        for i in range(8):
+            print('\n')
+            print(matrix[i])
+
+
+    def compare_before_after(self, board1, board2):
+        selected_house = (0,0)
+        desired_house = (0,0)
+        for i in range(8):
+            for j in range(8):
+                prev_element = board1[i][j]
+                current_element = board2[i][j]
+                if prev_element != current_element:
+                    if current_element == 0:
+                        selected_house = (i,j)
+                        continue
+                    if current_element != 0:
+                        desired_house = (i,j)
+                        continue
+        return (selected_house, desired_house)
+
+    def invert(self,pos):
+        return (pos[1], pos[0])
+
+
+    def house_to_matrix(self, matrix):
+        board = []
+        for i in range(8):
+            line = []
+            for j in range(8):
+                if matrix[i][j].get_piece() is not None:
+                    line.append(matrix[i][j].get_piece().get_value())
+                else:
+                    line.append(0)
+
+            board.append(line)
+        return board
+
     
-    #inverte o tabuleiro (eu n consegui fazer as contas de outra forma)
-    #(isso tem a ver com aquilo de retornar row e col x retornar col x row)
     def flip_board(self, board):
         fix_matrix = np.rot90(board, axes=(1,0))
         for i in range(8):
@@ -65,7 +110,6 @@ class Scenario:
         
         return fix_matrix
 
-    #desfaz a funcao flip_board
     def unflip_board(self, board):
         for i in range(8):
             board[i] = np.flip(board[i])
@@ -74,8 +118,7 @@ class Scenario:
 
     
     def play(self, match):
-
-        #recebe a matriz de houses
+                #recebe a matriz de houses
         matrix_houses = match.get_board().get_houses()
         #inverte(explicacao na declaracao da funcao)
         fix_matrix = self.flip_board(matrix_houses)
@@ -86,14 +129,20 @@ class Scenario:
         all_scenarios = self.getAllTurnScenarios(board, -1)
 
         best_scenario = np.full((8,8), 999)
+        best_scenario_value = best_scenario.sum()
+        
         for scenario in all_scenarios:
             scenario_evaluation = self.minimax(scenario, 2, -999, 999, 1)
             print(np.array(scenario))
             print(scenario_evaluation)
-            if best_scenario.sum() > scenario_evaluation: 
-                best_scenario = np.array(scenario)        
-        
-
+            if best_scenario_value > scenario_evaluation:
+                # print(best_scenario.sum(), " é maior que ", scenario_evaluation) 
+                best_scenario = np.array(scenario)
+                best_scenario_value = scenario_evaluation
+                
+        #best_scenario = self.min_scenario(all_scenarios)
+        # print("board escolhido: ", np.array(best_scenario))
+        # print("\nvalor do board: ", best_scenario.sum())
         
         best_scenario = self.unflip_board(best_scenario)
         board = self.unflip_board(board)
@@ -105,7 +154,7 @@ class Scenario:
         d_house = selected_desired[1]
         s_house = match.get_board().get_house(s_house)
         d_house = match.get_board().get_house(d_house)
-
+        print(s_house.get_piece(), d_house.get_piece())
         return (s_house, d_house)
 
 
@@ -184,21 +233,21 @@ class Scenario:
 
 
 
-    #teste: da p usar essa funcao em vez do minimax. 
-    #eh como se fosse um minimax de profundidade 1
-    # def min_scenario(self, scenarios):
-    #     best = np.full((8,8), 999)
-    #     for i in range(len(scenarios)):
-    #         if np.array(scenarios[i]).sum() < best.sum():
-    #             best = np.array(scenarios[i])
+    # teste: da p usar essa funcao em vez do minimax. 
+    # eh como se fosse um minimax de profundidade 1
+    def min_scenario(self, scenarios):
+        best = np.full((8,8), 999)
+        for i in range(len(scenarios)):
+            if np.array(scenarios[i]).sum() < best.sum():
+                best = np.array(scenarios[i])
 
-    #     return best
+        return best
 
-    # def max_scenario(self, scenarios):
-    #     best = np.full((8,8) -999)
-    #     for i in range(len(scenarios)):
-    #         if np.array(scenarios[i]).sum() > best.sum():
-    #             best = np.array(scenarios[i])
+    def max_scenario(self, scenarios):
+        best = np.full((8,8) -999)
+        for i in range(len(scenarios)):
+            if np.array(scenarios[i]).sum() > best.sum():
+                best = np.array(scenarios[i])
 
-    #     return best
+        return best
             
