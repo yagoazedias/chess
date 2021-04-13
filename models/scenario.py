@@ -88,6 +88,8 @@ class Scenario:
         best_scenario = np.full((8,8), 999)
         for scenario in all_scenarios:
             scenario_evaluation = self.minimax(scenario, 2, -999, 999, 1)
+            print(np.array(scenario))
+            print(scenario_evaluation)
             if best_scenario.sum() > scenario_evaluation: 
                 best_scenario = np.array(scenario)        
         
@@ -110,10 +112,12 @@ class Scenario:
     def minimax(self, board, depth, alpha, beta, maximizing_player):
         if depth == 0:  #or scenario.game_over() <- implementar essa funcao de fim de jogo
             return np.array(board).sum()
+        
+        #all_turn_scenarios = self.getAllTurnScenarios(board, )
 
         if maximizing_player == 1: #maximizingPlayer
-            maxEval = -999
-            for sub_board in self.getAllTurnScenarios(board, maximizing_player):
+            maxEval = -99999
+            for sub_board in self.getAllTurnScenarios(board, 1):
                 board_eval = self.minimax(sub_board, depth-1, alpha, beta, -1)
                 maxEval = max(maxEval, board_eval)
                 alpha = max(alpha, board_eval)
@@ -122,11 +126,11 @@ class Scenario:
             return maxEval
         
         else:
-            minEval = 999
-            for sub_board in self.getAllTurnScenarios(board, maximizing_player): #self.getAllTurnScenarios(board, -1):
+            minEval = 99999
+            for sub_board in self.getAllTurnScenarios(board, -1): #self.getAllTurnScenarios(board, -1):
                 board_eval = self.minimax(sub_board, depth-1, alpha, beta, 1)
                 minEval = min(minEval, board_eval)
-                alpha = min(beta, board_eval)
+                beta = min(beta, board_eval)
                 if beta <= alpha:
                     break
             return minEval
