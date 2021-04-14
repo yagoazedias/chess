@@ -4,8 +4,6 @@ from models.ia import Ia
 from constants.colors import *
 from constants.screens import Screens
 
-from models.scenario import Scenario
-
 pygame.init()
 
 

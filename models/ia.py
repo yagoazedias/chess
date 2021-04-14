@@ -1,8 +1,6 @@
 from constants.colors import *
 from random import choices
-from models.scenario import Scenario
-
-from models.scenario import Scenario
+from models.minimax_ia import MinimaxIA
 
 class Ia:
     def __init__(self, match):
@@ -12,8 +10,8 @@ class Ia:
 
         if self.match.get_turn() == BLACK:
             
-            scenario = Scenario()
-            positions = scenario.play(self.match)
+            minimax_ia = MinimaxIA()
+            positions = minimax_ia.play(self.match)
             #positions = self.select_piece_and_desired_house()
 
             selected_house = positions[0]
