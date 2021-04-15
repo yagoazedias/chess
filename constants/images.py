@@ -19,3 +19,5 @@ fallen_white_king = pygame.image.load(os.path.join("./images", "fallen_white_kin
 fallen_black_king = pygame.image.load(os.path.join("./images", "fallen_black_king.jpg"))
 
 chess = pygame.image.load(os.path.join("./images", "chess.jpg"))
+
+credits_screen = pygame.image.load(os.path.join("./images", "credits.jpeg"))
