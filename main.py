@@ -29,8 +29,6 @@ def main():
             mouse_x = pygame.mouse.get_pos()[0]
             mouse_y = pygame.mouse.get_pos()[1]
 
-            print('DEBUG', pygame.mouse.get_pos())
-
             if event.type == pygame.QUIT:
                 running = False
             if match.get_turn() == BLACK and ia_on:
