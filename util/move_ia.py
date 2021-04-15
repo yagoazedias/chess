@@ -341,7 +341,7 @@ def king_possible_moves(board, pos):
                         up_right(pos), down_left(pos), down_right(pos)]
     invalid_moves = []
     for move in move_list:
-        if not (is_valid_pos(move)) or has_teammate(board, pos, my_color):
+        if not (is_valid_pos(move)) or has_teammate(board, move, my_color):
             invalid_moves.append(move)
 
     move_list = [x for x in move_list if x not in invalid_moves]
@@ -386,7 +386,7 @@ def get_piece_all_moves(board, pos):
     if abs(piece) == 90:
         return queen_possible_moves(board, pos)
     
-    if abs(piece) == 150:
+    if abs(piece) == 1000:
         return king_possible_moves(board, pos)
 
 

@@ -14,9 +14,9 @@ class King(Piece):
         
     def get_value(self):
         if self.get_color() == WHITE:
-            return 150
+            return 1000
         else:
-            return -150
+            return -1000
 
     # verifica se o movimento eh o roque.
     # eh roque quando o rei anda mais de uma casa
