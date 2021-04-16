@@ -10,6 +10,8 @@ class Ia:
 
         if self.match.get_turn() == BLACK:
             
+            #para voltar a IA com movimentos aleatórios, é só comentar
+            #essas duas linhas abaixo, e descomentar essa terceira que está comentada.
             minimax_ia = MinimaxIA()
             positions = minimax_ia.play(self.match)
             #positions = self.select_piece_and_desired_house()

@@ -30,8 +30,7 @@ class MinimaxIA:
         return (selected_house, desired_house)
     
 
-
-    #converte a matriz de houses em uma matriz de numeros
+    #converte a matriz de houses em uma matriz de inteiros
     #cada peca tem um valor definido
     def house_to_matrix(self, matrix):
         board = []
@@ -46,35 +45,7 @@ class MinimaxIA:
             board.append(line)
         return board
 
-    # def copy_match(self, match):
-    #     new_board = copy.copy(match.get_board())
-    #     new_match = Match()
-    #     new_match.set_board(new_board)
-    #     #tuple_ = match.get_all()
-    #     #new_match.set_all(tuple_[0], tuple_[1], tuple_[2], tuple_[3], tuple_[4])
-    #     return new_match
-
-    def print_matrix(self, matrix):
-        for i in range(8):
-            print('\n')
-            print(matrix[i])
-
-
-
-    def house_to_matrix(self, matrix):
-        board = []
-        for i in range(8):
-            line = []
-            for j in range(8):
-                if matrix[i][j].get_piece() is not None:
-                    line.append(matrix[i][j].get_piece().get_value())
-                else:
-                    line.append(0)
-
-            board.append(line)
-        return board
-
-    
+    #(coluna, linha) para (linha, coluna)
     def flip_board(self, board):
         fix_matrix = np.rot90(board, axes=(1,0))
         for i in range(8):
@@ -82,54 +53,80 @@ class MinimaxIA:
         
         return fix_matrix
 
+    
+    #(linha, coluna) para (coluna, linha)
     def unflip_board(self, board):
         for i in range(8):
             board[i] = np.flip(board[i])
         board = np.rot90(board, axes=(1,0), k=3)
         return board
 
-    
-    def play(self, match):
-                #recebe a matriz de houses
+    #retorna e prepara o tabuleiro para fazer os calculos
+    #de melhor movimento
+    def prepare_board(self, match):
+        #recebe a matriz de houses
         matrix_houses = match.get_board().get_houses()
-        #inverte(explicacao na declaracao da funcao)
+        #inverte(explicacao na declaracao da funcao flip_board())
         fix_matrix = self.flip_board(matrix_houses)
         #transforma em matriz de numeros
         board = self.house_to_matrix(fix_matrix)
+        return board
+    
+    #recebe uma lista de duas coordenadas e retorna as houses correspondentes
+    #usado para retornar a posição atual e a posição desejada, ou seja, o movimento desejado
+    def coords_to_houses(self, match, coords):
+        selected_house = coords[0]
+        desired_house = coords[1]
+        selected_house = match.get_board().get_house(selected_house)
+        desired_house = match.get_board().get_house(desired_house)
+        print(selected_house.get_piece(), desired_house.get_piece())
+        return (selected_house, desired_house)
         
-        #retorna todos os cenarios possiveis do turno
-        all_scenarios = self.get_all_turn_scenarios(board, -1)
-
-        best_scenario = np.full((8,8), 999)
-        best_scenario_value = best_scenario.sum()
+    
+    def play(self, match):
         
-        for scenario in all_scenarios:
-            scenario_evaluation = self.minimax(scenario, 2, -999, 999, 1)
-            print(np.array(scenario))
-            print(scenario_evaluation)
-            if best_scenario_value > scenario_evaluation:
-                # print(best_scenario.sum(), " é maior que ", scenario_evaluation) 
-                best_scenario = np.array(scenario)
-                best_scenario_value = scenario_evaluation
-                
-        #best_scenario = self.min_scenario(all_scenarios)
-        # print("board escolhido: ", np.array(best_scenario))
-        # print("\nvalor do board: ", best_scenario.sum())
+        board = self.prepare_board(match)
         
+        #calcula o melhor movimento e retorna o tabuleiro resultante
+        best_scenario = self.calculate_best_move(board)
+        
+        #explicação na declaração da função unflip_board()
         best_scenario = self.unflip_board(best_scenario)
         board = self.unflip_board(board)
         
-
+        #explicação na declaração da função extract_movement()
         selected_and_desired_house = self.extract_movement(board, best_scenario)
-
-        s_house = selected_and_desired_house[0]
-        d_house = selected_and_desired_house[1]
-        s_house = match.get_board().get_house(s_house)
-        d_house = match.get_board().get_house(d_house)
-        print(s_house.get_piece(), d_house.get_piece())
-        return (s_house, d_house)
+        
+        #retorna o movimento desejado
+        move = self.coords_to_houses(match, selected_and_desired_house)
+        return move
 
 
+    #dentre todas as jogadas possíveis, retorna a que tiver o menor valor,
+    #pois a IA joga com as pretas, e as pretas são valores negativos. Então,
+    #quanto menor o valor da soma do tabuleiro, melhor para a IA
+    def calculate_best_move(self, board):
+        #retorna todos os cenarios possiveis do turno
+        all_scenarios = self.get_all_turn_scenarios(board, -1)
+        
+        #inicialização das variáveis
+        best_scenario = np.full((8,8), 999)
+        best_scenario_value = best_scenario.sum()
+        
+        #para cada jogada possível...
+        for scenario in all_scenarios:
+            #...calcula o valor dela usando minimax
+            scenario_evaluation = self.minimax(scenario, 2, -999, 999, 1)
+            print(np.array(scenario))
+            print(scenario_evaluation)
+            #comparação para descobrir o menor valor
+            if best_scenario_value > scenario_evaluation:
+                best_scenario = np.array(scenario)
+                best_scenario_value = scenario_evaluation
+                
+        return best_scenario
+        
+        
     def minimax(self, board, depth, alpha, beta, maximizing_player):
         if depth == 0:  #or scenario.game_over() <- implementar essa funcao de fim de jogo
             return np.array(board).sum()
@@ -207,6 +204,7 @@ class MinimaxIA:
 
     # teste: da p usar essa funcao em vez do minimax. 
     # eh como se fosse um minimax de profundidade 1
+    ####################
     def min_scenario(self, scenarios):
         best = np.full((8,8), 999)
         for i in range(len(scenarios)):
@@ -216,10 +214,12 @@ class MinimaxIA:
         return best
 
     def max_scenario(self, scenarios):
-        best = np.full((8,8) -999)
+        best = np.full((8,8), -999)
         for i in range(len(scenarios)):
             if np.array(scenarios[i]).sum() > best.sum():
                 best = np.array(scenarios[i])
 
         return best
+    
+    ##################
             
