@@ -45,7 +45,7 @@ class MinimaxIA:
             board.append(line)
         return board
 
-    #(coluna, linha) para (linha, coluna)
+    #converte o tabuleiro do (coluna, linha) para o formato (linha, coluna)
     def flip_board(self, board):
         fix_matrix = np.rot90(board, axes=(1,0))
         for i in range(8):
@@ -54,7 +54,7 @@ class MinimaxIA:
         return fix_matrix
 
     
-    #(linha, coluna) para (coluna, linha)
+    #converte o tabuleiro do formato (linha, coluna) para o formato (coluna, linha)
     def unflip_board(self, board):
         for i in range(8):
             board[i] = np.flip(board[i])
@@ -128,12 +128,10 @@ class MinimaxIA:
         
         
     def minimax(self, board, depth, alpha, beta, maximizing_player):
-        if depth == 0:  #or scenario.game_over() <- implementar essa funcao de fim de jogo
+        if depth == 0:
             return np.array(board).sum()
         
-        #all_turn_scenarios = self.get_all_turn_scenarios(board, )
-
-        if maximizing_player == 1: #maximizingPlayer
+        if maximizing_player == 1:
             maxEval = -99999
             for sub_board in self.get_all_turn_scenarios(board, 1):
                 board_eval = self.minimax(sub_board, depth-1, alpha, beta, -1)
@@ -205,21 +203,21 @@ class MinimaxIA:
     # teste: da p usar essa funcao em vez do minimax. 
     # eh como se fosse um minimax de profundidade 1
     ####################
-    def min_scenario(self, scenarios):
-        best = np.full((8,8), 999)
-        for i in range(len(scenarios)):
-            if np.array(scenarios[i]).sum() < best.sum():
-                best = np.array(scenarios[i])
+    # def min_scenario(self, scenarios):
+    #     best = np.full((8,8), 999)
+    #     for i in range(len(scenarios)):
+    #         if np.array(scenarios[i]).sum() < best.sum():
+    #             best = np.array(scenarios[i])
 
-        return best
+    #     return best
 
-    def max_scenario(self, scenarios):
-        best = np.full((8,8), -999)
-        for i in range(len(scenarios)):
-            if np.array(scenarios[i]).sum() > best.sum():
-                best = np.array(scenarios[i])
+    # def max_scenario(self, scenarios):
+    #     best = np.full((8,8), -999)
+    #     for i in range(len(scenarios)):
+    #         if np.array(scenarios[i]).sum() > best.sum():
+    #             best = np.array(scenarios[i])
 
-        return best
+    #     return best
     
     ##################
             
