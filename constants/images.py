@@ -18,4 +18,6 @@ white_king = pygame.image.load(os.path.join("./images", "wK.png"))
 fallen_white_king = pygame.image.load(os.path.join("./images", "fallen_white_king.jpg"))
 fallen_black_king = pygame.image.load(os.path.join("./images", "fallen_black_king.jpg"))
 
+draw = pygame.image.load(os.path.join("./images", "draw.jpg"))
+
 chess = pygame.image.load(os.path.join("./images", "chess.jpg"))
