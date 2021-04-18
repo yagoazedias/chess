@@ -33,6 +33,8 @@ class Match:
         self.board = Board(houses=self.build_houses())
         self.set_up_pieces()
         self.screen_name = Screens.MENU
+        self.whiteCapturePieceIncator = 0
+        self.blackCapturePieceIncator = 0
 
 
     def get_is_stalemate(self):
@@ -57,15 +59,16 @@ class Match:
             
             else:
                 fallen_king = images.fallen_white_king if self.get_turn() == WHITE else images.fallen_black_king
-                draw_this = pygame.transform.scale(fallen_king, (400,400))
+                draw_this = pygame.transform.scale(fallen_king, (400, 400))
                 display.blit(draw_this, (0, 0))
             self.text_indicator(display, text_font, 100, 410)
+            self.capture_piece_indicator(display, text_font, 470)
             self.draw_button(display, text_font)
         elif self.screen_name == Screens.MENU:
-            draw_this = pygame.transform.scale(images.chess, (400,400))
+            draw_this = pygame.transform.scale(images.chess, (400, 400))
             display.blit(draw_this, (0, 0))
         elif self.screen_name == Screens.CREDITS:
-            draw_this = pygame.transform.scale(images.credits_screen, (400,400))
+            draw_this = pygame.transform.scale(images.credits_screen, (400, 400))
             display.blit(draw_this, (0, 0))
 
     def build_houses(self):
@@ -141,6 +144,11 @@ class Match:
                 
                 # lógica de movimentação e captura
                 captured_piece = self.move(selected_house, desired_house)
+
+                if (captured_piece is not None and selected_piece.get_color() == WHITE):
+                    self.whiteCapturePieceIncator += 1
+                elif (captured_piece is not None and selected_piece.get_color() == BLACK):
+                    self.blackCapturePieceIncator += 1
 
                 self.checked = self.is_checked(self.get_turn())
                 if self.checked:
@@ -328,6 +336,17 @@ class Match:
             
         indicator = font.render(text, True, color)
 
+        screen_width = screen.get_width() / 2
+        text_width = indicator.get_width() / 2
+        x = screen_width - text_width
+
+        screen.blit(indicator, (x, y))
+
+    def capture_piece_indicator(self, screen, font, y):
+        text = "Peças capturadas: " + str(self.blackCapturePieceIncator) + " brancas " + str(
+            self.whiteCapturePieceIncator) + " pretas"
+        color = WHITE
+        indicator = font.render(text, True, color)
         screen_width = screen.get_width() / 2
         text_width = indicator.get_width() / 2
         x = screen_width - text_width
