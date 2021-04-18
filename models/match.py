@@ -61,9 +61,11 @@ class Match:
                 fallen_king = images.fallen_white_king if self.get_turn() == WHITE else images.fallen_black_king
                 draw_this = pygame.transform.scale(fallen_king, (400, 400))
                 display.blit(draw_this, (0, 0))
+
             self.text_indicator(display, text_font, 100, 410)
             self.capture_piece_indicator(display, text_font, 470)
             self.draw_button(display, text_font)
+
         elif self.screen_name == Screens.MENU:
             draw_this = pygame.transform.scale(images.chess, (400, 400))
             display.blit(draw_this, (0, 0))
