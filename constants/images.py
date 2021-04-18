@@ -21,3 +21,4 @@ fallen_black_king = pygame.image.load(os.path.join("./images", "fallen_black_kin
 chess = pygame.image.load(os.path.join("./images", "background.png"))
 
 credits_screen = pygame.image.load(os.path.join("./images", "credits.png"))
+draw = pygame.image.load(os.path.join("./images", "draw.jpg"))

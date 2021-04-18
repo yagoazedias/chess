@@ -31,7 +31,7 @@ def main():
 
             if event.type == pygame.QUIT:
                 running = False
-            if match.get_turn() == BLACK and ia_on:
+            if match.get_turn() == BLACK and ia_on and not match.is_checkmate and not match.get_is_stalemate():
                 ia.move()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
