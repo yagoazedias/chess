@@ -28,18 +28,31 @@ class Match:
         self.choice = False
         self.checked = False
         self.is_checkmate = False
+        self.is_stalemate = False
         self.board = Board(houses=self.build_houses())
         self.set_up_pieces()
 
+
+    def get_is_stalemate(self):
+        return self.is_stalemate
+    
     def get_board(self):
         return self.board
 
     def draw(self, display, text_font):
         if self.choice:
             if not self.is_checkmate:
-                for col in range(0, 8):
-                    for row in range(0, 8):
-                        self.board.houses[col][row].draw(display)
+                
+                if self.get_is_stalemate():
+                    draw = images.draw
+                    draw_this = pygame.transform.scale(draw, (400,400))
+                    display.blit(draw_this, (0, 0))
+                    
+                else:
+                    for col in range(0, 8):
+                        for row in range(0, 8):
+                            self.board.houses[col][row].draw(display)
+            
             else:
                 fallen_king = images.fallen_white_king if self.get_turn() == WHITE else images.fallen_black_king
                 draw_this = pygame.transform.scale(fallen_king, (400,400))
@@ -257,21 +270,24 @@ class Match:
         return False
     
     def checkmate(self):
-        if not self.is_checked(self.get_turn()):
-            return False
         
         for col in range(0, 8):
             for row in range(0, 8): 
                 if self.board.houses[col][row].get_piece() is not None:
                     if self.board.houses[col][row].get_piece().get_color() == self.get_turn():
                         possible_moves = self.board.houses[col][row].get_piece().get_possible_moves(self)
+                        all_moves_results_in_check = False
                         for possible_move in possible_moves:
                             captured_piece = self.move(self.board.houses[col][row],self.board.houses[possible_move[0]][possible_move[1]])
                             checked = self.is_checked(self.get_turn()) 
                             self.undo_move(self.board.houses[col][row],self.board.houses[possible_move[0]][possible_move[1]], captured_piece)
                             if not checked:
                                 return False
-                                
+                            
+        if not self.is_checked(self.get_turn()):
+            self.is_stalemate = True
+            return False
+                       
         return True
 
     def get_king_position(self):
@@ -292,6 +308,10 @@ class Match:
             if self.is_checkmate:
                 text = "Brancas Venceram!" if self.get_turn() != WHITE else "Pretas Venceram"
                 color = another_color
+            
+            elif self.get_is_stalemate():
+                text = "Empate"
+                
             else:
                 text = "Vez das peças "
                 if self.turn != WHITE:
