@@ -8,6 +8,9 @@ class Board:
         self.winner = None
         self.houses = houses
 
+    def get_houses(self):
+        return self.houses
+
     def set_selected_piece_house(self, house):
         if house is not None:
             house.set_selected(True)

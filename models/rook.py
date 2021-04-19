@@ -1,5 +1,7 @@
 from models.piece import Piece
 from util.move import *
+from constants.colors import *
+
 
 
 class Rook(Piece):
@@ -7,6 +9,14 @@ class Rook(Piece):
         super(Rook, self).__init__(color, img, house)
         self.is_first_move = True
         self.turn_first_move_false = 0
+
+
+    def get_value(self):
+        if self.get_color() == WHITE:
+            return 50
+        else:
+            return -50
+
 
     def get_type(self):
         return self.__str__()

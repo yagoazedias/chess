@@ -12,8 +12,22 @@ class Pawn(Piece):
         self.is_en_passant_vulnerable = False
         self.house = house
 
+
+    def get_value(self):
+        if self.get_color() == WHITE:
+            return 10
+        else:
+            return -10
+
     def __str__(self):
         return PAWN
+    
+    
+    def get_value(self):
+        if self.get_color() == WHITE:
+            return 10
+        else:
+            return -10
 
     # verifica se eh um movimento especial do peao (andar duas casas)
     # se o movimento tiver mais de uma casa de distancia, eh um movimento especial

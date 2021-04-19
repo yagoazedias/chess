@@ -1,10 +1,17 @@
 from models.piece import Piece
 from util.move import *
-
+from constants.colors import *
 
 class Queen(Piece):
     def __init__(self, color, img, house):
         super(Queen, self).__init__(color, img, house)
+
+
+    def get_value(self):
+        if self.get_color() == WHITE:
+            return 90
+        else:
+            return -90
 
     def get_type(self):
         return self.__str__()

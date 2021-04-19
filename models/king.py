@@ -1,6 +1,7 @@
 from models.piece import Piece
 from constants.types import ROOK
 from util.move import *
+from constants.colors import *
 
 
 class King(Piece):
@@ -9,6 +10,13 @@ class King(Piece):
         self.is_first_move = True
         self.turn_first_move_false = 0
         self.is_checked = False
+
+        
+    def get_value(self):
+        if self.get_color() == WHITE:
+            return 1000
+        else:
+            return -1000
 
     # verifica se o movimento eh o roque.
     # eh roque quando o rei anda mais de uma casa

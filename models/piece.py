@@ -1,4 +1,5 @@
 import pygame
+from constants.colors import *
 
 
 class Piece(object):
@@ -7,6 +8,9 @@ class Piece(object):
         self.img = img
         self.move_list = []
         self.house = house
+        
+    def get_value(self):
+        pass
 
     def draw(self, windows, x, y):
         draw_this = pygame.transform.scale(self.img, (27, 27))

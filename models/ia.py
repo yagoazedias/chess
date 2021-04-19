@@ -1,6 +1,6 @@
 from constants.colors import *
 from random import choices
-
+from models.minimax_ia import MinimaxIA
 
 class Ia:
     def __init__(self, match):
@@ -9,7 +9,12 @@ class Ia:
     def move(self):
 
         if self.match.get_turn() == BLACK:
-            positions = self.select_piece_and_desired_house()
+            
+            #para voltar a IA com movimentos aleatórios, é só comentar
+            #essas duas linhas abaixo, e descomentar essa terceira que está comentada.
+            minimax_ia = MinimaxIA()
+            positions = minimax_ia.play(self.match)
+            #positions = self.select_piece_and_desired_house()
 
             selected_house = positions[0]
             desired_house = positions[1]
