@@ -85,7 +85,7 @@ class MinimaxIA:
         board = self.prepare_board(match)
 
         # calcula o melhor movimento e retorna o tabuleiro resultante
-        best_scenario = self.calculate_best_move(board)
+        best_scenario = self.calculate_best_move(board, match.get_turn)
 
         # explicação na declaração da função unflip_board()
         best_scenario = self.unflip_board(best_scenario)
@@ -98,12 +98,18 @@ class MinimaxIA:
         move = self.coords_to_houses(match, selected_and_desired_house)
         return move
 
-    # dentre todas as jogadas possíveis, retorna a que tiver o menor valor,
-    # pois a IA joga com as pretas, e as pretas são valores negativos. Então,
-    # quanto menor o valor da soma do tabuleiro, melhor para a IA
-    def calculate_best_move(self, board):
+    # dentre todas as jogadas possíveis, retorna a que tiver o menor valor
+    def calculate_best_move(self, board, turn_color):
+        
+        #na logica usada para os calculos,
+        #-1 significa a vez das peças pretas,
+        # e 1 significa a vez das peças brancas
+        my_color = -1
+        if turn_color == WHITE:
+            my_color = 1
+            
         # retorna todos os cenarios possiveis do turno
-        all_scenarios = self.get_all_turn_scenarios(board, -1)
+        all_scenarios = self.get_all_turn_scenarios(board, my_color)
 
         # inicialização das variáveis
         best_scenario = np.full((8, 8), 999)
@@ -114,15 +120,22 @@ class MinimaxIA:
         # para cada jogada possível...
         for scenario in all_scenarios:
             # ...calcula o valor dela usando minimax
-            scenario_evaluation = self.minimax(scenario, 2, -999, 999, 1)
+            scenario_evaluation = self.minimax(scenario, 2, -999, 999, -1*my_color)
             #...e guarda
             all_evaluations.append(scenario_evaluation)
             
         #retorna o índice da melhor avaliação da lista de avaliações
-        best_eval_index = all_evaluations.index(min(all_evaluations))
+        if my_color == -1:
+            #se a IA estiver jogando com as pretas, a melhor é a menor
+            best_eval_index = all_evaluations.index(min(all_evaluations))
+        else:
+            #se a IA estiver jogando com as brancas, a melhor é a maior
+            best_eval_index = all_evaluations.index(max(all_evaluations))
+
         
-        #verifica se o valor dessa avaliação é único..
-        if not self.has_unique_play(all_evaluations):
+        #verifica se o valor da avaliação cujo índice é passado como 
+        #parâmetro é único
+        if not self.is_unique_eval(all_evaluations, best_eval_index):
             #se nao for...
             #retorna todos os índices em que essa avaliação se repete
             list_best_eval_indexes = np.where(np.array(all_evaluations) == all_evaluations[best_eval_index])
@@ -131,11 +144,13 @@ class MinimaxIA:
         
         return all_scenarios[best_eval_index]
     
-    #dada uma lista de cenários possíveis,
-    #verifica se existe um único melhor cenário, ou se existem cenários
+    #dada uma lista de pesos de jogadas, e o index do melhor peso,
+    #verifica se existe um único melhor peso, ou se existem cenários
     #com a mesma pontuação
-    def has_unique_play(self, all_evaluations):
-        return np.count_nonzero(np.array(all_evaluations) == min(all_evaluations)) == 1
+    def is_unique_eval(self, all_evaluations, best_eval_index):
+        return np.count_nonzero(np.array(all_evaluations) == all_evaluations[best_eval_index]) == 1
+
+            
 
     def minimax(self, board, depth, alpha, beta, maximizing_player):
         if depth == 0:
