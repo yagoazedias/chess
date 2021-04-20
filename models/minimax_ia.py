@@ -109,16 +109,33 @@ class MinimaxIA:
         best_scenario = np.full((8, 8), 999)
         best_scenario_value = best_scenario.sum()
 
+        
+        all_evaluations = []
         # para cada jogada possível...
         for scenario in all_scenarios:
             # ...calcula o valor dela usando minimax
             scenario_evaluation = self.minimax(scenario, 2, -999, 999, 1)
-            # comparação para descobrir o menor valor
-            if best_scenario_value > scenario_evaluation:
-                best_scenario = np.array(scenario)
-                best_scenario_value = scenario_evaluation
-
-        return best_scenario
+            #...e guarda
+            all_evaluations.append(scenario_evaluation)
+            
+        #retorna o índice da melhor avaliação da lista de avaliações
+        best_eval_index = all_evaluations.index(min(all_evaluations))
+        
+        #verifica se o valor dessa avaliação é único..
+        if not self.has_unique_play(all_evaluations):
+            #se nao for...
+            #retorna todos os índices em que essa avaliação se repete
+            list_best_eval_indexes = np.where(np.array(all_evaluations) == all_evaluations[best_eval_index])
+            #e escolhe aleatoriamente um desses índices para ser a jogada
+            best_eval_index = np.random.choice(np.asarray(list_best_eval_indexes)[0])
+        
+        return all_scenarios[best_eval_index]
+    
+    #dada uma lista de cenários possíveis,
+    #verifica se existe um único melhor cenário, ou se existem cenários
+    #com a mesma pontuação
+    def has_unique_play(self, all_evaluations):
+        return np.count_nonzero(np.array(all_evaluations) == min(all_evaluations)) == 1
 
     def minimax(self, board, depth, alpha, beta, maximizing_player):
         if depth == 0:
