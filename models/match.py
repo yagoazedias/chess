@@ -146,13 +146,16 @@ class Match:
                 
                 # lógica de movimentação e captura
                 captured_piece = self.move(selected_house, desired_house)
-
-                if (captured_piece is not None and selected_piece.get_color() == WHITE):
-                    self.whiteCapturePieceIncator += 1
-                elif (captured_piece is not None and selected_piece.get_color() == BLACK):
-                    self.blackCapturePieceIncator += 1
-
+                
+                
                 self.checked = self.is_checked(self.get_turn())
+                
+                if not self.checked:
+                    if (captured_piece is not None and selected_piece.get_color() == WHITE):
+                        self.whiteCapturePieceIncator += 1
+                    elif (captured_piece is not None and selected_piece.get_color() == BLACK):
+                        self.blackCapturePieceIncator += 1
+
                 if self.checked:
                     self.undo_move(selected_house, desired_house, captured_piece)
 
