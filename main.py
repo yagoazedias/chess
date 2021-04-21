@@ -7,6 +7,7 @@ if getattr(sys, "frozen", False):
     os.chdir(sys._MEIPASS)
 
 import pygame
+import ctypes
 from models.match import Match
 from models.ia import Ia
 from constants.colors import *
