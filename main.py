@@ -1,20 +1,26 @@
+import os, sys
+
+dirpath = os.getcwd()
+sys.path.append(dirpath)
+
+if getattr(sys, "frozen", False):
+    os.chdir(sys._MEIPASS)
+
 import pygame
 from models.match import Match
 from models.ia import Ia
 from constants.colors import *
 from constants.screens import Screens
 
-pygame.init()
-
-
 def main():
+    pygame.init()
     screen = pygame.display.set_mode([400, 400])
     pygame.display.set_caption("Xadrez")
 
     clock = pygame.time.Clock()
 
     # defining Text font
-    text_font = pygame.font.Font(pygame.font.get_default_font(), 18)
+    text_font = pygame.font.Font("font/FreeSansBold.ttf", 18)
 
     match = Match()
     ia = Ia(match)
