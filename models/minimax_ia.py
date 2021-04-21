@@ -150,10 +150,14 @@ class MinimaxIA:
     def is_unique_eval(self, all_evaluations, best_eval_index):
         return np.count_nonzero(np.array(all_evaluations) == all_evaluations[best_eval_index]) == 1
 
-            
+
+    #verifica se um dos reis não está no tabuleiro
+    def game_over(self, board):
+        np_board = np.array(board)
+        return not (1000 in np_board and -1000 in np_board)
 
     def minimax(self, board, depth, alpha, beta, maximizing_player):
-        if depth == 0:
+        if depth == 0 or self.game_over(board):
             return np.array(board).sum()
 
         if maximizing_player == 1:
