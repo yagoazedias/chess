@@ -146,17 +146,19 @@ class Match:
                 
                 # lógica de movimentação e captura
                 captured_piece = self.move(selected_house, desired_house)
-
-                if (captured_piece is not None and selected_piece.get_color() == WHITE):
-                    self.whiteCapturePieceIncator += 1
-                elif (captured_piece is not None and selected_piece.get_color() == BLACK):
-                    self.blackCapturePieceIncator += 1
-
+                
+                
                 self.checked = self.is_checked(self.get_turn())
+
                 if self.checked:
                     self.undo_move(selected_house, desired_house, captured_piece)
 
                 else:
+                    if (captured_piece is not None and selected_piece.get_color() == WHITE):
+                        self.whiteCapturePieceIncator += 1
+                    elif (captured_piece is not None and selected_piece.get_color() == BLACK):
+                        self.blackCapturePieceIncator += 1
+                        
                     # promocao do peao
                     if selected_piece.get_type() == PAWN and selected_piece.can_be_promoted():
                         if selected_piece.get_color() == BLACK:
