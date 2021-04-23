@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - 'master'
+      - 'feature/autoRelease'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -42,3 +43,34 @@ jobs:
         with:
           name: linux-chess
           path: dist/linux
+      
+      - name: Create GitHub release
+        id: create_new_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: 1.0.${{ github.run_number }}
+          release_name: 1.0.${{ github.run_number }}
+      - name: see folder content
+        run: ls -R dist/
+
+      - name: Upload Windows installer to GitHub release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_new_release.outputs.upload_url }}
+          asset_path: ./dist/windows/chess.exe
+          asset_name: windows-chess.exe
+          asset_content_type: application/octet-stream
+      - name: Upload Linux installer to GitHub release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_new_release.outputs.upload_url }}
+          asset_path: ./dist/linux/chess
+          asset_name: linux-chess.run
+          asset_content_type: application/octet-stream
+
