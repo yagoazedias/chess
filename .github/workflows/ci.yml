@@ -61,14 +61,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_new_release.outputs.upload_url }}
-          asset_path: ./dist/windows/*
+          asset_path: ./dist/windows/chess.exe
           asset_name: windows-chess.zip
+          asset_content_type: application/zip
       - name: Upload Linux installer to GitHub release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_new_release.outputs.upload_url }}
-          asset_path: ./dist/linux/*
+          asset_path: ./dist/linux/chess
           asset_name: linux-chess.zip
+          asset_content_type: application/zip
 
