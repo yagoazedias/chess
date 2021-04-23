@@ -85,7 +85,7 @@ class MinimaxIA:
         board = self.prepare_board(match)
 
         # calcula o melhor movimento e retorna o tabuleiro resultante
-        best_scenario = self.calculate_best_move(board, match.get_turn)
+        best_scenario = self.calculate_best_move(board, match.get_turn())
 
         # explicação na declaração da função unflip_board()
         best_scenario = self.unflip_board(best_scenario)
@@ -112,8 +112,8 @@ class MinimaxIA:
         all_scenarios = self.get_all_turn_scenarios(board, my_color)
 
         # inicialização das variáveis
-        best_scenario = np.full((8, 8), 999)
-        best_scenario_value = best_scenario.sum()
+        # best_scenario = np.full((8, 8), 999)
+        # best_scenario_value = best_scenario.sum()
 
         
         all_evaluations = []

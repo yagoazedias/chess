@@ -19,7 +19,6 @@ def main():
     pygame.display.set_caption("Xadrez")
 
     clock = pygame.time.Clock()
-
     # defining Text font
     text_font = pygame.font.Font("font/FreeSansBold.ttf", 18)
 
@@ -28,21 +27,36 @@ def main():
 
     running = True
     ia_on = True
+    
+    ia_vs_ia = True
+    
+    playevent = pygame.USEREVENT + 1
+    my_event = pygame.event.Event(playevent)
 
     while running:
         match.is_checkmate = match.checkmate()
 
         for event in pygame.event.get():
+            
             mouse_x = pygame.mouse.get_pos()[0]
             mouse_y = pygame.mouse.get_pos()[1]
 
             if event.type == pygame.QUIT:
                 running = False
-            if match.get_turn() == BLACK and ia_on and not match.is_checkmate and not match.get_is_stalemate():
+            
+
+            #IA vs IA
+            if ia_vs_ia and ia_on and not match.is_checkmate and not match.get_is_stalemate():
+                if match.choice:
+                    pygame.event.post(my_event)
+                    ia.move()
+                    break
+                
+            #Player vs IA
+            elif ia_on and match.get_turn() == BLACK and not match.is_checkmate and not match.get_is_stalemate():
                 ia.move()
-
+            
             if event.type == pygame.MOUSEBUTTONDOWN:
-
                 if match.choice:  # Match has already started
                     if mouse_y <= 400:
                         clicked_house = get_clicked_house(match)
@@ -63,9 +77,9 @@ def main():
                         show_credits_screen(match)
                     elif has_clicked_on_go_to_menu(mouse_x, mouse_y):
                         show_menu_screen(match)
-
+        
         pygame.display.update()
-        clock.tick(60)
+        clock.tick(40)
         match.draw(screen, text_font)
 
 
