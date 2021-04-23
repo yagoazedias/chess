@@ -4,7 +4,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup
+      - name: Checking build
         uses: actions/checkout@v2
       - run: bash replace.sh
       
@@ -12,13 +12,20 @@ jobs:
         uses: JackMcKew/pyinstaller-action-windows@main
         with:
           path: .
-      - run: ls dist
-      - run: git status
       - run: ls dist/windows
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Building deployment artifact
+        uses: actions/checkout@v2
+      - run: bash replace.sh
+
+      - name: Package Application
+        uses: JackMcKew/pyinstaller-action-windows@main
+        with:
+          path: .
+
       - uses: actions/upload-artifact@v2
         with:
           name: windows-chess
@@ -28,8 +35,6 @@ jobs:
         uses: JackMcKew/pyinstaller-action-linux@main
         with:
           path: .    
-      - run: ls dist
-      - run: ls dist/linux
       - uses: actions/upload-artifact@v2
         with:
           name: linux-chess
