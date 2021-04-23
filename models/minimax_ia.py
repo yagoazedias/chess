@@ -6,7 +6,6 @@ from constants.colors import *
 import copy
 from util.move_ia import *
 
-
 class MinimaxIA:
     def __init__(self):
         pass
@@ -99,6 +98,7 @@ class MinimaxIA:
         return move
 
     # dentre todas as jogadas possíveis, retorna a que tiver o menor valor
+    
     def calculate_best_move(self, board, turn_color):
         
         #na logica usada para os calculos,
@@ -114,16 +114,10 @@ class MinimaxIA:
         # inicialização das variáveis
         # best_scenario = np.full((8, 8), 999)
         # best_scenario_value = best_scenario.sum()
-
         
-        all_evaluations = []
-        # para cada jogada possível...
-        for scenario in all_scenarios:
-            # ...calcula o valor dela usando minimax
-            scenario_evaluation = self.minimax(scenario, 2, -999, 999, -1*my_color)
-            #...e guarda
-            all_evaluations.append(scenario_evaluation)
-            
+        # para cada jogada possível calcula o valor dela usando minimax e guarda
+        all_evaluations = self.all_evaluations(all_scenarios,my_color)
+        
         #retorna o índice da melhor avaliação da lista de avaliações
         if my_color == -1:
             #se a IA estiver jogando com as pretas, a melhor é a menor
@@ -144,6 +138,16 @@ class MinimaxIA:
         
         return all_scenarios[best_eval_index]
     
+    def all_evaluations(self, all_scenarios,my_color):
+        all_evaluations = []
+        # para cada jogada possível...
+        for scenario in all_scenarios:
+            # ...calcula o valor dela usando minimax
+            scenario_evaluation = self.minimax(scenario, 2, -999, 999, -1*my_color)
+            #...e guarda
+            all_evaluations.append(scenario_evaluation)
+        return all_evaluations
+    
     #dada uma lista de pesos de jogadas, e o index do melhor peso,
     #verifica se existe um único melhor peso, ou se existem cenários
     #com a mesma pontuação
@@ -155,7 +159,7 @@ class MinimaxIA:
     def game_over(self, board):
         np_board = np.array(board)
         return not (1000 in np_board and -1000 in np_board)
-
+    
     def minimax(self, board, depth, alpha, beta, maximizing_player):
         if depth == 0 or self.game_over(board):
             return np.array(board).sum()
@@ -225,24 +229,3 @@ class MinimaxIA:
             all_match_turn_scenarios = all_match_turn_scenarios + all_possible_scenarios
 
         return all_match_turn_scenarios
-
-    # teste: da p usar essa funcao em vez do minimax.
-    # eh como se fosse um minimax de profundidade 1
-    ####################
-    # def min_scenario(self, scenarios):
-    #     best = np.full((8,8), 999)
-    #     for i in range(len(scenarios)):
-    #         if np.array(scenarios[i]).sum() < best.sum():
-    #             best = np.array(scenarios[i])
-
-    #     return best
-
-    # def max_scenario(self, scenarios):
-    #     best = np.full((8,8), -999)
-    #     for i in range(len(scenarios)):
-    #         if np.array(scenarios[i]).sum() > best.sum():
-    #             best = np.array(scenarios[i])
-
-    #     return best
-
-    ##################
