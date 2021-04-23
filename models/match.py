@@ -368,8 +368,8 @@ class Match:
         if self.checked:
             text = "Ok"
         
-        # elif self.is_checkmate:
-        #     text = "Voltar ao menu"
+        elif self.is_checkmate:
+             text = "Voltar ao menu"
             
         elif ia_vs_ia:
             text = "Segure ESC para voltar ao menu principal"
