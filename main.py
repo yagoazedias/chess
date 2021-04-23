@@ -84,13 +84,15 @@ def main():
                         ia_on = True
                         ia_vs_ia = False
                     elif has_clicked_on_credits(mouse_x, mouse_y):
-                        show_credits_screen(match)
+                        #show_credits_screen(match)
+                        show_menu_screen(match)
                     elif has_clicked_on_go_to_menu(mouse_x, mouse_y):
                         show_menu_screen(match)
                         
                     elif has_clicked_on_ia_vs_ia(mouse_x, mouse_y):
-                        ia_vs_ia = True
                         start_match(match, screen)
+                        ia_vs_ia = True
+                        ia_on = True
         
         pygame.display.update()
         clock.tick(40)
@@ -107,6 +109,8 @@ def start_match(match, screen):
 def show_menu_screen(match):
     if match.screen_name != Screens.MENU:
         match.screen_name = Screens.MENU
+    else:
+        show_credits_screen(match)
 
 
 def show_credits_screen(match):
@@ -115,22 +119,19 @@ def show_credits_screen(match):
 
 
 def has_clicked_on_go_to_menu(x, y):
-    return 300 <= x <= 360 and 320 <= y <= 360
+    return 45 <= x <= 125 and 320 <= y <= 360
 
 
 def has_clicked_on_p_vs_p(x, y):
     return 45 <= x <= 125 and 182 <= y <= 210
 
-
 def has_clicked_on_ia(x, y):
     return 158 <= x <= 242 and 182 <= y <= 210
 
-def has_clicked_on_ia_vs_ia(x, y):
-    return 45 <= x <= 125 and 282 <= y <= 310
-
-
-
 def has_clicked_on_credits(x, y):
+    return 275 <= x <= 350 and 320 <= y <= 380
+
+def has_clicked_on_ia_vs_ia(x, y):
     return 275 <= x <= 350 and 182 <= y <= 210
 
 
