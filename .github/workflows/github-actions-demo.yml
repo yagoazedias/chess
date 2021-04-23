@@ -12,5 +12,6 @@ jobs:
         with:
           path: .
       - run: ls dist
-      - run: git status  
+      - run: git status
+      - run: ls dist/windows
           
