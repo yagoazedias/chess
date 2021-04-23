@@ -16,6 +16,7 @@ jobs:
       - run: git status
       - run: ls dist/windows
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/upload-artifact@v2
