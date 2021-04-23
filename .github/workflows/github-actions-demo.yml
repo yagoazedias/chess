@@ -14,4 +14,9 @@ jobs:
       - run: ls dist
       - run: git status
       - run: ls dist/windows
-          
+      - name: Package Application
+        uses: JackMcKew/pyinstaller-action-linux@main
+        with:
+          path: .    
+      - run: ls dist
+      - run: ls dist/linux
