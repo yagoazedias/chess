@@ -71,6 +71,6 @@ jobs:
         with:
           upload_url: ${{ steps.create_new_release.outputs.upload_url }}
           asset_path: ./dist/linux/chess
-          asset_name: linux-chess
+          asset_name: linux-chess.run
           asset_content_type: application/octet-stream
 
