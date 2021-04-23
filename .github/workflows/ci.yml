@@ -43,6 +43,7 @@ jobs:
         with:
           name: linux-chess
           path: dist/linux
+      
       - name: Create GitHub release
         id: create_new_release
         uses: actions/create-release@v1
@@ -52,7 +53,8 @@ jobs:
           tag_name: 1.0.${{ github.run_number }}
           release_name: 1.0.${{ github.run_number }}
       - name: see folder content
-        run: ls -l
+        run: ls -R dist/
+
       - name: Upload Windows installer to GitHub release
         uses: actions/upload-release-asset@v1
         env:
@@ -60,6 +62,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_new_release.outputs.upload_url }}
           asset_path: ./dist/windows/*
+          asset_name: windows-chess.zip
       - name: Upload Linux installer to GitHub release
         uses: actions/upload-release-asset@v1
         env:
@@ -67,4 +70,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_new_release.outputs.upload_url }}
           asset_path: ./dist/linux/*
+          asset_name: linux-chess.zip
 
