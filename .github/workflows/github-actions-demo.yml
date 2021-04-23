@@ -4,7 +4,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Echo...
+      - name: Setup
         uses: actions/checkout@v2
-      - run: make echo
+      - run: bash replace.sh
+      - name: Package Application
+        uses: JackMcKew/pyinstaller-action-windows@main
+        with:
+          path: .
 
+      - uses: actions/upload-artifact@v2
+        with:
+          name: name-of-artifact
+          path: src/dist/windows
