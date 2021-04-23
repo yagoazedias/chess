@@ -1,0 +1,44 @@
+name: Continuous Delivery
+on:
+  push:
+    branches:
+      - 'master'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking build
+        uses: actions/checkout@v2
+      - run: bash replace.sh
+      
+      - name: Package Application
+        uses: JackMcKew/pyinstaller-action-windows@main
+        with:
+          path: .
+      - run: ls dist/windows
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Building deployment artifact
+        uses: actions/checkout@v2
+      - run: bash replace.sh
+
+      - name: Package Application
+        uses: JackMcKew/pyinstaller-action-windows@main
+        with:
+          path: .
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: windows-chess
+          path: dist/windows
+      
+      - name: Package Application
+        uses: JackMcKew/pyinstaller-action-linux@main
+        with:
+          path: .    
+      - uses: actions/upload-artifact@v2
+        with:
+          name: linux-chess
+          path: dist/linux

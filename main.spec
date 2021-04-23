@@ -12,7 +12,7 @@ added_files = [
 ]
 
 a = Analysis(['main.py'],
-             pathex=['C:/Users/Moreira/Desktop/chess-feature-forDistributions/main.py'],
+             pathex=['{changeme}/main.py'],
              binaries=[],
              datas=added_files,
              hiddenimports=[],
