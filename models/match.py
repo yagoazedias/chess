@@ -43,7 +43,7 @@ class Match:
     def get_board(self):
         return self.board
 
-    def draw(self, display, text_font):
+    def draw(self, display, text_font, ia_vs_ia):
         if self.choice and self.screen_name == Screens.GAME:
             if not self.is_checkmate:
                 
@@ -64,7 +64,7 @@ class Match:
 
             self.text_indicator(display, text_font, 100, 410)
             self.capture_piece_indicator(display, text_font, 470)
-            self.draw_button(display, text_font)
+            self.draw_button(display, text_font, ia_vs_ia)
 
         elif self.screen_name == Screens.MENU:
             draw_this = pygame.transform.scale(images.chess, (400, 400))
@@ -360,13 +360,21 @@ class Match:
     def clear_text_indicator(self, screen):
         pygame.draw.rect(screen, (26, 120, 122), (0, 400, 400, 100))
 
-    def draw_button(self, screen, font):
+    def draw_button(self, screen, font, ia_vs_ia):
         height = 25
         width = 200
         x = screen.get_width() / 4
         y = 440
         if self.checked:
             text = "Ok"
+        
+        elif self.is_checkmate:
+            text = "Voltar ao menu"
+            
+        elif ia_vs_ia:
+            text = "Segure ESC para voltar ao menu principal"
+            width = screen.get_width()
+            x = 0
         else:
             text = "Reiniciar Partida"
 

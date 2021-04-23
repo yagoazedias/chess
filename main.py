@@ -51,8 +51,6 @@ def main():
                 
                 keys = pygame.key.get_pressed()
                 if keys[pygame.K_ESCAPE]:
-                    pygame.event.clear()
-                    show_menu_screen(match)
                     screen = pygame.display.set_mode([400, 400])
                     match.button_manager()
                     break
@@ -90,7 +88,7 @@ def main():
         
         pygame.display.update()
         clock.tick(40)
-        match.draw(screen, text_font)
+        match.draw(screen, text_font, ia_vs_ia)
 
 
 def start_match(match, screen):
