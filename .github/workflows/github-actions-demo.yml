@@ -4,6 +4,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: make echo
       - name: Check out repository code
+      - run: make echo
 
