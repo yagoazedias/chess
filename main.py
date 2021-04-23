@@ -18,7 +18,6 @@ def main():
     screen = pygame.display.set_mode([400, 400])
     pygame.display.set_caption("Xadrez")
 
-    clock = pygame.time.Clock()
     # defining Text font
     text_font = pygame.font.Font("font/FreeSansBold.ttf", 18)
 
@@ -95,7 +94,6 @@ def main():
                         ia_on = True
         
         pygame.display.update()
-        clock.tick(40)
         match.draw(screen, text_font, ia_vs_ia)
 
 
