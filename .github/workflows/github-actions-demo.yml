@@ -15,9 +15,12 @@ jobs:
       - run: ls dist
       - run: git status
       - run: ls dist/windows
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/upload-artifact@v2
         with:
-          name: name-of-artifact
+          name: windows-chess
           path: dist/windows
       
       - name: Package Application
@@ -28,5 +31,5 @@ jobs:
       - run: ls dist/linux
       - uses: actions/upload-artifact@v2
         with:
-          name: name-of-artifact
+          name: linux-chess
           path: dist/linux
