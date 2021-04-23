@@ -62,8 +62,8 @@ jobs:
         with:
           upload_url: ${{ steps.create_new_release.outputs.upload_url }}
           asset_path: ./dist/windows/chess.exe
-          asset_name: windows-chess.zip
-          asset_content_type: application/zip
+          asset_name: windows-chess.exe
+          asset_content_type: application/octet-stream
       - name: Upload Linux installer to GitHub release
         uses: actions/upload-release-asset@v1
         env:
@@ -71,6 +71,6 @@ jobs:
         with:
           upload_url: ${{ steps.create_new_release.outputs.upload_url }}
           asset_path: ./dist/linux/chess
-          asset_name: linux-chess.zip
-          asset_content_type: application/zip
+          asset_name: linux-chess
+          asset_content_type: application/octet-stream
 
