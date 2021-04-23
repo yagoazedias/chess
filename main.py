@@ -45,8 +45,18 @@ def main():
                 running = False
             
 
+
             #IA vs IA
             if ia_vs_ia and ia_on and not match.is_checkmate and not match.get_is_stalemate():
+                
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_ESCAPE]:
+                    pygame.event.clear()
+                    show_menu_screen(match)
+                    screen = pygame.display.set_mode([400, 400])
+                    match.button_manager()
+                    break
+            
                 if match.choice:
                     pygame.event.post(my_event)
                     ia.move()
