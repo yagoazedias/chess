@@ -2,7 +2,8 @@ name: Continuous Delivery
 on:
   push:
     branches:
-      - 'master', 'feature/autoRelease'
+      - 'master'
+      - 'feature/autoRelease'
 jobs:
   build:
     runs-on: ubuntu-latest
