@@ -28,7 +28,7 @@ def main():
     running = True
     ia_on = True
     
-    ia_vs_ia = True
+    ia_vs_ia = False
     
     playevent = pygame.USEREVENT + 1
     my_event = pygame.event.Event(playevent)
@@ -78,13 +78,19 @@ def main():
                     if has_clicked_on_p_vs_p(mouse_x, mouse_y):
                         start_match(match, screen)
                         ia_on = False
+                        ia_vs_ia = False
                     elif has_clicked_on_ia(mouse_x, mouse_y):
                         start_match(match, screen)
                         ia_on = True
+                        ia_vs_ia = False
                     elif has_clicked_on_credits(mouse_x, mouse_y):
                         show_credits_screen(match)
                     elif has_clicked_on_go_to_menu(mouse_x, mouse_y):
                         show_menu_screen(match)
+                        
+                    elif has_clicked_on_ia_vs_ia(mouse_x, mouse_y):
+                        ia_vs_ia = True
+                        start_match(match, screen)
         
         pygame.display.update()
         clock.tick(40)
@@ -118,6 +124,10 @@ def has_clicked_on_p_vs_p(x, y):
 
 def has_clicked_on_ia(x, y):
     return 158 <= x <= 242 and 182 <= y <= 210
+
+def has_clicked_on_ia_vs_ia(x, y):
+    return 45 <= x <= 125 and 282 <= y <= 310
+
 
 
 def has_clicked_on_credits(x, y):

@@ -368,15 +368,15 @@ class Match:
         if self.checked:
             text = "Ok"
         
-        elif self.is_checkmate:
-            text = "Voltar ao menu"
+        # elif self.is_checkmate:
+        #     text = "Voltar ao menu"
             
         elif ia_vs_ia:
             text = "Segure ESC para voltar ao menu principal"
             width = screen.get_width()
             x = 0
         else:
-            text = "Reiniciar Partida"
+            text = "Voltar ao menu"
 
         pygame.draw.rect(screen, (210, 210, 210), (x, y, width, height), 0, 3, 3, 3, 3)
         text_button = font.render(text, True, (0, 0, 0))
