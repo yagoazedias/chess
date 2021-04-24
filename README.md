@@ -13,7 +13,8 @@ Link do board do trello: https://trello.com/b/ANLdUMgU/gpms
 
 1. Abra a [lista de versões](https://github.com/yagoazedias/chess/releases)
 2. Baixe o arquivo "windows-chess.exe"
-3. Execute o arquvo normalmente
+3. Execute o arquivo como administrador
+Observação: dependendo do antivírus utilizado, é necessário permitir a execução do arquivo para que o jogo funcione corretamente.
 
 ## Rodando no Unix
 
