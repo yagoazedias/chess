@@ -5,21 +5,20 @@ from models.minimax_ia import MinimaxIA
 class Ia:
     def __init__(self, match):
         self.match = match
+        self.minimax_ia = MinimaxIA()
+
 
     def move(self):
-
-        if self.match.get_turn() == BLACK:
             
-            #para voltar a IA com movimentos aleatórios, é só comentar
-            #essas duas linhas abaixo, e descomentar essa terceira que está comentada.
-            minimax_ia = MinimaxIA()
-            positions = minimax_ia.play(self.match)
-            #positions = self.select_piece_and_desired_house()
+        #para voltar a IA com movimentos aleatórios, é só comentar
+        #essas duas linhas abaixo, e descomentar essa terceira que está comentada.
+        positions = self.minimax_ia.play(self.match)
+        #positions = self.select_piece_and_desired_house()
 
-            selected_house = positions[0]
-            desired_house = positions[1]
+        selected_house = positions[0]
+        desired_house = positions[1]
 
-            self.match.movement_manager(selected_house, desired_house)
+        self.match.movement_manager(selected_house, desired_house)
 
     def select_piece_and_desired_house(self):
         position = (-1, -1)
