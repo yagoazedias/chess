@@ -6,7 +6,7 @@
 [![PR Status](https://badgen.net/github/prs/yagoazedias/chess)](https://github.com/yagoazedias/chess/pulls)
 [![GitHub Actions Demo](https://github.com/yagoazedias/chess/actions/workflows/github-actions-demo.yml/badge.svg?branch=feature%2Factions)](https://github.com/yagoazedias/chess/actions/workflows/github-actions-demo.yml)
 [![Continuous Delivery](https://github.com/yagoazedias/chess/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/yagoazedias/chess/actions/workflows/ci.yml)
-[![Release Status](https://badgen.net/github/release/yagoazedias/chess)](https://badgen.net/github/release/yagoazedias/chess)
+[![Release Status](https://badgen.net/github/release/yagoazedias/chess)](https://github.com/yagoazedias/chess/releases)
 [![Python Status](https://badgen.net/pypi/python/black)](https://badgen.net/pypi/python/black)
 
 <img src="https://user-images.githubusercontent.com/32250493/116000076-256d6a00-a5c5-11eb-9c19-f134bdeb7b7e.png" width="300"><img src="https://user-images.githubusercontent.com/32250493/115999821-ab88b100-a5c3-11eb-9adb-8c2a71cf1cd2.png" width="300"><img src="https://user-images.githubusercontent.com/32250493/116000083-2acab480-a5c5-11eb-83e3-cc61e08e5136.jpeg" width="250">
