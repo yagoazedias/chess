@@ -18,8 +18,6 @@ def main():
     screen = pygame.display.set_mode([400, 400])
     pygame.display.set_caption("Xadrez")
 
-    clock = pygame.time.Clock()
-
     # defining Text font
     text_font = pygame.font.Font("font/FreeSansBold.ttf", 18)
 
@@ -28,21 +26,44 @@ def main():
 
     running = True
     ia_on = True
+    
+    ia_vs_ia = False
+    
+    playevent = pygame.USEREVENT + 1
+    my_event = pygame.event.Event(playevent)
 
     while running:
         match.is_checkmate = match.checkmate()
 
         for event in pygame.event.get():
+            
             mouse_x = pygame.mouse.get_pos()[0]
             mouse_y = pygame.mouse.get_pos()[1]
 
             if event.type == pygame.QUIT:
                 running = False
-            if match.get_turn() == BLACK and ia_on and not match.is_checkmate and not match.get_is_stalemate():
+            
+
+
+            #IA vs IA
+            if ia_vs_ia and ia_on and not match.is_checkmate and not match.get_is_stalemate():
+                
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_ESCAPE]:
+                    screen = pygame.display.set_mode([400, 400])
+                    match.button_manager()
+                    break
+            
+                if match.choice:
+                    pygame.event.post(my_event)
+                    ia.move()
+                    break
+                
+            #Player vs IA
+            elif ia_on and match.get_turn() == BLACK and not match.is_checkmate and not match.get_is_stalemate():
                 ia.move()
-
+            
             if event.type == pygame.MOUSEBUTTONDOWN:
-
                 if match.choice:  # Match has already started
                     if mouse_y <= 400:
                         clicked_house = get_clicked_house(match)
@@ -56,17 +77,24 @@ def main():
                     if has_clicked_on_p_vs_p(mouse_x, mouse_y):
                         start_match(match, screen)
                         ia_on = False
+                        ia_vs_ia = False
                     elif has_clicked_on_ia(mouse_x, mouse_y):
                         start_match(match, screen)
                         ia_on = True
+                        ia_vs_ia = False
                     elif has_clicked_on_credits(mouse_x, mouse_y):
-                        show_credits_screen(match)
+                        #show_credits_screen(match)
+                        show_menu_screen(match)
                     elif has_clicked_on_go_to_menu(mouse_x, mouse_y):
                         show_menu_screen(match)
-
+                        
+                    elif has_clicked_on_ia_vs_ia(mouse_x, mouse_y):
+                        start_match(match, screen)
+                        ia_vs_ia = True
+                        ia_on = True
+        
         pygame.display.update()
-        clock.tick(60)
-        match.draw(screen, text_font)
+        match.draw(screen, text_font, ia_vs_ia)
 
 
 def start_match(match, screen):
@@ -79,6 +107,8 @@ def start_match(match, screen):
 def show_menu_screen(match):
     if match.screen_name != Screens.MENU:
         match.screen_name = Screens.MENU
+    else:
+        show_credits_screen(match)
 
 
 def show_credits_screen(match):
@@ -87,18 +117,19 @@ def show_credits_screen(match):
 
 
 def has_clicked_on_go_to_menu(x, y):
-    return 300 <= x <= 360 and 320 <= y <= 360
+    return 45 <= x <= 125 and 320 <= y <= 360
 
 
 def has_clicked_on_p_vs_p(x, y):
     return 45 <= x <= 125 and 182 <= y <= 210
 
-
 def has_clicked_on_ia(x, y):
     return 158 <= x <= 242 and 182 <= y <= 210
 
-
 def has_clicked_on_credits(x, y):
+    return 275 <= x <= 350 and 320 <= y <= 380
+
+def has_clicked_on_ia_vs_ia(x, y):
     return 275 <= x <= 350 and 182 <= y <= 210
 
 
