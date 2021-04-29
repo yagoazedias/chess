@@ -11,7 +11,7 @@
 
 <img src="https://user-images.githubusercontent.com/32250493/116000076-256d6a00-a5c5-11eb-9c19-f134bdeb7b7e.png" width="250"><img src="https://user-images.githubusercontent.com/32250493/115999821-ab88b100-a5c3-11eb-9adb-8c2a71cf1cd2.png" width="250"><img src="https://user-images.githubusercontent.com/32250493/116000083-2acab480-a5c5-11eb-83e3-cc61e08e5136.jpeg" width="200">
 
-## :sparkles: Features
+## :sparkles: Funcionalidades
 
 - Modos de jogo
 
@@ -19,7 +19,7 @@
   * :boy: x 🤖
   * 🤖 x 🤖
 
-## :rocket: Tech
+## :rocket: Tecnologias utilizadas
 
 - Linguagem
   - [Python]
@@ -29,7 +29,7 @@
   - [Pygame]
   - [Numpy]
 
-## :memo: Installation
+## :memo: Instalação
 
   ### :gear: Rodando o Projeto
   
@@ -64,17 +64,17 @@
   ```bash
   $ ./linux-chess.run
   ```
-  ## :eyes: Project Management
+  ## :eyes: Gerenciamento do Projeto
   
   - [Trello]
 
-  ## :movie_camera: Presentations
+  ## :movie_camera: Apresentações
   
    - :clapper:  [1° Entrega]
    - :clapper:  [2° Entrega]
    - :construction:  3° Entrega 
   
-  ## :hotsprings: Contributors
+  ## :hotsprings: Contribuíntes
 <!-- test comment -->  
   <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
