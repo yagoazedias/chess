@@ -74,7 +74,7 @@
    - :clapper:  [2° Entrega]
    - :construction:  3° Entrega 
   
-  ## :hotsprings: Contribuíntes
+  ## :hotsprings: Contribuintes
 <!-- test comment -->  
   <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
