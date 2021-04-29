@@ -51,7 +51,7 @@
   3. Execute o arquivo como administrador  
   Observação: dependendo do antivírus utilizado, é necessário permitir a execução do arquivo para que o jogo funcione corretamente.
   
-  ### :keyboard: Rodando no Linux
+  ### :keyboard: Rodando no Linux!
   
   1. Abra a [lista de versões](https://github.com/yagoazedias/chess/releases)
   2. Baixe o arquivo "linux-chess.run"
@@ -68,7 +68,7 @@
   
   - [Trello]
 
-  ## :movie_camera: Apresentations
+  ## :movie_camera: Presentations
   
    - :clapper:  [1° Entrega]
    - :clapper:  [2° Entrega]
