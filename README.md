@@ -72,7 +72,7 @@
   
    - :clapper:  [1° Entrega]
    - :clapper:  [2° Entrega]
-   - :construction:  3° Entrega 
+   - :clapper:  [3° Entrega](https://youtu.be/PSIL6uKPv64)
   
   ## :hotsprings: Contribuintes
 <!-- test comment -->  
